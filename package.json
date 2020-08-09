@@ -4,8 +4,7 @@
   "description": "NW55 ESLint Config",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nw55/eslint-config.git",
-    "directory": "packages/eslint-config"
+    "url": "https://github.com/nw55/eslint-config.git"
   },
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",
