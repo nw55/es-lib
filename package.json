@@ -1,0 +1,29 @@
+{
+  "name": "@nw55/build-tools",
+  "version": "0.1.2",
+  "description": "NW55 Build Tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nw55/node-build-tools.git"
+  },
+  "author": "Niklas Werner (nw55) <nw55@outlook.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "fix-dts-bundle.js"
+  ],
+  "bin": {
+    "nw55-fix-dts-bundle": "./fix-dts-bundle.js"
+  },
+  "scripts": {
+    "lint": "eslint -c eslint-config.js .",
+    "ci": "yarn lint",
+    "prepublishOnly": "yarn ci"
+  },
+  "devDependencies": {
+    "@nw55/eslint-config": "0.1.1",
+    "eslint": "^6.8.0"
+  }
+}
