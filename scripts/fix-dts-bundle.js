@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 'use strict';
 
 const fs = require('fs');
@@ -54,4 +52,4 @@ function main(prefix, inputFile, outputFile = inputFile) {
     });
 }
 
-main(...process.argv.slice(2));
+module.exports = main;

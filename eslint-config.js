@@ -9,8 +9,11 @@ module.exports = {
         es2020: true
     },
     extends: ['@nw55/eslint-config/build/es'],
+    rules: {
+        'no-console': 'off'
+    },
     overrides: [{
-        files: ['./fix-dts-bundle.js'],
+        files: ['./cli.js'],
         rules: {
             'linebreak-style': 'error'
         }

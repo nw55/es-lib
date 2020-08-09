@@ -12,10 +12,11 @@
     "access": "public"
   },
   "files": [
-    "fix-dts-bundle.js"
+    "scripts",
+    "cli.js"
   ],
   "bin": {
-    "nw55-fix-dts-bundle": "./fix-dts-bundle.js"
+    "nw55-build": "./cli.js"
   },
   "scripts": {
     "lint": "eslint -c eslint-config.js .",
