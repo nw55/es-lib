@@ -8,7 +8,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-await-in-loop': 'off',
     'no-compare-neg-zero': mistake,
     'no-cond-assign': [mistake, 'except-parens'],
-    'no-console': debug,
+    'no-console': lib && debug,
     'no-constant-condition': [mistake, {
         checkLoops: false
     }],
@@ -132,7 +132,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-useless-escape': improvement,
     'no-useless-return': improvement,
     'no-void': style,
-    'no-warning-comments': debug,
+    'no-warning-comments': 'off',
     'no-with': error,
     'prefer-named-capture-group': 'off',
     'prefer-promise-reject-errors': [error, {
@@ -330,9 +330,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'prefer-template': 'off',
     'require-yield': mistake,
     'rest-spread-spacing': style,
-    'sort-imports': [style, {
-        ignoreDeclarationSort: true
-    }],
+    'sort-imports': 'off',
     'symbol-description': 'off',
     'template-curly-spacing': style,
     'yield-star-spacing': [style, 'after']
