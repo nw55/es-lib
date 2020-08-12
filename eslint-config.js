@@ -3,10 +3,16 @@
 module.exports = {
     root: true,
     ignorePatterns: [
+        '/app/',
+        '/dev/',
+        '/lib/'
     ],
+    parserOptions: {
+        ecmaVersion: 2019
+    },
     env: {
         node: true,
-        es2020: true
+        es2017: true
     },
-    extends: './build/es'
+    extends: './lib/es'
 };
