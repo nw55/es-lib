@@ -5,7 +5,7 @@ const tsRules = require('./rules/ts');
 const tsTypecheckRules = require('./rules/ts-typecheck');
 
 const validLanguages = ['es', 'ts', 'ts-typecheck'];
-const validUsages = ['default', 'lib'];
+const validUsages = ['app', 'lib'];
 const validOptionNames = ['build', 'dev'];
 
 function createConfig(language, usage, options) {
@@ -35,17 +35,20 @@ function createConfig(language, usage, options) {
             Object.assign(result.rules, tsTypecheckRules(usageObject, options));
     }
 
-    for (const [key, value] of Object.entries(options.rules)) {
+    for (const [key, value] of Object.entries(result.rules)) {
         if (!value)
-            options.rules[key] = 'off';
+            result.rules[key] = 'off';
     }
 
     return result;
 }
 
 function useDevInExtends(extendsValue) {
-    if (typeof extendsValue === 'string')
-        return extendsValue.replace('@nw55/eslint-config/build', '@nw55/eslint-config/dev');
+    if (typeof extendsValue === 'string') {
+        for (const usage of validUsages)
+            extendsValue = extendsValue.replace('@nw55/eslint-config/' + usage + '/', '@nw55/eslint-config/dev/' + usage + '/');
+        return extendsValue;
+    }
     if (Array.isArray(extendsValue))
         return extendsValue.map(useDevInExtends);
     return extendsValue;
@@ -62,5 +65,7 @@ function useDevInConfig(config) {
 
 module.exports = {
     createConfig,
-    useDevConfig: useDevInConfig
+    useDevConfig: useDevInConfig,
+    iterateLanguages: () => validLanguages[Symbol.iterator](),
+    iterateUsages: () => validUsages[Symbol.iterator]()
 };

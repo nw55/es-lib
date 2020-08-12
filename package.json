@@ -13,19 +13,23 @@
   },
   "main": "index.js",
   "files": [
-    "build",
+    "app",
     "dev",
+    "lib",
     "options",
     "rules",
     "index.js"
   ],
   "scripts": {
     "lint": "eslint -c eslint-config.js .",
-    "ci": "yarn lint",
+    "generate-files": "node generate-files.js",
+    "build": "yarn generate-files",
+    "ci": "yarn build && yarn lint",
     "prepublishOnly": "yarn ci"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^6.8.0",
+    "fs-extra": "^9.0.1"
   },
   "peerDependencies": {
     "eslint": "^6.8.0",

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = ({ lib }, { error, mistake, debug, improvement, style }) => ({
+module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) => ({
     // rules not needed or not useful with typescript
     'getter-return': 'off',
     'no-dupe-args': 'off',

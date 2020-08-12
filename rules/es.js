@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = ({ lib }, { error, mistake, debug, improvement, style }) => ({
+module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) => ({
     // category: possible errors
     'for-direction': mistake,
     'getter-return': error,
