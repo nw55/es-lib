@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = ({ error, mistake, debug, improvement, style }) => ({
+module.exports = ({ lib }, { error, mistake, debug, improvement, style }) => ({
     // overridden eslint rules (that can be used with ts)
     'no-implied-eval': 'off',
     'no-throw-literal': 'off',
