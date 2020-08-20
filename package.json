@@ -1,6 +1,6 @@
 {
   "name": "@nw55/build-tools",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "NW55 Build Tools",
   "repository": {
     "type": "git",
@@ -13,6 +13,7 @@
   },
   "files": [
     "scripts",
+    "tsconfig",
     "cli.js"
   ],
   "bin": {
