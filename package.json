@@ -1,7 +1,7 @@
 {
   "name": "@nw55/eslint-config",
-  "version": "0.2.0-alpha-1",
-  "description": "NW55 ESLint Config",
+  "version": "0.2.0",
+  "description": "nw55 eslint config",
   "repository": {
     "type": "git",
     "url": "https://github.com/nw55/eslint-config.git"
