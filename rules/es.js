@@ -33,8 +33,10 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-irregular-whitespace': [mistake, {
         skipStrings: false
     }],
+    'no-loss-of-precision': mistake,
     'no-misleading-character-class': mistake,
     'no-obj-calls': error,
+    'no-promise-executor-return': mistake,
     'no-prototype-builtins': mistake,
     'no-regex-spaces': mistake,
     'no-setter-return': error,
@@ -42,19 +44,16 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-template-curly-in-string': 'off',
     'no-unexpected-multiline': mistake,
     'no-unreachable': mistake,
+    'no-unreachable-loop': mistake,
     'no-unsafe-finally': mistake,
     'no-unsafe-negation': error,
-    // 'no-useless-backreference': mistake, // not available yet
+    'no-useless-backreference': mistake,
     'require-atomic-updates': mistake,
-    'use-isnan': [error, {
-        enforceForSwitchCase: true
-    }],
+    'use-isnan': error,
     'valid-typeof': error,
 
     // category: best practices
-    'accessor-pairs': [error, {
-        enforceForClassMembers: true
-    }],
+    'accessor-pairs': error,
     'array-callback-return': mistake,
     'block-scoped-var': 'off',
     'class-methods-use-this': 'off',
@@ -62,7 +61,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'consistent-return': mistake,
     'curly': [style, 'multi-or-nest', 'consistent'],
     'default-case': 'off',
-    // 'default-case-last': style, // not available yet
+    'default-case-last': mistake,
     'default-param-last': improvement,
     'dot-location': [style, 'property'],
     'dot-notation': style,
@@ -167,18 +166,6 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     }],
     'no-use-before-define': 'off',
 
-    // category: nodejs and commonjs
-    'callback-return': 'off',
-    'global-require': mistake,
-    'handle-callback-err': 'off',
-    'no-buffer-constructor': mistake,
-    'no-mixed-requires': 'off',
-    'no-new-require': mistake,
-    'no-path-concat': mistake,
-    'no-process-env': 'off',
-    'no-process-exit': 'off',
-    'no-sync': 'off',
-
     // category: stylistic issues
     'array-bracket-newline': [style, 'consistent'],
     'array-bracket-spacing': style,
@@ -190,9 +177,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'comma-dangle': style,
     'comma-spacing': style,
     'comma-style': style,
-    'computed-property-spacing': [style, 'never', {
-        enforceForClassMembers: true
-    }],
+    'computed-property-spacing': style,
     'consistent-this': 'off',
     'eol-last': style,
     'func-call-spacing': style,
@@ -201,7 +186,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'func-style': 'off',
     'function-call-argument-newline': 'off',
     'function-paren-newline': [style, 'consistent'],
-    'id-blacklist': 'off',
+    'id-denylist': 'off',
     'id-length': 'off',
     'id-match': 'off',
     'implicit-arrow-linebreak': 'off',
