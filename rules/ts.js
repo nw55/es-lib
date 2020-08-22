@@ -26,11 +26,16 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'default-param-last': 'off',
     'func-call-spacing': 'off',
     'indent': 'off',
+    'init-declarations': 'off',
+    'keyword-spacing': 'off',
+    'lines-between-class-members': 'off',
     'no-array-constructor': 'off',
     'no-dupe-class-members': 'off',
     'no-empty-function': 'off',
     'no-extra-parens': 'off',
     'no-extra-semi': 'off',
+    'no-invalid-this': 'off',
+    'no-loss-of-precision': 'off',
     'no-magic-numbers': 'off',
     'no-unused-expressions': 'off',
     'no-unused-vars': 'off',
@@ -49,7 +54,10 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/comma-spacing': style,
     '@typescript-eslint/default-param-last': improvement,
     '@typescript-eslint/func-call-spacing': style,
+    '@typescript-eslint/keyword-spacing': style,
     '@typescript-eslint/indent': 'off', // handled by formatter
+    '@typescript-eslint/init-declarations': 'off',
+    '@typescript-eslint/lines-between-class-members': 'off',
     '@typescript-eslint/no-array-constructor': mistake,
     '@typescript-eslint/no-dupe-class-members': error,
     '@typescript-eslint/no-empty-function': [mistake, {
@@ -57,6 +65,8 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     }],
     '@typescript-eslint/no-extra-parens': 'off',
     '@typescript-eslint/no-extra-semi': style,
+    '@typescript-eslint/no-invalid-this': mistake,
+    '@typescript-eslint/no-loss-of-precision': mistake,
     '@typescript-eslint/no-magic-numbers': 'off',
     '@typescript-eslint/no-unused-expressions': mistake,
     '@typescript-eslint/no-unused-vars': [mistake, {
@@ -81,11 +91,8 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
         default: 'array'
     }],
     '@typescript-eslint/ban-ts-comment': mistake,
-    '@typescript-eslint/ban-types': [mistake, {
-        types: {
-            'Function': null
-        }
-    }],
+    '@typescript-eslint/ban-tslint-comment': mistake,
+    '@typescript-eslint/ban-types': mistake,
     '@typescript-eslint/class-literal-property-style': 'off',
     '@typescript-eslint/consistent-type-assertions': [mistake, {
         assertionStyle: 'as',
@@ -120,6 +127,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
             'instance-method'
         ]
     }],
+    '@typescript-eslint/method-signature-style': 'off',
     '@typescript-eslint/naming-convention': [
         style,
         {
@@ -155,12 +163,16 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
             format: ['PascalCase']
         }
     ],
+    '@typescript-eslint/no-confusing-non-null-assertion': style,
     '@typescript-eslint/no-dynamic-delete': mistake,
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-extra-non-null-assertion': style,
     '@typescript-eslint/no-extraneous-class': mistake,
     '@typescript-eslint/no-inferrable-types': style,
+    '@typescript-eslint/no-invalid-void-type': [improvement, {
+        allowInGenericTypeArguments: false
+    }],
     '@typescript-eslint/no-misused-new': mistake,
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': error,
@@ -171,10 +183,13 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-type-alias': 'off',
     '@typescript-eslint/no-var-requires': mistake,
     '@typescript-eslint/prefer-as-const': improvement,
+    '@typescript-eslint/prefer-enum-initializers': 'off',
     '@typescript-eslint/prefer-for-of': improvement,
     '@typescript-eslint/prefer-function-type': style,
+    '@typescript-eslint/prefer-literal-enum-member': 'off',
     '@typescript-eslint/prefer-namespace-keyword': mistake,
     '@typescript-eslint/prefer-optional-chain': improvement,
+    '@typescript-eslint/prefer-ts-expect-error': 'off',
     '@typescript-eslint/triple-slash-reference': [mistake, {
         path: 'never',
         types: 'prefer-import',
@@ -185,6 +200,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/unified-signatures': improvement,
 
     // eslint overrides requiring type information
+    '@typescript-eslint/dot-notation': 'off',
     '@typescript-eslint/require-await': 'off',
     '@typescript-eslint/return-await': 'off',
     '@typescript-eslint/no-implied-eval': 'off',
@@ -201,6 +217,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-unnecessary-qualifier': 'off',
     '@typescript-eslint/no-unnecessary-type-arguments': 'off',
     '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
@@ -209,6 +226,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/prefer-readonly': 'off',
     '@typescript-eslint/prefer-readonly-parameter-types': 'off',
+    '@typescript-eslint/prefer-reduce-type-parameter': 'off',
     '@typescript-eslint/prefer-regexp-exec': 'off',
     '@typescript-eslint/prefer-string-starts-ends-with': 'off',
     '@typescript-eslint/promise-function-async': 'off',
