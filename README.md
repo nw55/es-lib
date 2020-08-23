@@ -1,4 +1,4 @@
-# NW55 Common JS/TS Library
+# @nw55/common - js/ts library
 
 This library is still very much a work-in-progress.
 
