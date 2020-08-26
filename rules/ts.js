@@ -169,10 +169,9 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-extra-non-null-assertion': style,
     '@typescript-eslint/no-extraneous-class': mistake,
+    '@typescript-eslint/no-implicit-any-catch': improvement,
     '@typescript-eslint/no-inferrable-types': style,
-    '@typescript-eslint/no-invalid-void-type': [improvement, {
-        allowInGenericTypeArguments: false
-    }],
+    '@typescript-eslint/no-invalid-void-type': improvement,
     '@typescript-eslint/no-misused-new': mistake,
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': error,
