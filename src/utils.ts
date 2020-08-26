@@ -13,6 +13,8 @@ export type Mutable<T> = {
 
 export type AnyRecord = Record<PropertyKey, unknown>;
 
+export type TypedArray = Uint32Array | Uint16Array | Uint8Array | Int32Array | Int16Array | Int8Array | Uint8ClampedArray | Float32Array | Float64Array;
+
 export function defaultFactory<TResult, TParams extends any[]>(constructor: new (...args: TParams) => TResult) {
     return (...args: TParams) => new constructor(...args);
 }
