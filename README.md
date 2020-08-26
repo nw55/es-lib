@@ -1,3 +1,3 @@
 # @nw55/eslint-config
 
-NW55 ESLint Config
+nw55 eslint config
