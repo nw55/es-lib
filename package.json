@@ -20,7 +20,8 @@
     "test:watch": "cd test && mocha -w --reporter min",
     "lint": "eslint . --ext .ts -c eslint-config.js",
     "lint:fix": "eslint . --ext .ts -c eslint-config.js --fix",
-    "build": "yarn build:esm && yarn build:cjs && yarn lint",
+    "clean": "rimraf dist/ lib/",
+    "build": "yarn clean && yarn build:esm && yarn build:cjs && yarn lint",
     "ci": "yarn build && yarn test",
     "prepublishOnly": "yarn ci"
   },
@@ -42,6 +43,7 @@
     "chai": "^4.2.0",
     "eslint": "^7.7.0",
     "mocha": "^8.1.2",
+    "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "~4.0.2"
