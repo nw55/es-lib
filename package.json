@@ -20,7 +20,7 @@
     "test:watch": "cd test && mocha -w --reporter min",
     "lint": "eslint . --ext .ts -c eslint-config.js",
     "lint:fix": "eslint . --ext .ts -c eslint-config.js --fix",
-    "clean": "rimraf dist/ lib/",
+    "clean": "rimraf dist/* lib/*",
     "build": "yarn clean && yarn build:esm && yarn build:cjs && yarn lint",
     "ci": "yarn build && yarn test",
     "prepublishOnly": "yarn ci"
