@@ -11,6 +11,19 @@ export type Mutable<T> = {
     -readonly [P in keyof T]: T[P];
 };
 
+export type DeepPartial<T> =
+    T extends Function | null ? T : // eslint-disable-line @typescript-eslint/ban-types
+    T extends object ? { [P in keyof T]?: DeepPartial<T[P]>; } : // eslint-disable-line @typescript-eslint/ban-types
+    T;
+
+export type DeepReadonly<T> =
+    T extends Function | null ? T : // eslint-disable-line @typescript-eslint/ban-types
+    T extends (infer U)[] ? readonly DeepReadonly<U>[] :
+    T extends Map<infer K, infer V> ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>> :
+    T extends Set<infer U> ? ReadonlySet<DeepReadonly<U>> :
+    T extends object ? { readonly [P in keyof T]: DeepReadonly<T[P]> } : // eslint-disable-line @typescript-eslint/ban-types
+    T;
+
 export type AnyRecord = Record<PropertyKey, unknown>;
 
 export type TypedArray = Uint32Array | Uint16Array | Uint8Array | Int32Array | Int16Array | Int8Array | Uint8ClampedArray | Float32Array | Float64Array;

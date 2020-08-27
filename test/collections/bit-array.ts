@@ -2,7 +2,7 @@ import { ArgumentError, BitArray } from '@nw55/common';
 import { assert } from 'chai';
 import { describe, test } from 'mocha';
 
-describe('bit-array', () => {
+describe('BitArray', () => {
     test('length', () => {
         const array = new BitArray(5);
         assert.equal(array.length, 5);

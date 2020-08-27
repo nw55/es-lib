@@ -2,7 +2,7 @@ import { ResizableTypedArray } from '@nw55/common';
 import { assert } from 'chai';
 import { describe, test } from 'mocha';
 
-describe('resizable-typed-array', () => {
+describe('ResizableTypedArray', () => {
     test('append / grow', () => {
         const resizable = new ResizableTypedArray(Uint8Array, { capacity: 3, growFactor: 2, size: 2 });
         assert.equal(resizable.size, 2);

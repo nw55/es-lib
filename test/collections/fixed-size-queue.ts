@@ -2,7 +2,7 @@ import { FixedSizeQueue } from '@nw55/common';
 import { assert } from 'chai';
 import { describe, test } from 'mocha';
 
-describe('fixed-size-queue', () => {
+describe('FixedSizeQueue', () => {
     test('basic enqueue / dequeue / size', () => {
         const queue = new FixedSizeQueue<string>(3);
         assert.isUndefined(queue.dequeue());
