@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-types
-export type ConstructorLike<T> = Function & { prototype: T; };
+export type ConstructorLike<T extends object> = Omit<Function, 'prototype'> & { prototype: T; };
 
-export type AnyConstructor<T> = new (...args: any[]) => T;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type AnyConstructor<T extends object> = new (...args: any[]) => T;
 
-export type DefaultConstructor<T> = new () => T;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type DefaultConstructor<T extends object> = new () => T;
 
 export type Awaitable<T = unknown> = Promise<T> | T;
 
