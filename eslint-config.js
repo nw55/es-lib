@@ -7,12 +7,5 @@ module.exports = {
         '/dev/',
         '/lib/'
     ],
-    parserOptions: {
-        ecmaVersion: 2019
-    },
-    env: {
-        node: true,
-        es2017: true
-    },
-    extends: './lib/es'
+    extends: './build'
 };
