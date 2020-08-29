@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@nw55/build-tools": "~0.2.2",
-    "@nw55/eslint-config": "0.2.1",
+    "@nw55/eslint-config": "0.2.2",
     "@types/chai": "^4.2.12",
     "@types/mocha": "^8.0.3",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
