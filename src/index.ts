@@ -1,4 +1,5 @@
 export * from './collections';
+export * from './logging';
 export * from './text';
 
 export * from './errors';
