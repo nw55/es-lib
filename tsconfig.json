@@ -1,0 +1,10 @@
+{
+    "extends": "@nw55/build-tools/tsconfig/lib/es2019.json",
+    "compilerOptions": {
+        "outDir": "./lib",
+        "rootDir": "./src"
+    },
+    "include": [
+        "src"
+    ]
+}
