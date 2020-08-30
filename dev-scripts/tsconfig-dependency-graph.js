@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs').promises;
+const stripJsonComments = require('strip-json-comments');
 
 async function* iterateFilesRecursive(dir) {
     const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -20,7 +21,7 @@ async function processFile(baseDir, file, nodes, edges) {
     if (pathInfo.ext !== '.json')
         return;
 
-    const fileContent = JSON.parse(await fs.readFile(file, 'utf-8'));
+    const fileContent = JSON.parse(stripJsonComments(await fs.readFile(file, 'utf-8')));
 
     nodes.push(name);
 
