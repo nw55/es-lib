@@ -1,9 +1,8 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "extends": "./base.json",
+    "extends": "./lib.json",
     "compilerOptions": {
-        // keep in sync with node-lib.json (except for "module")
-        "module": "CommonJS",
+        // keep in sync with node.json (except for "module")
         "types": [
             "node"
         ]
