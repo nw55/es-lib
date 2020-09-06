@@ -1,41 +1,25 @@
-export interface LogMessageOptions {
+export interface LogDetails {
     readonly code?: string;
     readonly error?: Error;
     readonly details?: unknown;
 }
 
 interface LoggerMethods {
-    trace(message: string, options?: LogMessageOptions): void;
-    verbose(message: string, options?: LogMessageOptions): void;
-    debug(message: string, options?: LogMessageOptions): void;
-    info(message: string, options?: LogMessageOptions): void;
-    notice(message: string, options?: LogMessageOptions): void;
-    warn(message: string, options?: LogMessageOptions): void;
-    error(message: string, options?: LogMessageOptions): void;
-    critical(message: string, options?: LogMessageOptions): void;
-    fatal(message: string, options?: LogMessageOptions): void;
+    trace(message: string, options?: LogDetails): void;
+    verbose(message: string, options?: LogDetails): void;
+    debug(message: string, options?: LogDetails): void;
+    info(message: string, options?: LogDetails): void;
+    notice(message: string, options?: LogDetails): void;
+    warn(message: string, options?: LogDetails): void;
+    error(message: string, options?: LogDetails): void;
+    critical(message: string, options?: LogDetails): void;
+    fatal(message: string, options?: LogDetails): void;
 }
 
 export type LogLevelKeys = 'all' | keyof LoggerMethods;
 
 export interface LogLevelInfo<TKey extends LogLevelKeys = LogLevelKeys> {
     readonly key: TKey;
-    readonly value: number;
-    readonly name: string;
-    readonly symbol: string;
-    readonly isError: boolean;
-}
-
-export interface LogMessage extends LogMessageOptions {
-    readonly level: LogLevelInfo;
-    readonly source?: string;
-    readonly message: string;
-}
-
-export interface LogWriter {
-    shouldLog(level: LogLevelInfo, source?: string): boolean;
-
-    log(message: LogMessage): void;
 }
 
 export interface Logger extends LoggerMethods {
@@ -45,10 +29,10 @@ export interface Logger extends LoggerMethods {
 export interface LoggingProvider {
     shouldLog(level: LogLevelInfo | LogLevelKeys, source?: string): boolean;
 
-    log(level: LogLevelInfo | LogLevelKeys, message: string, options?: LogMessageOptions): void;
+    log(level: LogLevelInfo | LogLevelKeys, source: string | undefined, message: string, options?: LogDetails): void;
 }
 
-export namespace LoggerProvider {
+export namespace LoggingProvider {
     const noopLoggingProvider: LoggingProvider = {
         shouldLog() { return false; },
         log() { }
@@ -75,32 +59,32 @@ export namespace LoggerProvider {
             return globalLoggingProvider.shouldLog(level, this._source);
         }
 
-        trace(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('trace', message, options);
+        trace(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('trace', this._source, message, options);
         }
-        verbose(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('verbose', message, options);
+        verbose(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('verbose', this._source, message, options);
         }
-        debug(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('debug', message, options);
+        debug(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('debug', this._source, message, options);
         }
-        info(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('info', message, options);
+        info(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('info', this._source, message, options);
         }
-        notice(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('notice', message, options);
+        notice(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('notice', this._source, message, options);
         }
-        warn(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('warn', message, options);
+        warn(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('warn', this._source, message, options);
         }
-        error(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('error', message, options);
+        error(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('error', this._source, message, options);
         }
-        critical(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('critical', message, options);
+        critical(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('critical', this._source, message, options);
         }
-        fatal(message: string, options?: LogMessageOptions) {
-            globalLoggingProvider.log('fatal', message, options);
+        fatal(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('fatal', this._source, message, options);
         }
     }
 
