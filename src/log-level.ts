@@ -82,6 +82,10 @@ export class LogLevel<T extends LogLevelKeys = LogLevelKeys> implements LogLevel
         return level._value >= this._value;
     }
 
+    shouldLogMessage(message: { level: LogLevel; }) {
+        return this.shouldLog(message.level);
+    }
+
     valueOf() {
         return this._value;
     }
