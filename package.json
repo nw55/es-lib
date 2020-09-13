@@ -34,7 +34,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@nw55/common": "~0.2.0"
+    "@nw55/common": "~0.2.0",
+    "@nw55/type-checking": "~0.1.0"
   },
   "devDependencies": {
     "@nw55/build-tools": "~0.2.3",
