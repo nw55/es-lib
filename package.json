@@ -1,7 +1,7 @@
 {
   "name": "@nw55/build-tools",
-  "version": "0.2.2",
-  "description": "NW55 Build Tools",
+  "version": "0.2.3",
+  "description": "nw55 build tools for nodejs",
   "repository": {
     "type": "git",
     "url": "https://github.com/nw55/node-build-tools.git"
