@@ -44,10 +44,10 @@
   resolved "https://registry.yarnpkg.com/@nw55/build-tools/-/build-tools-0.2.2.tgz#208c3a7b1357c3875485e43230c9882a2cdfb567"
   integrity sha512-8CPVfbcoLFEAdIpP61nAJzhGYnlybRQ1ckVDmZ5g4pqhve6lOz7lUrrnlmtvLTYSuBY2bKOle8EFHAuXAMGH6g==
 
-"@nw55/common@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@nw55/common/-/common-0.2.0.tgz#c95144ed903b1f3fe420c6b2390aa17c650cbbfa"
-  integrity sha512-bR2xWcUgLtjlUqYZByFJ9dQFEhYylbV4bU0CkE/9WQ0qhVb7F3p2olsMJNsHuRrXsy6WMWruYQUHPs6q3j6n3A==
+"@nw55/common@~0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@nw55/common/-/common-0.2.1.tgz#70d4ff8699a685907d917a98bd790743e845d972"
+  integrity sha512-UTrLxsKa0bY4bjiywNumV6IMNGaxhBVFeiUqt3kVYv0Yyh5Xs05ug2nMG7zW2O6KD9LS5BYqfHzpjglvSIiTcw==
 
 "@nw55/eslint-config@0.2.2":
   version "0.2.2"
