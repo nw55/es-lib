@@ -6,8 +6,8 @@ export interface LogDetails {
 
 interface LoggerMethods {
     trace(message: string, options?: LogDetails): void;
-    verbose(message: string, options?: LogDetails): void;
     debug(message: string, options?: LogDetails): void;
+    verbose(message: string, options?: LogDetails): void;
     info(message: string, options?: LogDetails): void;
     notice(message: string, options?: LogDetails): void;
     warn(message: string, options?: LogDetails): void;
@@ -62,11 +62,11 @@ export namespace LoggingProvider {
         trace(message: string, options?: LogDetails) {
             globalLoggingProvider.log('trace', this._source, message, options);
         }
-        verbose(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('verbose', this._source, message, options);
-        }
         debug(message: string, options?: LogDetails) {
             globalLoggingProvider.log('debug', this._source, message, options);
+        }
+        verbose(message: string, options?: LogDetails) {
+            globalLoggingProvider.log('verbose', this._source, message, options);
         }
         info(message: string, options?: LogDetails) {
             globalLoggingProvider.log('info', this._source, message, options);
@@ -88,7 +88,9 @@ export namespace LoggingProvider {
         }
     }
 
+    export const globalLogger = new DefaultLogger(undefined);
+
     export function getLogger(source?: string) {
-        return new DefaultLogger(source);
+        return source === undefined ? globalLogger : new DefaultLogger(source);
     }
 }
