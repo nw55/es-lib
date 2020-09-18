@@ -94,7 +94,7 @@ export class Logger {
         this._source = v;
     }
 
-    private _shouldLog(level: LogLevel) {
+    shouldLog(level: LogLevel) {
         return this._logWriter?.shouldLog(level, this._source) ?? false;
     }
 
@@ -103,42 +103,42 @@ export class Logger {
     }
 
     trace(...params: InforParams) {
-        if (this._shouldLog(LogLevel.Trace)) {
+        if (this.shouldLog(LogLevel.Trace)) {
             const message = infoParamsToLogMessage(LogLevel.Trace, this._source, params);
             this._log(message);
         }
     }
 
-    verbose(...params: InforParams) {
-        if (this._shouldLog(LogLevel.Verbose)) {
-            const message = infoParamsToLogMessage(LogLevel.Verbose, this._source, params);
-            this._log(message);
-        }
-    }
-
     debug(...params: InforParams) {
-        if (this._shouldLog(LogLevel.Debug)) {
+        if (this.shouldLog(LogLevel.Debug)) {
             const message = infoParamsToLogMessage(LogLevel.Debug, this._source, params);
             this._log(message);
         }
     }
 
+    verbose(...params: InforParams) {
+        if (this.shouldLog(LogLevel.Verbose)) {
+            const message = infoParamsToLogMessage(LogLevel.Verbose, this._source, params);
+            this._log(message);
+        }
+    }
+
     info(...params: InforParams) {
-        if (this._shouldLog(LogLevel.Information)) {
+        if (this.shouldLog(LogLevel.Information)) {
             const message = infoParamsToLogMessage(LogLevel.Information, this._source, params);
             this._log(message);
         }
     }
 
     notice(...params: InforParams) {
-        if (this._shouldLog(LogLevel.Notice)) {
+        if (this.shouldLog(LogLevel.Notice)) {
             const message = infoParamsToLogMessage(LogLevel.Notice, this._source, params);
             this._log(message);
         }
     }
 
     warn(...params: ErrorParams) {
-        if (this._shouldLog(LogLevel.Warning)) {
+        if (this.shouldLog(LogLevel.Warning)) {
             const message = errorParamsToLogMessage(LogLevel.Warning, this._source, params);
             message.error ??= new LoggerStackTraceError(message.message);
             this._log(message);
@@ -146,7 +146,7 @@ export class Logger {
     }
 
     error(...params: ErrorParams) {
-        if (this._shouldLog(LogLevel.Error)) {
+        if (this.shouldLog(LogLevel.Error)) {
             const message = errorParamsToLogMessage(LogLevel.Error, this._source, params);
             message.error ??= new LoggerStackTraceError(message.message);
             this._log(message);
@@ -154,7 +154,7 @@ export class Logger {
     }
 
     critical(...params: ErrorParams) {
-        if (this._shouldLog(LogLevel.Critical)) {
+        if (this.shouldLog(LogLevel.Critical)) {
             const message = errorParamsToLogMessage(LogLevel.Critical, this._source, params);
             message.error ??= new LoggerStackTraceError(message.message);
             this._log(message);
@@ -163,7 +163,7 @@ export class Logger {
 
     fatal(...params: ErrorParams): never {
         const message = errorParamsToLogMessage(LogLevel.Fatal, this._source, params);
-        if (this._shouldLog(LogLevel.Fatal)) {
+        if (this.shouldLog(LogLevel.Fatal)) {
             message.error ??= new LoggerStackTraceError(message.message);
             this._log(message);
         }

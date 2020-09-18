@@ -94,12 +94,36 @@ export namespace logFormat {
         throw new ArgumentError();
     }
 
-    export function sourceOrDefault(defaultSource = ''): LogFormat {
+    export function source(defaultSource = ''): LogFormat {
         return message => message.source ?? defaultSource;
     }
 
-    export function sourceFormat(format = '%', placeholder = '%'): LogFormat {
-        return message => message.source === undefined ? '' : format.replace(placeholder, message.source);
+    export function sourceFormat(format: string, placeholder = '%', defaultSource = ''): LogFormat {
+        return message => message.source === undefined ? defaultSource : format.replace(placeholder, message.source);
+    }
+
+    export function code(defaultCode = ''): LogFormat {
+        return message => message.code ?? defaultCode;
+    }
+
+    export function codeFormat(format: string, placeholder = '%', defaultCode = ''): LogFormat {
+        return message => message.code === undefined ? defaultCode : format.replace(placeholder, message.code);
+    }
+
+    const errorNameFormat: LogFormat = message => message.error?.name ?? '';
+    const errorMessageFormat: LogFormat = message => message.error?.message ?? '';
+    const errorNameAndMessageFormat: LogFormat = message => message.error === undefined ? '' : `${message.error.name}: ${message.error.message}`;
+
+    export function error(format: 'name' | 'message' | 'name-and-message' = 'name-and-message'): LogFormat {
+        switch (format) {
+            case 'name':
+                return errorNameFormat;
+            case 'message':
+                return errorMessageFormat;
+            case 'name-and-message':
+                return errorNameAndMessageFormat;
+        }
+        throw new ArgumentError();
     }
 
     export const detailsString: LogFormat = message => String(message.details);
@@ -117,7 +141,9 @@ const knownLogFormats = {
     time: logFormat.time(),
     datetime: logFormat.dateTime(),
     level: logFormat.level(),
-    source: logFormat.sourceOrDefault(),
+    source: logFormat.source(),
+    code: logFormat.code(),
+    error: logFormat.error(),
     details: logFormat.detailsString,
     message: logFormat.message
 };

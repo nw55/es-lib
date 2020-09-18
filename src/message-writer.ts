@@ -8,15 +8,15 @@ export interface LogMessageWriter {
 function inheritLogLevelProperties<D, T = D>(properties: Partial<Record<LogLevelKeys, T>>, defaultValue: D): Record<LogLevelKeys, T | D> {
     const all = properties.all ?? defaultValue;
     const trace = properties.trace ?? all;
-    const verbose = properties.verbose ?? trace;
-    const debug = properties.debug ?? verbose;
-    const info = properties.info ?? debug;
+    const debug = properties.debug ?? trace;
+    const verbose = properties.verbose ?? debug;
+    const info = properties.info ?? verbose;
     const notice = properties.notice ?? info;
     const warn = properties.warn ?? notice;
     const error = properties.error ?? warn;
     const critical = properties.critical ?? error;
     const fatal = properties.fatal ?? critical;
-    return { all, trace, verbose, debug, info, notice, warn, error, critical, fatal };
+    return { all, trace, debug, verbose, info, notice, warn, error, critical, fatal };
 }
 
 type LogMessageTransformation = (text: string, message: LogMessage) => string;

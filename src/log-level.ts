@@ -7,8 +7,8 @@ export class LogLevel<T extends LogLevelKeys = LogLevelKeys> implements LogLevel
     /* eslint-disable @typescript-eslint/naming-convention */
     static readonly All = new LogLevel('all', 0, 'All', false);
     static readonly Trace = new LogLevel('trace', 1, 'Trace', false);
-    static readonly Verbose = new LogLevel('verbose', 2, 'Verbose', false);
-    static readonly Debug = new LogLevel('debug', 3, 'Debug', false);
+    static readonly Debug = new LogLevel('debug', 2, 'Debug', false);
+    static readonly Verbose = new LogLevel('verbose', 3, 'Verbose', false);
     static readonly Information = new LogLevel('info', 4, 'Information', false);
     static readonly Notice = new LogLevel('notice', 5, 'Notice', false);
     static readonly Warning = new LogLevel('warn', 6, 'Warning', true);

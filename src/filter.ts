@@ -27,7 +27,7 @@ export class SourcePrefixLogFilter implements LogFilter {
     private _prefixMap = new Map<string, number>();
     private _minLevelValue: number;
 
-    constructor(defaultLevel: LogLevel | LogLevelKeys, separator: string, map: LogFilterMap) {
+    constructor(defaultLevel: LogLevel | LogLevelKeys, map: LogFilterMap, separator = '/') {
         if (separator === '')
             throw new ArgumentError();
 
