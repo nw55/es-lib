@@ -24,19 +24,26 @@
     js-tokens "^4.0.0"
 
 "@nw55/build-tools@~0.2.3":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@nw55/build-tools/-/build-tools-0.2.2.tgz#208c3a7b1357c3875485e43230c9882a2cdfb567"
-  integrity sha512-8CPVfbcoLFEAdIpP61nAJzhGYnlybRQ1ckVDmZ5g4pqhve6lOz7lUrrnlmtvLTYSuBY2bKOle8EFHAuXAMGH6g==
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@nw55/build-tools/-/build-tools-0.2.3.tgz#52a951a47b0ae87b923b5eea1320cd37b0d9b8ef"
+  integrity sha512-xYao/7BQTsxxr34LPGQF3zsDHNr6xMtBeEr4d/m9wC2fkmY8iryjZTFmCKPqwJfgahXpN+Xbrq/leWu/QHztpA==
 
-"@nw55/common@~0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@nw55/common/-/common-0.2.0.tgz#c95144ed903b1f3fe420c6b2390aa17c650cbbfa"
-  integrity sha512-bR2xWcUgLtjlUqYZByFJ9dQFEhYylbV4bU0CkE/9WQ0qhVb7F3p2olsMJNsHuRrXsy6WMWruYQUHPs6q3j6n3A==
+"@nw55/common@~0.2.0", "@nw55/common@~0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@nw55/common/-/common-0.2.1.tgz#70d4ff8699a685907d917a98bd790743e845d972"
+  integrity sha512-UTrLxsKa0bY4bjiywNumV6IMNGaxhBVFeiUqt3kVYv0Yyh5Xs05ug2nMG7zW2O6KD9LS5BYqfHzpjglvSIiTcw==
 
 "@nw55/eslint-config@0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@nw55/eslint-config/-/eslint-config-0.2.2.tgz#adcf4def21222639d31b7a6fac99ff74bada3a13"
   integrity sha512-zAwtowiqGsMsWTRRNmgwkWuMgO5Snj0Z+yYNhxvfIrcqU7BsXdVLYEHwMX6Mcnudt0kplEWc1O1DmDR0XxxLAw==
+
+"@nw55/logging@~0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@nw55/logging/-/logging-0.1.0.tgz#cae884665afaa046fc79fb367ac49daf5df3ab87"
+  integrity sha512-fIiyFgnNF0vFF9XjC8ZaVU9o8uJne/kix2pp6gFlPLm37qpBgvmrgcVi3O+DpAdISpK/0mvRNLnRIhgp3R4ZlQ==
+  dependencies:
+    "@nw55/common" "~0.2.1"
 
 "@nw55/type-checking@~0.1.0":
   version "0.1.0"
