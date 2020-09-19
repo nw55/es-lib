@@ -22,8 +22,7 @@ export namespace ConsoleLogWriter {
         });
     }
 
-    // TODO
-    export const defaultFormat = logFormat`${'datetime'} ${'level'}: ${'message'}`;
+    export const defaultFormat = logFormat`${'datetime'} ${'level'} [${'source'}]${logFormat.codeFormat(' %')}: ${'message'}`;
 
     interface Options {
         readonly filter?: LogFilter;
