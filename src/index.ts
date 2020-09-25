@@ -1,3 +1,4 @@
 export * from './common';
-export * from './type-checking';
+export * from './json';
 export * from './type';
+export * from './type-checking';

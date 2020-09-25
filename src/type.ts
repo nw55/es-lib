@@ -3,6 +3,7 @@ import { CheckableType, TypeDefinition, TypeFromDefinition } from './common';
 import { ArrayType, TupleType } from './internal/array-types';
 import { LiteralType, TypeofType } from './internal/basic-types';
 import { PlainObjectProperty, PlainObjectType, RecordType } from './internal/object-types';
+import { RecursiveTypeDefinitionRef } from './internal/recursive';
 import { OptionalType, UnionType } from './internal/special-types';
 
 type UnionTypeFromTupleDefinition<T extends unknown[]> = {
@@ -99,4 +100,8 @@ export namespace Type {
     }
 
     export const unknown = unchecked<unknown>();
+
+    export function recursiveRef<T>() {
+        return new RecursiveTypeDefinitionRef<T>();
+    }
 }
