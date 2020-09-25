@@ -109,7 +109,7 @@ export class PlainObjectType<T> implements CheckableType<T> {
 }
 
 export class RecordType<T> implements CheckableType<T> {
-    constructor(private _type: CheckableType) {
+    constructor(private _keyType: CheckableType, private _valueType: CheckableType) {
     }
 
     [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
@@ -120,14 +120,28 @@ export class RecordType<T> implements CheckableType<T> {
 
         if (isPlainObject(value)) {
             for (const [key, propertyValue] of Object.entries(value)) {
-                const propertyResult = this._type[CheckableType.check](propertyValue, options);
-                if (!propertyResult.success) {
+                const keyResult = this._keyType[CheckableType.check](key, options);
+                if (!keyResult.success) {
+                    result.success = false;
+                    if (options.returnDetails) {
+                        result.errors.push({
+                            path: pathForPropertyKey(key),
+                            message: 'Property key in record object doese not match the type.',
+                            nestedErrors: keyResult.errors
+                        });
+                    }
+                    if (options.returnEarly)
+                        break;
+                }
+
+                const valueResult = this._valueType[CheckableType.check](propertyValue, options);
+                if (!valueResult.success) {
                     result.success = false;
                     if (options.returnDetails) {
                         result.errors.push({
                             path: pathForPropertyKey(key),
                             message: 'Property value in record object doese not match the type.',
-                            nestedErrors: propertyResult.errors
+                            nestedErrors: valueResult.errors
                         });
                     }
                     if (options.returnEarly)
@@ -140,7 +154,7 @@ export class RecordType<T> implements CheckableType<T> {
             if (options.returnDetails) {
                 result.errors.push({
                     path: '',
-                    message: 'Value is not a plain array.',
+                    message: 'Value is not a plain object.',
                     nestedErrors: []
                 });
             }

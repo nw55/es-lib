@@ -101,6 +101,15 @@ describe('type-checking', () => {
         assert.isFalse(testType(type, { a: 'string' }));
     });
 
+    test('record with union key', () => {
+        const type = Type.record(Type.union('a', 'b'), Number);
+        assert.isTrue(testType(type, { a: 1, b: 2 }));
+        assert.isFalse(testType(type, { a: 1, c: 2 }));
+        assert.isTrue(testType(type, {}));
+        assert.isFalse(testType(type, { a: 1, b: 'string' }));
+        assert.isFalse(testType(type, { a: 'string' }));
+    });
+
     test('unchecked', () => {
         const type = Type.unchecked<unknown>();
         assert.isTrue(testType(type, 1));

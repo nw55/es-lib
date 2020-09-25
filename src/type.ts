@@ -18,6 +18,8 @@ interface PlainObjectOptions {
     partial?: boolean;
 }
 
+type StringTypeDefinition = typeof String | string | CheckableType<string>;
+
 export namespace Type {
     export type Of<T> = T extends CheckableType ? CheckableType.ExtractType<T> : never;
 
@@ -78,8 +80,12 @@ export namespace Type {
         return new OptionalType(fromDefinition(typeDefinition));
     }
 
-    export function record<T extends TypeDefinition>(typeDefinition: T): CheckableType<Record<PropertyKey, TypeFromDefinition<T>>> {
-        return new RecordType(fromDefinition(typeDefinition));
+    export function record<T extends TypeDefinition>(typeDefinition: T): CheckableType<Record<string, TypeFromDefinition<T>>>;
+    export function record<K extends StringTypeDefinition, V extends TypeDefinition>(keyTypeDefinition: K, valueTypeDefinition: V): CheckableType<Record<TypeFromDefinition<K>, TypeFromDefinition<V>>>;
+    export function record(typeDefinition1: TypeDefinition, typeDefinition2?: TypeDefinition) {
+        const keyType = typeDefinition2 === undefined ? uncheckedType : fromDefinition(typeDefinition1);
+        const valueType = fromDefinition(typeDefinition2 === undefined ? typeDefinition1 : typeDefinition2);
+        return new RecordType(keyType, valueType);
     }
 
     const uncheckedType: CheckableType = {
