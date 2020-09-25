@@ -1,5 +1,5 @@
 import { CheckableType, TypeCheckError, TypeCheckResult, TypeDefinition, TypeFromDefinition } from './common';
-import { Type } from './types';
+import { Type } from './type';
 
 const NESTED_MESSAGE_INDENT = '  ';
 
