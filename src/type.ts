@@ -4,11 +4,16 @@ import { ArrayType, TupleType } from './internal/array-types';
 import { LiteralType, TypeofType } from './internal/basic-types';
 import { PlainObjectProperty, PlainObjectType, RecordType } from './internal/object-types';
 import { RecursiveTypeDefinitionRef } from './internal/recursive';
-import { OptionalType, UnionType } from './internal/special-types';
+import { IntersectionType, OptionalType, UnionType } from './internal/special-types';
 
 type UnionTypeFromTupleDefinition<T extends unknown[]> = {
     [P in keyof T]: TypeFromDefinition<T[P]>;
 }[Exclude<keyof T, keyof []>];
+
+// https://stackoverflow.com/a/50375286
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+
+type IntersectionTypeFromTupleDefinition<T extends unknown[]> = UnionToIntersection<UnionTypeFromTupleDefinition<T>>;
 
 type PartialTypeFromObjectDefinition<T extends AnyRecord> = {
     [P in keyof T]?: TypeFromDefinition<T[P]>;
@@ -62,6 +67,10 @@ export namespace Type {
 
     export function union<T extends TypeDefinition[]>(...typeDefinitions: T): CheckableType<UnionTypeFromTupleDefinition<T>> {
         return new UnionType(typeDefinitions.map(fromDefinition));
+    }
+
+    export function intersection<T extends TypeDefinition[]>(...typeDefinitions: T): CheckableType<IntersectionTypeFromTupleDefinition<T>> {
+        return new IntersectionType(typeDefinitions.map(fromDefinition));
     }
 
     export function array<T extends TypeDefinition>(typeDefinition: T): CheckableType<TypeFromDefinition<T>[]> {

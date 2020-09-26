@@ -1,3 +1,4 @@
+import { Mutable } from '@nw55/common';
 import { CheckableType, TypeCheckOptions, TypeCheckResult } from '../common';
 
 export class UnionType<T> implements CheckableType<T> {
@@ -31,6 +32,43 @@ export class UnionType<T> implements CheckableType<T> {
             }
         }
         return unionResult;
+    }
+}
+
+export class IntersectionType<T> implements CheckableType<T> {
+    private _types: CheckableType[] = [];
+
+    constructor(types: CheckableType[]) {
+        for (const type of types) {
+            if (type instanceof IntersectionType)
+                this._types.push(...type._types);
+            else
+                this._types.push(type);
+        }
+    }
+
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
+        const intersectionResult: Mutable<TypeCheckResult> = {
+            success: true,
+            errors: []
+        };
+        for (let i = 0; i < this._types.length; i++) {
+            const type = this._types[i];
+            const result = type[CheckableType.check](value, options);
+            if (!result.success) {
+                intersectionResult.success = false;
+                if (options.returnDetails) {
+                    intersectionResult.errors.push({
+                        path: '',
+                        message: `Type #${i} of the intersection type does not match.`,
+                        nestedErrors: result.errors
+                    });
+                }
+                if (options.returnEarly)
+                    break;
+            }
+        }
+        return intersectionResult;
     }
 }
 
