@@ -1,5 +1,14 @@
-import { JsonValue } from '@nw55/common';
+import { CheckableType } from './common';
 import { Type } from './type';
+
+type JsonValue = string | number | boolean | null | { [property: string]: JsonValue; } | JsonValue[];
+
+export type JsonTypeDefinition =
+    CheckableType<JsonValue>
+    | string | number | boolean | null
+    | typeof String | typeof Number | typeof Boolean
+    | readonly JsonTypeDefinition[]
+    | { readonly [key: string]: JsonTypeDefinition; };
 
 export namespace JsonType {
     export const unchecked = Type.unchecked<JsonValue>();
