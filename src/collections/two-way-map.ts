@@ -2,7 +2,7 @@ export class TwoWayMap<K, V> {
     private _map1 = new Map<K, V>();
     private _map2 = new Map<V, K>();
 
-    constructor(items?: Iterable<[K, V]>) {
+    constructor(items?: Iterable<readonly [K, V]>) {
         if (items !== undefined) {
             for (const [key, value] of items)
                 this.set(key, value);

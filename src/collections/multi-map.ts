@@ -33,7 +33,7 @@ export class MultiMap<K, V> {
     private _emptySets = 0;
     private _mapEmptySets: number;
 
-    constructor(items?: Iterable<[K, V]>, options?: MultiMapOptions) {
+    constructor(items?: Iterable<readonly [K, V]>, options?: MultiMapOptions) {
         this._mapEmptySets = options?.maxEmptySets ?? 8;
 
         if (items) {
