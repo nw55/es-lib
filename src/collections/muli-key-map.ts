@@ -10,7 +10,7 @@ export class MultiKeyMap<K1, K2, V> {
     private _emptyInnerMaps = 0;
     private _maxEmptyInnerMaps: number;
 
-    constructor(elements?: Iterable<[K1, K2, V]>, options?: MultiKeyMapOptions) {
+    constructor(elements?: Iterable<readonly [K1, K2, V]>, options?: MultiKeyMapOptions) {
         this._maxEmptyInnerMaps = options?.maxEmptyInnerMaps ?? 8;
 
         if (elements !== undefined) {
@@ -51,7 +51,7 @@ export class MultiKeyMap<K1, K2, V> {
         return inner;
     }
 
-    getValues(key1: K1) {
+    getValues(key1: K1): IterableIterator<V> {
         const inner = this._map.get(key1);
         if (inner === undefined)
             return emptyMap.values();
