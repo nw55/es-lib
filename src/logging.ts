@@ -88,9 +88,9 @@ export namespace LoggingProvider {
         }
     }
 
-    export const globalLogger = new DefaultLogger(undefined);
+    export const globalLogger: Logger = new DefaultLogger(undefined);
 
-    export function getLogger(source?: string) {
+    export function getLogger(source?: string): Logger {
         return source === undefined ? globalLogger : new DefaultLogger(source);
     }
 }
