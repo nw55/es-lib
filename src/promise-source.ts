@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-type PromiseResolveArgs<T> = T extends void ? [result?: undefined] : [result: T];
+import { Awaitable } from './utils';
 
 // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export class PromiseSource<T = void> {
-    private _resolve!: (result?: T) => void;
-    private _reject!: (error: any) => void;
+    private _resolve!: (value: T | PromiseLike<T>) => void;
+    private _reject!: (reason?: any) => void;
     private _promise: Promise<T>;
     private _pending = true;
 
@@ -23,18 +22,17 @@ export class PromiseSource<T = void> {
         return this._pending;
     }
 
-    resolve(...args: PromiseResolveArgs<T>): void;
-    resolve(result?: T) {
+    resolve(value: Awaitable<T>) {
         if (this._pending) {
             this._pending = false;
-            this._resolve(result);
+            this._resolve(value);
         }
     }
 
-    reject(error?: unknown) {
+    reject(reason?: unknown) {
         if (this._pending) {
             this._pending = false;
-            this._reject(error);
+            this._reject(reason);
         }
     }
 }
