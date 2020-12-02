@@ -1,6 +1,6 @@
 import { ArgumentError, LogLevelInfo, LogLevelKeys } from '@nw55/common';
 
-export class LogLevel<T extends LogLevelKeys = LogLevelKeys> implements LogLevelInfo {
+export class LogLevel<K extends LogLevelKeys = LogLevelKeys> implements LogLevelInfo {
     private static _byKey = new Map<LogLevelKeys, LogLevel>();
     private static _byValue = new Map<number, LogLevel>();
 
@@ -21,17 +21,19 @@ export class LogLevel<T extends LogLevelKeys = LogLevelKeys> implements LogLevel
         return this._byKey.values();
     }
 
-    static get<T extends LogLevelKeys>(key: T | LogLevelInfo<T>): LogLevel<T> {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    static get<K extends LogLevelKeys>(key: K | LogLevelInfo<K>): LogLevel<K> {
         if (typeof key === 'string')
             return LogLevel.fromKey(key);
         return LogLevel.fromKey(key.key);
     }
 
-    static fromKey<T extends LogLevelKeys>(key: T): LogLevel<T> {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    static fromKey<K extends LogLevelKeys>(key: K): LogLevel<K> {
         const level = LogLevel._byKey.get(key);
         if (level === undefined)
             throw new ArgumentError();
-        return level as LogLevel<T>;
+        return level as LogLevel<K>;
     }
 
     static fromValue(value: number): LogLevel {
@@ -41,13 +43,13 @@ export class LogLevel<T extends LogLevelKeys = LogLevelKeys> implements LogLevel
         return level;
     }
 
-    private _key: T;
+    private _key: K;
     private _value: number;
     private _name: string;
     private _symbol: string;
     private _isError: boolean;
 
-    constructor(key: T, value: number, name: string, isError: boolean) {
+    constructor(key: K, value: number, name: string, isError: boolean) {
         this._key = key;
         this._value = value;
         this._name = name;

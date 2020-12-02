@@ -128,7 +128,7 @@ export namespace logFormat {
 
     export const detailsString: LogFormat = message => String(message.details);
 
-    // eslint-disable-next-line no-shadow
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     export const message: LogFormat = message => message.message;
 
     export function literal(text: string): LogFormat {
