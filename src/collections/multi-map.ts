@@ -15,6 +15,7 @@ interface MultiMapOptions {
 }
 
 export class MultiMap<K, V> {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     static add<K, V>(map: Map<K, Set<V>>, key: K, value: V) {
         const inner = map.get(key);
         if (inner === undefined) {
