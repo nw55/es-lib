@@ -22,6 +22,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
 
     // overridden eslint rules
     'brace-style': 'off',
+    'comma-dangle': 'off',
     'comma-spacing': 'off',
     'default-param-last': 'off',
     'func-call-spacing': 'off',
@@ -31,12 +32,16 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'lines-between-class-members': 'off',
     'no-array-constructor': 'off',
     'no-dupe-class-members': 'off',
+    'no-duplicate-imports': 'off',
     'no-empty-function': 'off',
     'no-extra-parens': 'off',
     'no-extra-semi': 'off',
     'no-invalid-this': 'off',
+    'no-loop-func': 'off',
     'no-loss-of-precision': 'off',
     'no-magic-numbers': 'off',
+    'no-redeclare': 'off',
+    'no-shadow': 'off',
     'no-unused-expressions': 'off',
     'no-unused-vars': 'off',
     'no-use-before-define': 'off',
@@ -46,11 +51,13 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-return-await': 'off', // ts: return-await
     'semi': 'off',
     'space-before-function-paren': 'off',
+    'space-infix-ops': 'off',
 
     // eslint overrides
     '@typescript-eslint/brace-style': [style, 'stroustrup', {
         allowSingleLine: true
     }],
+    '@typescript-eslint/comma-dangle': style,
     '@typescript-eslint/comma-spacing': style,
     '@typescript-eslint/default-param-last': improvement,
     '@typescript-eslint/func-call-spacing': style,
@@ -60,14 +67,18 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/lines-between-class-members': 'off',
     '@typescript-eslint/no-array-constructor': mistake,
     '@typescript-eslint/no-dupe-class-members': error,
+    '@typescript-eslint/no-duplicate-imports': improvement,
     '@typescript-eslint/no-empty-function': [mistake, {
         allow: ['methods']
     }],
     '@typescript-eslint/no-extra-parens': 'off',
     '@typescript-eslint/no-extra-semi': style,
     '@typescript-eslint/no-invalid-this': mistake,
+    '@typescript-eslint/no-loop-func': mistake,
     '@typescript-eslint/no-loss-of-precision': mistake,
     '@typescript-eslint/no-magic-numbers': 'off',
+    '@typescript-eslint/no-redeclare': mistake,
+    '@typescript-eslint/no-shadow': style,
     '@typescript-eslint/no-unused-expressions': mistake,
     '@typescript-eslint/no-unused-vars': [mistake, {
         args: 'none',
@@ -85,6 +96,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
         asyncArrow: 'always',
         named: 'never'
     }],
+    '@typescript-eslint/space-infix-ops': style,
 
     '@typescript-eslint/adjacent-overload-signatures': mistake,
     '@typescript-eslint/array-type': [style, {
@@ -94,11 +106,13 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/ban-tslint-comment': mistake,
     '@typescript-eslint/ban-types': mistake,
     '@typescript-eslint/class-literal-property-style': 'off',
+    '@typescript-eslint/consistent-indexed-object-style': 'off',
     '@typescript-eslint/consistent-type-assertions': [mistake, {
         assertionStyle: 'as',
         objectLiteralTypeAssertions: 'allow-as-parameter'
     }],
     '@typescript-eslint/consistent-type-definitions': [style, 'interface'],
+    '@typescript-eslint/consistent-type-imports': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': [style, {
         accessibility: 'no-public',
@@ -171,7 +185,9 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-extraneous-class': mistake,
     '@typescript-eslint/no-implicit-any-catch': improvement,
     '@typescript-eslint/no-inferrable-types': style,
-    '@typescript-eslint/no-invalid-void-type': improvement,
+    '@typescript-eslint/no-invalid-void-type': [improvement, {
+        allowAsThisParameter: true
+    }],
     '@typescript-eslint/no-misused-new': mistake,
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': error,
@@ -180,6 +196,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-require-imports': improvement,
     '@typescript-eslint/no-this-alias': mistake,
     '@typescript-eslint/no-type-alias': 'off',
+    '@typescript-eslint/no-unnecessary-type-constraint': improvement,
     '@typescript-eslint/no-var-requires': mistake,
     '@typescript-eslint/prefer-as-const': improvement,
     '@typescript-eslint/prefer-enum-initializers': 'off',
@@ -208,6 +225,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     // requiring type information
     '@typescript-eslint/await-thenable': 'off',
     '@typescript-eslint/no-base-to-string': 'off',
+    '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-for-in-array': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
