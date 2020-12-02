@@ -1,6 +1,6 @@
 {
   "name": "@nw55/eslint-config",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "nw55 eslint config",
   "repository": {
     "type": "git",
