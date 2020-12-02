@@ -10,18 +10,13 @@ export interface DefaultLogWriterOptions {
     readonly messageWriter: LogMessageWriter;
 }
 
-const noopFilter: LogFilter = {
-    shouldLog: () => false,
-    shouldLogMessage: () => false
-};
-
 export class DefaultLogWriter implements LogWriter {
     private _filter: LogFilter;
     private _format: LogFormat;
     private _messageWriter: LogMessageWriter;
 
     constructor(options: DefaultLogWriterOptions) {
-        this._filter = options.filter ?? noopFilter;
+        this._filter = options.filter ?? LogLevel.Information;
         this._format = options.format ?? logFormat.message;
         this._messageWriter = options.messageWriter;
     }
