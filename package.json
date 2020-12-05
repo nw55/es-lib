@@ -34,24 +34,24 @@
     "access": "public"
   },
   "dependencies": {
-    "@nw55/common": "~0.2.1",
-    "@nw55/logging": "~0.1.0",
+    "@nw55/common": "~0.2.2",
+    "@nw55/logging": "~0.1.1",
     "@nw55/type-checking": "~0.1.0"
   },
   "devDependencies": {
-    "@nw55/build-tools": "~0.2.3",
-    "@nw55/eslint-config": "0.2.2",
+    "@nw55/build-tools": "~0.2.4",
+    "@nw55/eslint-config": "0.2.3",
     "@types/chai": "^4.2.12",
     "@types/mocha": "^8.0.3",
-    "@types/node": "^14.6.2",
-    "@typescript-eslint/eslint-plugin": "^3.10.1",
-    "@typescript-eslint/parser": "^3.10.1",
+    "@types/node": "^14.14.10",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
     "chai": "^4.2.0",
-    "eslint": "^7.7.0",
+    "eslint": "^7.15.0",
     "mocha": "^8.1.2",
     "rimraf": "^3.0.2",
-    "ts-node": "^9.0.0",
+    "ts-node": "^9.1.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "~4.0.2"
+    "typescript": "~4.1.2"
   }
 }
