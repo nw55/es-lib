@@ -8,7 +8,7 @@ export interface LogMessage extends LogDetails {
 }
 
 export interface LogWriter {
-    shouldLog(level: LogLevel, source?: string): boolean;
+    shouldLog: (level: LogLevel, source?: string) => boolean;
 
-    log(message: LogMessage): void;
+    log: (message: LogMessage) => void;
 }

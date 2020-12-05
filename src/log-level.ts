@@ -1,6 +1,7 @@
 import { ArgumentError, LogLevelInfo, LogLevelKeys } from '@nw55/common';
+import { LogFilter } from './filter';
 
-export class LogLevel<K extends LogLevelKeys = LogLevelKeys> implements LogLevelInfo {
+export class LogLevel<K extends LogLevelKeys = LogLevelKeys> implements LogLevelInfo, LogFilter {
     private static _byKey = new Map<LogLevelKeys, LogLevel>();
     private static _byValue = new Map<number, LogLevel>();
 

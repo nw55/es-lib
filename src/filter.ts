@@ -3,9 +3,9 @@ import { LogMessage } from './common';
 import { LogLevel } from './log-level';
 
 export interface LogFilter {
-    shouldLog(level: LogLevel, source?: string): boolean;
+    shouldLog: (level: LogLevel, source?: string) => boolean;
 
-    shouldLogMessage(message: LogMessage): boolean;
+    shouldLogMessage: (message: LogMessage) => boolean;
 }
 
 type LogFilterFunction = (level: LogLevel, source?: string) => boolean;
