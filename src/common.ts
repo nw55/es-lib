@@ -11,6 +11,7 @@ export interface TypeCheckError {
     nestedErrors: TypeCheckError[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface TypeCheckResult<T = unknown> {
     readonly success: boolean;
     readonly errors: TypeCheckError[];
