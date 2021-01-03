@@ -140,7 +140,6 @@ export class Logger {
     warn(...params: ErrorParams) {
         if (this.shouldLog(LogLevel.Warning)) {
             const message = errorParamsToLogMessage(LogLevel.Warning, this._source, params);
-            message.error ??= new LoggerStackTraceError(message.message);
             this._log(message);
         }
     }
@@ -148,7 +147,6 @@ export class Logger {
     error(...params: ErrorParams) {
         if (this.shouldLog(LogLevel.Error)) {
             const message = errorParamsToLogMessage(LogLevel.Error, this._source, params);
-            message.error ??= new LoggerStackTraceError(message.message);
             this._log(message);
         }
     }
