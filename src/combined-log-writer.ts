@@ -71,7 +71,7 @@ export class CombinedLogWriter implements LogWriter {
 
     log(message: LogMessage) {
         for (const writer of this._writers) {
-            if (writer.shouldLog(message.level))
+            if (writer.shouldLog(message.level, message.source))
                 writer.log(message);
         }
     }
