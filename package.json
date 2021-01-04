@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@nw55/common": "~0.2.2",
-    "@nw55/logging": "~0.1.1",
+    "@nw55/logging": "~0.1.2",
     "@nw55/type-checking": "~0.1.0"
   },
   "devDependencies": {

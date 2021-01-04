@@ -75,10 +75,10 @@
   resolved "https://registry.yarnpkg.com/@nw55/eslint-config/-/eslint-config-0.2.3.tgz#9157baecee096f3a3016a90878413871bd84df50"
   integrity sha512-GLmzmLccMuBIIRgRoUT+mXNXpBdtOtLCReVf5j0aTQUhhE+OTeB/yn2Fc3xy95OZl37RCfhW66xyPv+4cL/Cqw==
 
-"@nw55/logging@~0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@nw55/logging/-/logging-0.1.1.tgz#8cf2a4b92aed7e609d49b1aafc6d09bb24c9260d"
-  integrity sha512-OwXKfl7AMK6al/bSPVYK6x6JvWeGFrGm8VKPl6R0EmteLtotv4E0Z+Ok9RLCvPcd6NBzE8YMD7JUAVHqIgMiJg==
+"@nw55/logging@~0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@nw55/logging/-/logging-0.1.2.tgz#681278434bb6312a9b5ed6cd9faffdbfd5f29bcf"
+  integrity sha512-+4m1WIx4ggHWKHgVtoNIxBQYSwt8qy5XckQFuBVYsLJxeF6WHcKOcNMOa5vYFAZIQQZ1chPIRYAqEw91VWJ2Yw==
   dependencies:
     "@nw55/common" "~0.2.2"
 
