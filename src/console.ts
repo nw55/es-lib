@@ -1,6 +1,5 @@
 import { LogMessage } from './common';
-import { LogFilter } from './filter';
-import { LogLevel } from './log-level';
+import { defaultLogFilter, LogFilter } from './filter';
 import { LogMessageWriter } from './message-writer';
 
 type DetailsAndErrorParams =
@@ -36,19 +35,6 @@ interface Console {
 
 type UnsafeWriter = (text: string, ...args: unknown[]) => void;
 
-const logNothingFilter: LogFilter = {
-    shouldLog: () => false,
-    shouldLogMessage: () => false
-};
-
-function getLogFilter(logFilter: LogFilter | boolean) {
-    if (logFilter === true)
-        return LogLevel.All;
-    if (logFilter === false)
-        return logNothingFilter;
-    return logFilter;
-}
-
 export class ConsoleLogMessageWriter implements LogMessageWriter {
     static createDefault(console: Console, details: 'none' | 'errors' | 'details' | 'all' = 'errors') {
         return new ConsoleLogMessageWriter({
@@ -67,8 +53,8 @@ export class ConsoleLogMessageWriter implements LogMessageWriter {
     constructor(options: ConsoleLogMessageWriterOptions) {
         this._writer = options.writer as UnsafeWriter;
         this._errorWriter = (options.errorWriter ?? options.writer) as UnsafeWriter;
-        this._logErrors = getLogFilter(options.logErrors ?? true);
-        this._logDetails = getLogFilter(options.logDetails ?? false);
+        this._logErrors = defaultLogFilter(options.logErrors ?? true);
+        this._logDetails = defaultLogFilter(options.logDetails ?? false);
     }
 
     writeMessage(text: string, message: LogMessage) {

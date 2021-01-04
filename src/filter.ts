@@ -10,7 +10,18 @@ export interface LogFilter {
 
 type LogFilterFunction = (level: LogLevel, source?: string) => boolean;
 
-export function defaultLogFilter(filter: LogFilterFunction): LogFilter {
+const logNothingFilter: LogFilter = {
+    shouldLog: () => false,
+    shouldLogMessage: () => false
+};
+
+export function defaultLogFilter(filter: LogFilterFunction | LogFilter | boolean): LogFilter {
+    if (filter === true)
+        return LogLevel.All;
+    if (filter === false)
+        return logNothingFilter;
+    if (typeof filter !== 'function')
+        return filter;
     return {
         shouldLog: filter,
         shouldLogMessage: message => filter(message.level, message.source)
