@@ -16,7 +16,7 @@ function useColorStyler(baseWriter: LogMessageWriter, colorStyler?: DefaultColor
         info: text => colorStyler.cyanBright(text),
         notice: text => colorStyler.greenBright(text),
         warn: text => colorStyler.yellowBright(text),
-        error: text => colorStyler.greenBright(text),
+        error: text => colorStyler.redBright(text),
         critical: text => colorStyler.bgWhiteBright.red(text)
     });
 }
