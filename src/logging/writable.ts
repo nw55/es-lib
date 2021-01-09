@@ -12,7 +12,7 @@ export async function openFileLogMessageWriter(options: FileLogMessageWriterOpti
     const stream = createWriteStream(options.file, { flags: append ? 'a' : 'w' });
     const readyEvent = new PromiseSource();
     stream.once('ready', () => readyEvent.resolve());
-    stream.once('error', () => readyEvent.reject());
+    stream.once('error', e => readyEvent.reject(e));
     await readyEvent.promise;
     return new WritableLogMessageWriter(stream, options);
 }
