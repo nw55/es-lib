@@ -3,7 +3,7 @@ import { CheckableType, TypeCheckOptions, TypeCheckResult } from '../common';
 import { OptionalType } from './special-types';
 
 function isPlainObject(obj: unknown): obj is AnyRecord {
-    if (typeof obj !== 'object')
+    if (typeof obj !== 'object' || obj === null)
         return false;
     const prototype = Object.getPrototypeOf(obj) as unknown;
     return prototype === null || prototype === Object.prototype;

@@ -13,6 +13,16 @@ describe('object-types', () => {
         assert.isFalse(testType(type, { a: 123 }));
     });
 
+    test('plain object: non-objects', () => {
+        const type = Type.plainObject({}, {
+            a: String
+        });
+        assert.isFalse(testType(type, undefined));
+        assert.isFalse(testType(type, null));
+        assert.isFalse(testType(type, ''));
+        assert.isFalse(testType(type, []));
+    });
+
     test('plain object: partial', () => {
         const type = Type.plainObject({ partial: true }, {
             a: String
