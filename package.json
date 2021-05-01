@@ -1,3 +1,11 @@
 {
-  "name": "@nw55/lib"
+  "name": "@nw55/lib",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "typescript": "^4.1.5"
+  }
 }
