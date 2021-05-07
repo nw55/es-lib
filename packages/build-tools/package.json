@@ -1,0 +1,32 @@
+{
+  "name": "@nw55/build-tools",
+  "version": "0.2.4",
+  "description": "nw55 build tools for nodejs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nw55/node-build-tools.git"
+  },
+  "author": "Niklas Werner (nw55) <nw55@outlook.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "scripts",
+    "tsconfig",
+    "cli.js"
+  ],
+  "bin": {
+    "nw55-build": "./cli.js"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "ci": "yarn lint",
+    "prepublishOnly": "yarn ci"
+  },
+  "devDependencies": {
+    "@nw55/eslint-config": "0.2.3",
+    "eslint": "^7.14.0",
+    "strip-json-comments": "^3.1.1"
+  }
+}
