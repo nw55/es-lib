@@ -1,0 +1,48 @@
+{
+  "name": "@nw55/eslint-config",
+  "version": "0.2.3",
+  "description": "nw55 eslint config",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nw55/eslint-config.git"
+  },
+  "author": "Niklas Werner (nw55) <nw55@outlook.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.js",
+  "files": [
+    "app",
+    "dev",
+    "lib",
+    "options",
+    "rules",
+    "build.js",
+    "index.js"
+  ],
+  "scripts": {
+    "lint": "eslint -c eslint-config.js .",
+    "generate-files": "node generate-files.js",
+    "build": "yarn generate-files",
+    "ci": "yarn build && yarn lint",
+    "prepublishOnly": "yarn ci"
+  },
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "fs-extra": "^9.0.1"
+  },
+  "peerDependencies": {
+    "eslint": "^7.14.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "@typescript-eslint/eslint-plugin": "^4.9.0"
+  },
+  "peerDependenciesMeta": {
+    "@typescript-eslint/parser": {
+      "optional": true
+    },
+    "@typescript-eslint/eslint-plugin": {
+      "optional": true
+    }
+  }
+}
