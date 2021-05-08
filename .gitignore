@@ -5,5 +5,5 @@
 !.yarn/versions
 .pnp.*
 
-dist/
-lib/
+/packages/**/dist/
+/packages/**/lib/
