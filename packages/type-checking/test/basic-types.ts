@@ -1,16 +1,15 @@
 import { testType, Type } from '@nw55/type-checking';
-import { assert } from 'chai';
 
 describe('basic-types', () => {
     test('String', () => {
         const type = Type.from(String);
-        assert.isTrue(testType(type, 'string'));
-        assert.isFalse(testType(type, {}));
+        expect(testType(type, 'string')).toBeTrue();
+        expect(testType(type, {})).toBeFalse();
     });
 
     test('literal', () => {
         const type = Type.from(1);
-        assert.isTrue(testType(type, 1));
-        assert.isFalse(testType(type, 2));
+        expect(testType(type, 1)).toBeTrue();
+        expect(testType(type, 2)).toBeFalse();
     });
 });

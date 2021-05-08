@@ -1,5 +1,4 @@
 import { ConstructorLike, PrototypeChainMultiMap } from '@nw55/common';
-import { assert } from 'chai';
 
 /* eslint-disable @typescript-eslint/no-extraneous-class -- test classes may be empty */
 
@@ -22,48 +21,48 @@ describe('PrototypeChainMultiMap', () => {
         const map = new PrototypeChainMultiMap<T, string>();
         for (const [key, value] of testEntries)
             map.add(key, value);
-        assert.isTrue(map.hasKey(T));
-        assert.isFalse(map.hasKey(A));
-        assert.isTrue(map.hasKey(B));
-        assert.isTrue(map.hasKey(C));
-        assert.isTrue(map.has(T, 't1'));
-        assert.isFalse(map.has(A, 'a'));
-        assert.isFalse(map.has(T, 't3'));
-        assert.isTrue(map.has(B, 'b2'));
+        expect(map.hasKey(T)).toBeTrue();
+        expect(map.hasKey(A)).toBeFalse();
+        expect(map.hasKey(B)).toBeTrue();
+        expect(map.hasKey(C)).toBeTrue();
+        expect(map.has(T, 't1')).toBeTrue();
+        expect(map.has(A, 'a')).toBeFalse();
+        expect(map.has(T, 't3')).toBeFalse();
+        expect(map.has(B, 'b2')).toBeTrue();
     });
 
     test('get / values', () => {
         const map = new PrototypeChainMultiMap<T, string>();
         for (const [key, value] of testEntries)
             map.add(key, value);
-        assert.deepEqual([...map.get(T)], ['t1', 't2']);
-        assert.deepEqual([...map.get(A)], []);
-        assert.deepEqual([...map.get(B)], ['b1', 'b2']);
-        assert.deepEqual([...map.get(C)], ['c']);
-        assert.deepEqual([...map.values()], ['t1', 't2', 'b1', 'b2', 'c']);
+        expect([...map.get(T)]).toEqual(['t1', 't2']);
+        expect([...map.get(A)]).toEqual([]);
+        expect([...map.get(B)]).toEqual(['b1', 'b2']);
+        expect([...map.get(C)]).toEqual(['c']);
+        expect([...map.values()]).toEqual(['t1', 't2', 'b1', 'b2', 'c']);
     });
 
     test('delete / deleteAll / clear / size', () => {
         const map = new PrototypeChainMultiMap<T, string>();
         for (const [key, value] of testEntries)
             map.add(key, value);
-        assert.equal(map.size, 5);
-        assert.isTrue(map.delete(T, 't2'));
-        assert.isFalse(map.deleteAll(A));
-        assert.isTrue(map.deleteAll(B));
-        assert.isFalse(map.delete(T, 't2'));
-        assert.isFalse(map.deleteAll(B));
-        assert.equal(map.size, 2);
+        expect(map.size).toBe(5);
+        expect(map.delete(T, 't2')).toBeTrue();
+        expect(map.deleteAll(A)).toBeFalse();
+        expect(map.deleteAll(B)).toBeTrue();
+        expect(map.delete(T, 't2')).toBeFalse();
+        expect(map.deleteAll(B)).toBeFalse();
+        expect(map.size).toBe(2);
         map.clear();
-        assert.equal(map.size, 0);
+        expect(map.size).toBe(0);
     });
 
     test('find', () => {
         const map = new PrototypeChainMultiMap<T, string>();
         for (const [key, value] of testEntries)
             map.add(key, value);
-        assert.deepEqual([...map.find(new T())], ['t1', 't2']);
-        assert.deepEqual([...map.find(new B())], ['b1', 'b2', 't1', 't2']);
-        assert.deepEqual([...map.find(new D())], []);
+        expect([...map.find(new T())]).toEqual(['t1', 't2']);
+        expect([...map.find(new B())]).toEqual(['b1', 'b2', 't1', 't2']);
+        expect([...map.find(new D())]).toEqual([]);
     });
 });

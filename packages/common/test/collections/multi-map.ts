@@ -1,5 +1,4 @@
 import { MultiMap } from '@nw55/common';
-import { assert } from 'chai';
 
 const testItems: [string, string][] = [
     ['a', 'b'],
@@ -10,50 +9,50 @@ const testItems: [string, string][] = [
 describe('MultiMap', () => {
     test('constructor / hasKey / has', () => {
         const map = new MultiMap(testItems);
-        assert.isTrue(map.has('a', 'b'));
-        assert.isTrue(map.has('d', 'e'));
-        assert.isFalse(map.has('a', 'e'));
-        assert.isTrue(map.hasKey('a'));
-        assert.isFalse(map.hasKey('b'));
+        expect(map.has('a', 'b')).toBeTrue();
+        expect(map.has('d', 'e')).toBeTrue();
+        expect(map.has('a', 'e')).toBeFalse();
+        expect(map.hasKey('a')).toBeTrue();
+        expect(map.hasKey('b')).toBeFalse();
     });
 
     test('add / get', () => {
         const map = new MultiMap<string, string>();
         for (const [k, v] of testItems)
             map.add(k, v);
-        assert.deepEqual([...map.get('a')], ['b', 'c']);
-        assert.deepEqual([...map.get('b')], []);
+        expect([...map.get('a')]).toEqual(['b', 'c']);
+        expect([...map.get('b')]).toEqual([]);
     });
 
     test('delete / deleteAll / clear / size', () => {
         const map = new MultiMap(testItems);
-        assert.equal(map.size, 3);
-        assert.isTrue(map.delete('a', 'b'));
-        assert.isTrue(map.deleteAll('d'));
-        assert.isFalse(map.delete('a', 'b'));
-        assert.isFalse(map.deleteAll('d'));
-        assert.equal(map.size, 1);
+        expect(map.size).toBe(3);
+        expect(map.delete('a', 'b')).toBeTrue();
+        expect(map.deleteAll('d')).toBeTrue();
+        expect(map.delete('a', 'b')).toBeFalse();
+        expect(map.deleteAll('d')).toBeFalse();
+        expect(map.size).toBe(1);
         map.clear();
-        assert.equal(map.size, 0);
+        expect(map.size).toBe(0);
     });
 
     test('iterator / entries / groupedEntries / keys / values', () => {
         const map = new MultiMap(testItems);
-        assert.deepEqual([...map], testItems);
-        assert.deepEqual([...map.entries()], testItems);
-        assert.deepEqual([...map.groupedEntries()].map(([key, values]) => [key, [...values]]), [
+        expect([...map]).toEqual(testItems);
+        expect([...map.entries()]).toEqual(testItems);
+        expect([...map.groupedEntries()].map(([key, values]) => [key, [...values]])).toEqual([
             ['a', ['b', 'c']],
             ['d', ['e']]
         ]);
-        assert.deepEqual([...map.keys()], ['a', 'd']);
-        assert.deepEqual([...map.values()], ['b', 'c', 'e']);
+        expect([...map.keys()]).toEqual(['a', 'd']);
+        expect([...map.values()]).toEqual(['b', 'c', 'e']);
     });
 
     test('static add', () => {
         const map = new Map<string, Set<string>>();
         for (const [k, v] of testItems)
             MultiMap.add(map, k, v);
-        assert.deepEqual([...map], [
+        expect([...map]).toEqual([
             ['a', new Set(['b', 'c'])],
             ['d', new Set(['e'])]
         ]);

@@ -1,12 +1,11 @@
 import { requireType, testType, Type } from '@nw55/type-checking';
-import { assert } from 'chai';
 
 describe('type-checking', () => {
     test('unchecked', () => {
         const type = Type.unchecked<unknown>();
-        assert.isTrue(testType(type, 1));
-        assert.isTrue(testType(type, ''));
-        assert.isTrue(testType(type, {}));
+        expect(testType(type, 1)).toBeTrue();
+        expect(testType(type, '')).toBeTrue();
+        expect(testType(type, {})).toBeTrue();
     });
 
     test('complex type', () => {
@@ -22,9 +21,9 @@ describe('type-checking', () => {
             a: 'a',
             b: ['b']
         };
-        assert.isTrue(testType(type, matchingValue));
-        assert.isFalse(testType(type, failingValue));
+        expect(testType(type, matchingValue)).toBeTrue();
+        expect(testType(type, failingValue)).toBeFalse();
         requireType(type, matchingValue);
-        assert.throws(() => requireType(type, failingValue));
+        expect(() => requireType(type, failingValue)).toThrow();
     });
 });

@@ -1,5 +1,4 @@
 import { base64, utf8 } from '@nw55/common';
-import { assert } from 'chai';
 
 // Test Vectors from RFC 4648
 const testVectors: [Uint8Array, string][] = [
@@ -16,14 +15,14 @@ describe('base64', () => {
     test('encode the RFC 4648 test vectors', () => {
         for (const [input, expected] of testVectors) {
             const output = base64.getString(input);
-            assert.equal(output, expected);
+            expect(output).toBe(expected);
         }
     });
 
     test('decode the RFC 4648 test vectors', () => {
         for (const [expected, input] of testVectors) {
             const output = base64.getBytes(input);
-            assert.deepEqual(output, expected);
+            expect(output).toEqual(expected);
         }
     });
 });

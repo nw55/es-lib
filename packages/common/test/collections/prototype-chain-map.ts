@@ -1,5 +1,4 @@
 import { PrototypeChainMap } from '@nw55/common';
-import { assert } from 'chai';
 
 /* eslint-disable @typescript-eslint/no-extraneous-class -- test classes may be empty */
 
@@ -15,14 +14,14 @@ describe('PrototypeChainMap', () => {
         map.set(T, 't');
         map.set(B, 'b');
         map.set(C, 'c');
-        assert.isTrue(map.has(T));
-        assert.isFalse(map.has(A));
-        assert.isTrue(map.has(B));
-        assert.isTrue(map.has(C));
-        assert.equal(map.get(T), 't');
-        assert.isUndefined(map.get(A));
-        assert.equal(map.get(B), 'b');
-        assert.equal(map.get(C), 'c');
+        expect(map.has(T)).toBeTrue();
+        expect(map.has(A)).toBeFalse();
+        expect(map.has(B)).toBeTrue();
+        expect(map.has(C)).toBeTrue();
+        expect(map.get(T)).toBe('t');
+        expect(map.get(A)).toBeUndefined();
+        expect(map.get(B)).toBe('b');
+        expect(map.get(C)).toBe('c');
     });
 
     test('delete / clear / size / values', () => {
@@ -30,18 +29,18 @@ describe('PrototypeChainMap', () => {
         map.set(T, 't');
         map.set(B, 'b');
         map.set(C, 'c');
-        assert.equal(map.size, 3);
-        assert.deepEqual([...map.values()], ['t', 'b', 'c']);
-        assert.isTrue(map.delete(T));
-        assert.isFalse(map.delete(A));
-        assert.isTrue(map.delete(B));
-        assert.isFalse(map.delete(T));
-        assert.isFalse(map.delete(B));
-        assert.equal(map.size, 1);
-        assert.deepEqual([...map.values()], ['c']);
+        expect(map.size).toBe(3);
+        expect([...map.values()]).toEqual(['t', 'b', 'c']);
+        expect(map.delete(T)).toBeTrue();
+        expect(map.delete(A)).toBeFalse();
+        expect(map.delete(B)).toBeTrue();
+        expect(map.delete(T)).toBeFalse();
+        expect(map.delete(B)).toBeFalse();
+        expect(map.size).toBe(1);
+        expect([...map.values()]).toEqual(['c']);
         map.clear();
-        assert.equal(map.size, 0);
-        assert.deepEqual([...map.values()], []);
+        expect(map.size).toBe(0);
+        expect([...map.values()]).toEqual([]);
     });
 
     test('find / finAll', () => {
@@ -49,11 +48,11 @@ describe('PrototypeChainMap', () => {
         map.set(T, 't');
         map.set(A, 'a');
         map.set(C, 'c');
-        assert.equal(map.find(new T()), 't');
-        assert.equal(map.find(new B()), 'a');
-        assert.isUndefined(map.find(new D()));
-        assert.deepEqual([...map.findAll(new T())], ['t']);
-        assert.deepEqual([...map.findAll(new B())], ['a', 't']);
-        assert.deepEqual([...map.findAll(new D())], []);
+        expect(map.find(new T())).toBe('t');
+        expect(map.find(new B())).toBe('a');
+        expect(map.find(new D())).toBeUndefined();
+        expect([...map.findAll(new T())]).toEqual(['t']);
+        expect([...map.findAll(new B())]).toEqual(['a', 't']);
+        expect([...map.findAll(new D())]).toEqual([]);
     });
 });

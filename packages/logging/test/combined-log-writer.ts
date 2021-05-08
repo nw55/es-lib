@@ -1,6 +1,5 @@
 import { LogLevelKeys } from '@nw55/common';
 import { CombinedLogWriter, LogLevel, LogMessage, LogWriter } from '@nw55/logging';
-import { assert } from 'chai';
 
 class TestLogWriter implements LogWriter {
     didLog = false;
@@ -29,16 +28,16 @@ describe('combined-log-writer', () => {
         const writer3 = new TestLogWriter('3', false);
 
         const combined1 = new CombinedLogWriter([writer1, writer2]);
-        assert.isTrue(combined1.shouldLog(LogLevel.Information), 'shouldLog() should return true');
+        expect(combined1.shouldLog(LogLevel.Information)).toBeTrue();// shouldLog() should return true
         combined1.log(testLogMessage);
-        assert.isTrue(writer1.didLog, 'should call log()');
-        assert.isFalse(writer2.didLog, 'should not call log()');
+        expect(writer1.didLog).toBeTrue(); // should call log()
+        expect(writer2.didLog).toBeFalse(); // should not call log()
 
         const combined2 = new CombinedLogWriter([writer2, writer3]);
-        assert.isFalse(combined2.shouldLog(LogLevel.Information));
+        expect(combined2.shouldLog(LogLevel.Information)).toBeFalse();
         combined2.log(testLogMessage);
-        assert.isFalse(writer2.didLog, 'should not call log()');
-        assert.isFalse(writer3.didLog, 'should not call log()');
+        expect(writer2.didLog).toBeFalse(); // should not call log()
+        expect(writer3.didLog).toBeFalse(); // should not call log()
     });
 
     test('flattening of nested combined log writers', () => {
@@ -49,7 +48,7 @@ describe('combined-log-writer', () => {
         const combined1 = new CombinedLogWriter([writer1, writer2]);
         const combined2 = new CombinedLogWriter([combined1, writer3]);
 
-        assert.deepStrictEqual(combined2.writers, [writer1, writer2, writer3], 'should flatten and maintain order');
+        expect(combined2.writers).toStrictEqual([writer1, writer2, writer3]); // should flatten and maintain order
     });
 
     test('static addLogWriter / removeLogWriter', () => {
@@ -58,39 +57,39 @@ describe('combined-log-writer', () => {
         const writer3 = new TestLogWriter('3', false);
 
         const add0 = CombinedLogWriter.addLogWriter(null, writer1);
-        assert.strictEqual(add0, writer1, 'adding to null should return added writer');
+        expect(add0).toBe(writer1); // adding to null should return added writer
 
         const add1 = CombinedLogWriter.addLogWriter(writer1, writer2);
-        assert.instanceOf(add1, CombinedLogWriter, 'should create combined writer');
-        assert.deepStrictEqual((add1 as CombinedLogWriter).writers, [writer1, writer2], 'should combine');
+        expect(add1).toBeInstanceOf(CombinedLogWriter); // should create combined writer
+        expect((add1 as CombinedLogWriter).writers).toStrictEqual([writer1, writer2]); // should combine
 
         const add2 = CombinedLogWriter.addLogWriter(writer3, add1);
-        assert.instanceOf(add2, CombinedLogWriter, 'should create combined writer');
-        assert.deepStrictEqual((add2 as CombinedLogWriter).writers, [writer3, writer1, writer2], 'should add combined writer');
+        expect(add2).toBeInstanceOf(CombinedLogWriter); // should create combined writer
+        expect((add2 as CombinedLogWriter).writers).toStrictEqual([writer3, writer1, writer2]); // should add combined writer
 
         const add3 = CombinedLogWriter.addLogWriter(add1, add2);
-        assert.instanceOf(add3, CombinedLogWriter, 'should create combined writer');
-        assert.deepStrictEqual((add3 as CombinedLogWriter).writers, [writer1, writer2, writer3, writer1, writer2], 'should combine combined writers');
+        expect(add3).toBeInstanceOf(CombinedLogWriter); // should create combined writer
+        expect((add3 as CombinedLogWriter).writers).toStrictEqual([writer1, writer2, writer3, writer1, writer2]); // should combine combined writers
 
         const remove0 = CombinedLogWriter.removeLogWriter(null, writer1);
-        assert.isNull(remove0, 'remove from null should return null');
+        expect(remove0).toBeNull(); // remove from null should return null
 
         const remove1 = CombinedLogWriter.removeLogWriter(add3, writer1);
-        assert.instanceOf(remove1, CombinedLogWriter, 'should create combined writer');
-        assert.deepStrictEqual((remove1 as CombinedLogWriter).writers, [writer2, writer3, writer1, writer2], 'should remove only first instance of single from combined');
+        expect(remove1).toBeInstanceOf(CombinedLogWriter); // should create combined writer
+        expect((remove1 as CombinedLogWriter).writers).toStrictEqual([writer2, writer3, writer1, writer2]); // should remove only first instance of single from combined
 
         const remove2 = CombinedLogWriter.removeLogWriter(add3, add1);
-        assert.instanceOf(remove2, CombinedLogWriter, 'should create combined writer');
-        assert.deepStrictEqual((remove2 as CombinedLogWriter).writers, [writer3, writer1, writer2], 'should remove combined from combined');
+        expect(remove2).toBeInstanceOf(CombinedLogWriter); // should create combined writer
+        expect((remove2 as CombinedLogWriter).writers).toStrictEqual([writer3, writer1, writer2]); // should remove combined from combined
 
         const remove3 = CombinedLogWriter.removeLogWriter(add3, add3);
-        assert.isNull(remove3, 'remove from itself should return null');
+        expect(remove3).toBeNull(); // remove from itself should return null
 
         const add3b = new CombinedLogWriter((add3 as CombinedLogWriter).writers);
         const remove4 = CombinedLogWriter.removeLogWriter(add3, add3b);
-        assert.isNull(remove4, 'remove should work with duplicates and return null instead of empty combined');
+        expect(remove4).toBeNull(); // remove should work with duplicates and return null instead of empty combined
 
         const remove5 = CombinedLogWriter.removeLogWriter(writer1, add1);
-        assert.isNull(remove5, 'remove combined from single should work');
+        expect(remove5).toBeNull(); // remove combined from single should work
     });
 });

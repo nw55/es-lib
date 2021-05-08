@@ -1,33 +1,32 @@
 import { JsonType, testType } from '@nw55/type-checking';
-import { assert } from 'chai';
 
 describe('json', () => {
     test('primitive', () => {
-        assert.isTrue(testType(JsonType.value, 'string'));
-        assert.isTrue(testType(JsonType.value, 1));
-        assert.isTrue(testType(JsonType.value, true));
-        assert.isTrue(testType(JsonType.value, null));
-        assert.isFalse(testType(JsonType.value, undefined));
+        expect(testType(JsonType.value, 'string')).toBeTrue();
+        expect(testType(JsonType.value, 1)).toBeTrue();
+        expect(testType(JsonType.value, true)).toBeTrue();
+        expect(testType(JsonType.value, null)).toBeTrue();
+        expect(testType(JsonType.value, undefined)).toBeFalse();
     });
 
     test('array', () => {
         const array = ['string', 1, true];
-        assert.isTrue(testType(JsonType.value, array));
-        assert.isTrue(testType(JsonType.array, array));
-        assert.isFalse(testType(JsonType.object, array));
+        expect(testType(JsonType.value, array)).toBeTrue();
+        expect(testType(JsonType.array, array)).toBeTrue();
+        expect(testType(JsonType.object, array)).toBeFalse();
 
         const array2 = [undefined];
-        assert.isFalse(testType(JsonType.value, array2));
+        expect(testType(JsonType.value, array2)).toBeFalse();
     });
 
     test('object', () => {
         const object = { a: 'string', b: 1, c: true };
-        assert.isTrue(testType(JsonType.value, object));
-        assert.isFalse(testType(JsonType.array, object));
-        assert.isTrue(testType(JsonType.object, object));
+        expect(testType(JsonType.value, object)).toBeTrue();
+        expect(testType(JsonType.array, object)).toBeFalse();
+        expect(testType(JsonType.object, object)).toBeTrue();
 
         const object2 = { a: undefined };
-        assert.isFalse(testType(JsonType.value, object2));
+        expect(testType(JsonType.value, object2)).toBeFalse();
     });
 
     test('recursive', () => {
@@ -35,13 +34,13 @@ describe('json', () => {
             a: ['string', 1, true],
             b: { c: null }
         };
-        assert.isTrue(testType(JsonType.value, object));
-        assert.isFalse(testType(JsonType.array, object));
-        assert.isTrue(testType(JsonType.object, object));
+        expect(testType(JsonType.value, object)).toBeTrue();
+        expect(testType(JsonType.array, object)).toBeFalse();
+        expect(testType(JsonType.object, object)).toBeTrue();
 
         const object2 = {
             a: [undefined]
         };
-        assert.isFalse(testType(JsonType.value, object2));
+        expect(testType(JsonType.value, object2)).toBeFalse();
     });
 });
