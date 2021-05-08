@@ -10,6 +10,8 @@
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",
   "main": "src/index.ts",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "build:esm": "tsc -b",
@@ -31,9 +33,7 @@
   ],
   "publishConfig": {
     "access": "public",
-    "main": "dist/index.js",
-    "module": "lib/index.js",
-    "types": "lib/index.d.ts"
+    "main": "dist/index.js"
   },
   "dependencies": {
     "@nw55/common": "~0.2.2",

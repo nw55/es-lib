@@ -1,4 +1,4 @@
-import { AnyRecord } from '@nw55/common/lib/utils';
+import { AnyRecord } from '@nw55/common';
 
 export interface TypeCheckOptions {
     readonly returnEarly: boolean;
