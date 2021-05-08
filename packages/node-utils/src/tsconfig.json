@@ -1,0 +1,6 @@
+{
+    "extends": "@nw55/build-tools/tsconfig/node-lib/12.json",
+    "compilerOptions": {
+        "outDir": "../lib"
+    }
+}

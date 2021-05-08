@@ -1,16 +1,16 @@
 {
     "references": [
         {
-            "path": "packages/common"
+            "path": "packages/common/src"
         },
         {
-            "path": "packages/logging"
+            "path": "packages/logging/src"
         },
         {
-            "path": "packages/node-utils"
+            "path": "packages/node-utils/src"
         },
         {
-            "path": "packages/type-checking"
+            "path": "packages/type-checking/src"
         },
         {
             "path": "tsconfig.test.json"
