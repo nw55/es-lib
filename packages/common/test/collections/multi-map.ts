@@ -1,6 +1,5 @@
 import { MultiMap } from '@nw55/common';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 const testItems: [string, string][] = [
     ['a', 'b'],

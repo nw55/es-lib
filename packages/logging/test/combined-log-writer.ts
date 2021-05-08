@@ -1,7 +1,6 @@
 import { LogLevelKeys } from '@nw55/common';
 import { CombinedLogWriter, LogLevel, LogMessage, LogWriter } from '@nw55/logging';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 class TestLogWriter implements LogWriter {
     didLog = false;

@@ -1,6 +1,5 @@
 import { logFormat, LogLevel } from '@nw55/logging';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('format', () => {
     test('logFormat', () => {

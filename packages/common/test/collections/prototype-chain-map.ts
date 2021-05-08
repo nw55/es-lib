@@ -1,6 +1,5 @@
 import { PrototypeChainMap } from '@nw55/common';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 /* eslint-disable @typescript-eslint/no-extraneous-class -- test classes may be empty */
 

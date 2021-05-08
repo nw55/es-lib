@@ -1,0 +1,20 @@
+{
+    "references": [
+        {
+            "path": "packages/common"
+        },
+        {
+            "path": "packages/logging"
+        },
+        {
+            "path": "packages/node-utils"
+        },
+        {
+            "path": "packages/type-checking"
+        },
+        {
+            "path": "tsconfig.test.json"
+        }
+    ],
+    "files": []
+}

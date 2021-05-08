@@ -1,6 +1,5 @@
 import { ArgumentError, BitArray } from '@nw55/common';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('BitArray', () => {
     test('length', () => {

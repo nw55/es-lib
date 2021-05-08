@@ -1,6 +1,5 @@
 import { testType, Type } from '@nw55/type-checking';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('special-types', () => {
     test('union', () => {

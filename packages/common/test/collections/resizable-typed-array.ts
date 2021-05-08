@@ -1,6 +1,5 @@
 import { ResizableTypedArray } from '@nw55/common';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('ResizableTypedArray', () => {
     test('append / grow', () => {

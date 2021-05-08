@@ -1,6 +1,5 @@
 import { FixedSizeQueue } from '@nw55/common';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('FixedSizeQueue', () => {
     test('basic enqueue / dequeue / size', () => {

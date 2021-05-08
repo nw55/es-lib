@@ -1,6 +1,5 @@
 import { LogLevel, SourcePrefixLogFilter } from '@nw55/logging';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('filter', () => {
     test('SourcePrefixLogFilter', () => {

@@ -1,6 +1,5 @@
 import { requireType, testType, Type } from '@nw55/type-checking';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('type-checking', () => {
     test('unchecked', () => {

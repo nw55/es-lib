@@ -1,0 +1,13 @@
+{
+    "extends": "@nw55/build-tools/tsconfig/lib/es2019.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        "types": [
+            "jest"
+        ],
+        "noEmit": true
+    },
+    "include": [
+        "packages/*/test/**/*.ts"
+    ]
+}

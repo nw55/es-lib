@@ -1,6 +1,5 @@
 import { base64, utf8 } from '@nw55/common';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 // Test Vectors from RFC 4648
 const testVectors: [Uint8Array, string][] = [

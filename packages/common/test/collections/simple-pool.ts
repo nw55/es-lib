@@ -1,6 +1,5 @@
 import { SimplePool } from '@nw55/common';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 function createTestFactory() {
     let next = 0;

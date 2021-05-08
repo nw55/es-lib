@@ -1,6 +1,5 @@
 import { JsonType, testType } from '@nw55/type-checking';
 import { assert } from 'chai';
-import { describe, test } from 'mocha';
 
 describe('json', () => {
     test('primitive', () => {
