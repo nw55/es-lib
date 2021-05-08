@@ -4,13 +4,12 @@
   "version": "0.1.3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nw55/node-utils.git"
+    "url": "https://github.com/nw55/es-lib.git",
+    "directory": "packages/node-utils"
   },
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "src/index.ts",
   "sideEffects": false,
   "scripts": {
     "build:esm": "tsc -b",
@@ -31,7 +30,10 @@
     "/src"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "main": "dist/index.js",
+    "module": "lib/index.js",
+    "types": "lib/index.d.ts"
   },
   "dependencies": {
     "@nw55/common": "~0.2.2",
