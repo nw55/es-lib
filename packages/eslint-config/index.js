@@ -4,23 +4,56 @@ const esRules = require('./rules/es');
 const tsRules = require('./rules/ts');
 const tsTypecheckRules = require('./rules/ts-typecheck');
 
+const buildOptions = require('./options/build');
+const devOptions = require('./options/dev');
+
 const validLanguages = ['es', 'ts', 'ts-typecheck'];
 const validUsages = ['app', 'lib'];
-const validOptionNames = ['build', 'dev'];
 
-function createConfig(language, usage, options) {
+const namedOptions = {
+    'build': buildOptions,
+    'dev': devOptions
+};
+
+let currentOptions;
+
+function setOptions(options) {
+    if (typeof options === 'string') {
+        if (!Object.keys(namedOptions).includes(options))
+            throw new Error('invalid options name: ' + options);
+        currentOptions = namedOptions[options];
+    }
+    else {
+        currentOptions = options;
+    }
+}
+
+function getOptions() {
+    // allow overriding via env
+    if (Object.keys(namedOptions).includes(process.env.NW55_ESLINT_OPTIONS))
+        return namedOptions[process.env.NW55_ESLINT_OPTIONS];
+
+    // explicitly specified options if available
+    if (currentOptions)
+        return currentOptions;
+
+    // when running in CI: build options
+    if (process.env.CI === 'true')
+        return buildOptions;
+
+    // default: dev options
+    return devOptions;
+}
+
+function createConfig(language, usage) {
     if (!validLanguages.includes(language))
         throw new Error('invalid language: ' + language);
     if (!validUsages.includes(usage))
         throw new Error('invalid usage: ' + usage);
-    if (typeof options === 'string') {
-        if (!validOptionNames.includes(options))
-            throw new Error('invalid named options: ' + options);
-        // eslint-disable-next-line global-require
-        options = require('./options/' + options);
-    }
 
     const usageObject = Object.fromEntries(validUsages.map(validUsage => [validUsage, validUsage === usage]));
+
+    const options = getOptions();
 
     const result = {
         extends: [],
@@ -43,29 +76,10 @@ function createConfig(language, usage, options) {
     return result;
 }
 
-function useDevInExtends(extendsValue) {
-    if (typeof extendsValue === 'string') {
-        for (const usage of validUsages)
-            extendsValue = extendsValue.replace('@nw55/eslint-config/' + usage + '/', '@nw55/eslint-config/dev/' + usage + '/');
-        return extendsValue;
-    }
-    if (Array.isArray(extendsValue))
-        return extendsValue.map(useDevInExtends);
-    return extendsValue;
-}
-
-function useDevInConfig(config) {
-    const devConfig = { ...config };
-    if (config.extends)
-        devConfig.extends = useDevInExtends(config.extends);
-    if (config.overrides)
-        devConfig.overrides = config.overrides.map(useDevInConfig);
-    return devConfig;
-}
-
 module.exports = {
+    setOptions,
+    getOptions,
     createConfig,
-    useDevConfig: useDevInConfig,
     iterateLanguages: () => validLanguages[Symbol.iterator](),
     iterateUsages: () => validUsages[Symbol.iterator]()
 };

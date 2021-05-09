@@ -26,8 +26,6 @@
     "prepublishOnly": "yarn ci"
   },
   "devDependencies": {
-    "@nw55/eslint-config": "0.2.3",
-    "eslint": "^7.14.0",
     "strip-json-comments": "^3.1.1"
   }
 }

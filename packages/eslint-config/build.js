@@ -1,6 +1,6 @@
 'use strict';
 
-// specialized configuration that is based on the build (never dev) config app/es
+// specialized configuration that is based on app/es
 // use this for build scripts and configuration scripts that are run with nodejs at dev/build time
 
 module.exports = {

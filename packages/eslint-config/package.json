@@ -15,7 +15,6 @@
   "main": "index.js",
   "files": [
     "app",
-    "dev",
     "lib",
     "options",
     "rules",
@@ -30,7 +29,6 @@
     "prepublishOnly": "yarn ci"
   },
   "devDependencies": {
-    "eslint": "^7.14.0",
     "fs-extra": "^9.0.1"
   },
   "peerDependencies": {

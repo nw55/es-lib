@@ -10,8 +10,11 @@
   ],
   "devDependencies": {
     "@nw55/build-tools": "workspace:packages/build-tools",
+    "@nw55/eslint-config": "workspace:packages/eslint-config",
     "@types/jest": "^26.0.23",
-    "eslint": "^7.20.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.26.0",
     "jest": "^26.6.3",
     "jest-extended": "^0.11.5",
     "ts-jest": "^26.5.6",
