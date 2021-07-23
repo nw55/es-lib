@@ -11,7 +11,6 @@
   "license": "MIT",
   "main": "src/index.ts",
   "sideEffects": false,
-  "scripts": {},
   "files": [
     "/dist",
     "/lib",
@@ -24,13 +23,13 @@
     "types": "lib/index.d.ts"
   },
   "dependencies": {
-    "@nw55/common": "~0.2.2",
-    "@nw55/logging": "~0.1.2",
-    "@nw55/type-checking": "~0.1.0"
+    "@nw55/common": "workspace:",
+    "@nw55/logging": "workspace:",
+    "@nw55/type-checking": "workspace:"
   },
   "devDependencies": {
-    "@nw55/build-tools": "~0.2.4",
-    "@types/node": "^14.14.10",
-    "typescript": "^4.2.4"
+    "@nw55/build-tools": "workspace:*",
+    "@types/node": "^16.4.1",
+    "typescript": "^4.3.5"
   }
 }
