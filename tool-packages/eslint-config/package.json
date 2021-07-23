@@ -5,7 +5,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/nw55/es-lib.git",
-    "directory": "packages/eslint-config"
+    "directory": "tool-packages/eslint-config"
   },
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",

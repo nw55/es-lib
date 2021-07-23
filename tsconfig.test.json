@@ -9,6 +9,6 @@
         "noEmit": true
     },
     "include": [
-        "packages/*/test/**/*.ts"
+        "*-packages/*/test/**/*.ts"
     ]
 }

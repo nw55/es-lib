@@ -10,11 +10,11 @@ module.exports = {
     extends: ['@nw55/eslint-config/build'],
     overrides: [{
         // for typescript source and test files: lib/ts-typecheck
-        files: ['**/packages/*/src/**/*.ts', '**/packages/*/test/**/*.ts'],
+        files: ['**/*-packages/*/src/**/*.ts', '**/*-packages/*/test/**/*.ts'],
         extends: ['@nw55/eslint-config/lib/ts-typecheck'],
         parserOptions: {
             project: [
-                'packages/*/src/tsconfig.json',
+                '*-packages/*/src/tsconfig.json',
                 'tsconfig.test.json'
             ]
         }

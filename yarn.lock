@@ -724,9 +724,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nw55/build-tools@workspace:packages/build-tools, @nw55/build-tools@~0.2.4":
+"@nw55/build-tools@workspace:tool-packages/build-tools, @nw55/build-tools@~0.2.4":
   version: 0.0.0-use.local
-  resolution: "@nw55/build-tools@workspace:packages/build-tools"
+  resolution: "@nw55/build-tools@workspace:tool-packages/build-tools"
   dependencies:
     strip-json-comments: ^3.1.1
   bin:
@@ -734,9 +734,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/common@workspace:packages/common, @nw55/common@~0.2.2":
+"@nw55/common@workspace:lib-packages/common, @nw55/common@~0.2.2":
   version: 0.0.0-use.local
-  resolution: "@nw55/common@workspace:packages/common"
+  resolution: "@nw55/common@workspace:lib-packages/common"
   dependencies:
     "@nw55/build-tools": ~0.2.4
     rimraf: ^3.0.2
@@ -744,9 +744,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/eslint-config@workspace:packages/eslint-config":
+"@nw55/eslint-config@workspace:tool-packages/eslint-config":
   version: 0.0.0-use.local
-  resolution: "@nw55/eslint-config@workspace:packages/eslint-config"
+  resolution: "@nw55/eslint-config@workspace:tool-packages/eslint-config"
   dependencies:
     fs-extra: ^9.0.1
   peerDependencies:
@@ -765,8 +765,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nw55/lib@workspace:."
   dependencies:
-    "@nw55/build-tools": "workspace:packages/build-tools"
-    "@nw55/eslint-config": "workspace:packages/eslint-config"
+    "@nw55/build-tools": "workspace:tool-packages/build-tools"
+    "@nw55/eslint-config": "workspace:tool-packages/eslint-config"
     "@types/jest": ^26.0.23
     "@typescript-eslint/eslint-plugin": ^4.22.1
     "@typescript-eslint/parser": ^4.22.1
@@ -778,9 +778,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/logging@workspace:packages/logging, @nw55/logging@~0.1.2":
+"@nw55/logging@workspace:lib-packages/logging, @nw55/logging@~0.1.2":
   version: 0.0.0-use.local
-  resolution: "@nw55/logging@workspace:packages/logging"
+  resolution: "@nw55/logging@workspace:lib-packages/logging"
   dependencies:
     "@nw55/build-tools": ~0.2.4
     "@nw55/common": ~0.2.2
@@ -789,9 +789,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/node-utils@workspace:packages/node-utils":
+"@nw55/node-utils@workspace:util-packages/node-utils":
   version: 0.0.0-use.local
-  resolution: "@nw55/node-utils@workspace:packages/node-utils"
+  resolution: "@nw55/node-utils@workspace:util-packages/node-utils"
   dependencies:
     "@nw55/build-tools": ~0.2.4
     "@nw55/common": ~0.2.2
@@ -803,9 +803,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/type-checking@workspace:packages/type-checking, @nw55/type-checking@~0.1.0":
+"@nw55/type-checking@workspace:lib-packages/type-checking, @nw55/type-checking@~0.1.0":
   version: 0.0.0-use.local
-  resolution: "@nw55/type-checking@workspace:packages/type-checking"
+  resolution: "@nw55/type-checking@workspace:lib-packages/type-checking"
   dependencies:
     "@nw55/build-tools": ~0.2.4
     "@nw55/common": ~0.2.2
@@ -949,9 +949,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^14.14.10":
-  version: 14.14.44
-  resolution: "@types/node@npm:14.14.44"
-  checksum: 5c4db716325fc8a25b5b76b800acf0ff00c8fa1e7cfcb764fc79d79594939488cb9d2a756e188eb8e8a36da51e8e2be1ffe859be901b338779cb0aa12ad73b3a
+  version: 14.17.5
+  resolution: "@types/node@npm:14.17.5"
+  checksum: bd2c9bd617d36fea3b6380f5f7bbf56b59dbfb97ba5ff6d04fdf8ec47402ba4bb4cc902087a7f40d17c91845cc949c811a366679f3421a965e80fbce328a2750
   languageName: node
   linkType: hard
 

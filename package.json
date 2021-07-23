@@ -6,11 +6,11 @@
     "url": "https://github.com/nw55/es-lib.git"
   },
   "workspaces": [
-    "packages/*"
+    "*-packages/*"
   ],
   "devDependencies": {
-    "@nw55/build-tools": "workspace:packages/build-tools",
-    "@nw55/eslint-config": "workspace:packages/eslint-config",
+    "@nw55/build-tools": "workspace:tool-packages/build-tools",
+    "@nw55/eslint-config": "workspace:tool-packages/eslint-config",
     "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
