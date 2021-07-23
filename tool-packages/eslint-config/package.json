@@ -22,11 +22,9 @@
     "index.js"
   ],
   "scripts": {
-    "lint": "eslint -c eslint-config.js .",
     "generate-files": "node generate-files.js",
-    "build": "yarn generate-files",
-    "ci": "yarn build && yarn lint",
-    "prepublishOnly": "yarn ci"
+    "build": "run generate-files",
+    "clean": "run generate-files clean"
   },
   "devDependencies": {
     "fs-extra": "^9.0.1"

@@ -10,22 +10,8 @@
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",
   "main": "src/index.ts",
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
   "sideEffects": false,
-  "scripts": {
-    "build:esm": "tsc -b",
-    "build:cjs": "tsc -b tsconfig.cjs.json",
-    "dev": "tsc -w --noEmit",
-    "test": "cd test && mocha",
-    "test:watch": "cd test && mocha -w --reporter min",
-    "lint": "eslint . --ext .js,.ts -c eslint-config.js",
-    "lint:fix": "eslint . --ext .js,.ts -c eslint-config.js --fix",
-    "clean": "rimraf dist/* lib/*",
-    "build": "yarn clean && yarn build:esm && yarn build:cjs && yarn lint",
-    "ci": "yarn build && yarn test",
-    "prepublishOnly": "yarn ci"
-  },
+  "scripts": {},
   "files": [
     "/dist",
     "/lib",
@@ -33,14 +19,15 @@
   ],
   "publishConfig": {
     "access": "public",
-    "main": "dist/index.js"
+    "main": "dist/index.js",
+    "module": "lib/index.js",
+    "types": "lib/index.d.ts"
   },
   "dependencies": {
     "@nw55/common": "~0.2.2"
   },
   "devDependencies": {
     "@nw55/build-tools": "~0.2.4",
-    "rimraf": "^3.0.2",
-    "typescript": "~4.1.2"
+    "typescript": "^4.2.4"
   }
 }

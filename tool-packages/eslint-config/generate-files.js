@@ -13,9 +13,13 @@ module.exports = createConfig('${language}', '${usage}');
     fs.writeFileSync(file, content, 'utf8');
 }
 
-function generateFiles() {
+function generateFiles(clean) {
     for (const usage of iterateUsages()) {
         const dir = path.resolve(__dirname, usage);
+        if (clean) {
+            fs.removeSync(dir);
+            continue;
+        }
         fs.emptyDirSync(dir);
         fs.ensureDirSync(dir);
         for (const language of iterateLanguages())
@@ -23,4 +27,4 @@ function generateFiles() {
     }
 }
 
-generateFiles();
+generateFiles(process.argv[2] === 'clean');
