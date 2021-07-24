@@ -1,4 +1,4 @@
-import { testType, Type } from '@nw55/type-checking';
+import { testType, Type } from '@nw55/runtime-types';
 
 describe('special-types', () => {
     test('union', () => {

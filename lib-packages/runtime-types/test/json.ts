@@ -1,4 +1,4 @@
-import { JsonType, testType } from '@nw55/type-checking';
+import { JsonType, testType } from '@nw55/runtime-types';
 
 describe('json', () => {
     test('primitive', () => {

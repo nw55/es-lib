@@ -7,7 +7,7 @@
             "path": "lib-packages/logging/src"
         },
         {
-            "path": "lib-packages/type-checking/src"
+            "path": "lib-packages/runtime-types/src"
         },
         {
             "path": "util-packages/node-utils/src"

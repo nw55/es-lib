@@ -838,15 +838,15 @@ __metadata:
     "@nw55/build-tools": ~0.2.4
     "@nw55/common": ~0.2.2
     "@nw55/logging": ~0.1.2
-    "@nw55/type-checking": ~0.1.0
+    "@nw55/runtime-types": ~0.1.0
     "@types/node": ^16.11.9
     typescript: ~4.4.4
   languageName: unknown
   linkType: soft
 
-"@nw55/type-checking@workspace:lib-packages/type-checking, @nw55/type-checking@~0.1.0":
+"@nw55/runtime-types@workspace:lib-packages/runtime-types, @nw55/runtime-types@~0.1.0":
   version: 0.0.0-use.local
-  resolution: "@nw55/type-checking@workspace:lib-packages/type-checking"
+  resolution: "@nw55/runtime-types@workspace:lib-packages/runtime-types"
   dependencies:
     "@nw55/build-tools": ~0.2.4
     "@nw55/common": ~0.2.2

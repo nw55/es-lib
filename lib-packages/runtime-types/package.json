@@ -1,11 +1,11 @@
 {
-  "name": "@nw55/type-checking",
+  "name": "@nw55/runtime-types",
   "description": "nw55 type checking",
   "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/nw55/es-lib.git",
-    "directory": "lib-packages/type-checking"
+    "directory": "lib-packages/runtime-types"
   },
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",

@@ -1,4 +1,4 @@
-import { requireType, testType, Type } from '@nw55/type-checking';
+import { requireType, testType, Type } from '@nw55/runtime-types';
 
 describe('type-checking', () => {
     test('unchecked', () => {
