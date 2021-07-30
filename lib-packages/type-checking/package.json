@@ -23,10 +23,10 @@
     "types": "lib/index.d.ts"
   },
   "dependencies": {
-    "@nw55/common": "workspace:*"
+    "@nw55/common": "~0.2.2"
   },
   "devDependencies": {
-    "@nw55/build-tools": "workspace:*",
+    "@nw55/build-tools": "~0.2.4",
     "typescript": "^4.3.5"
   }
 }
