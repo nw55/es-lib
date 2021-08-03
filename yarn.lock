@@ -752,7 +752,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nw55/build-tools@workspace:*, @nw55/build-tools@workspace:tool-packages/build-tools, @nw55/build-tools@~0.2.4":
+"@nw55/build-tools@workspace:tool-packages/build-tools, @nw55/build-tools@~0.2.4":
   version: 0.0.0-use.local
   resolution: "@nw55/build-tools@workspace:tool-packages/build-tools"
   dependencies:
@@ -771,7 +771,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/eslint-config@workspace:*, @nw55/eslint-config@workspace:tool-packages/eslint-config":
+"@nw55/eslint-config@workspace:tool-packages/eslint-config, @nw55/eslint-config@~0.2.3":
   version: 0.0.0-use.local
   resolution: "@nw55/eslint-config@workspace:tool-packages/eslint-config"
   dependencies:
@@ -792,8 +792,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nw55/lib@workspace:."
   dependencies:
-    "@nw55/build-tools": "workspace:*"
-    "@nw55/eslint-config": "workspace:*"
+    "@nw55/build-tools": ~0.2.4
+    "@nw55/eslint-config": ~0.2.3
     "@types/jest": ^26.0.24
     "@typescript-eslint/eslint-plugin": ^4.22.1
     "@typescript-eslint/parser": ^4.22.1

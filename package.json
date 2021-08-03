@@ -24,8 +24,8 @@
     "prepublishOnly": "run clean && run build && run lint && run test"
   },
   "devDependencies": {
-    "@nw55/build-tools": "workspace:*",
-    "@nw55/eslint-config": "workspace:*",
+    "@nw55/build-tools": "~0.2.4",
+    "@nw55/eslint-config": "~0.2.3",
     "@types/jest": "^26.0.24",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
