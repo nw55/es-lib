@@ -14,10 +14,12 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-throw-literal': error,
 
     '@typescript-eslint/await-thenable': 'off',
+    '@typescript-eslint/consistent-type-exports': 'off',
     '@typescript-eslint/no-base-to-string': 'off',
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/no-floating-promises': mistake,
     '@typescript-eslint/no-for-in-array': mistake,
+    '@typescript-eslint/no-meaningless-void-operator': 'off',
     '@typescript-eslint/no-misused-promises': [mistake, {
         checksVoidReturn: true,
         checksConditionals: true
@@ -43,6 +45,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/prefer-readonly-parameter-types': 'off',
     '@typescript-eslint/prefer-reduce-type-parameter': improvement,
     '@typescript-eslint/prefer-regexp-exec': improvement,
+    '@typescript-eslint/prefer-return-this-type': 'off',
     '@typescript-eslint/prefer-string-starts-ends-with': improvement,
     '@typescript-eslint/promise-function-async': 'off',
     '@typescript-eslint/require-array-sort-compare': [mistake, {

@@ -160,6 +160,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     }],
     'no-undef-init': style,
     'no-undefined': 'off',
+    'no-unused-private-class-members': mistake,
     'no-unused-vars': [mistake, {
         args: 'none',
         caughtErrors: 'all'
