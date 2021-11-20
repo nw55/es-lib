@@ -24,11 +24,11 @@ function useColorStyler(baseWriter: LogMessageWriter, colorStyler?: DefaultColor
 export const defaultConsoleLogFormat = logFormat`${'datetime'} ${'level'} [${'source'}]${logFormat.codeFormat(' %')}: ${'message'}`;
 
 export interface ConsoleLogWriterOptions {
-    readonly filter?: LogFilter;
-    readonly format?: LogFormat;
-    readonly logErrors?: boolean | LogFilter;
-    readonly logDetails?: boolean | LogFilter;
-    readonly colorStyler?: DefaultColorStyler;
+    readonly filter?: LogFilter | undefined;
+    readonly format?: LogFormat | undefined;
+    readonly logErrors?: boolean | LogFilter | undefined;
+    readonly logDetails?: boolean | LogFilter | undefined;
+    readonly colorStyler?: DefaultColorStyler | undefined;
 }
 
 export function createConsoleLogWriter(options: ConsoleLogWriterOptions) {

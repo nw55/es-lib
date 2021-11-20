@@ -7,25 +7,25 @@ type DetailsAndErrorParams =
     | [message: string, error: Error, details?: unknown];
 
 type ConsoleLogMessageWriterOptions = Readonly<{
-    logErrors?: true | LogFilter;
+    logErrors?: true | LogFilter | undefined;
     logDetails: true | LogFilter;
     writer: (...params: DetailsAndErrorParams) => void;
-    errorWriter?: (...params: DetailsAndErrorParams) => void;
+    errorWriter?: ((...params: DetailsAndErrorParams) => void) | undefined;
 } | {
-    logErrors?: true | LogFilter;
-    logDetails?: false;
+    logErrors?: true | LogFilter | undefined;
+    logDetails?: false | undefined;
     writer: (message: string, error?: Error) => void;
-    errorWriter?: (message: string, error?: Error) => void;
+    errorWriter?: ((message: string, error?: Error) => void) | undefined;
 } | {
     logErrors: false;
     logDetails: true | LogFilter;
     writer: (message: string, details?: unknown) => void;
-    errorWriter?: (message: string, details?: unknown) => void;
+    errorWriter?: ((message: string, details?: unknown) => void) | undefined;
 } | {
     logErrors: false;
-    logDetails?: false;
+    logDetails?: false | undefined;
     writer: (message: string) => void;
-    errorWriter?: (message: string) => void;
+    errorWriter?: ((message: string) => void) | undefined;
 }>;
 
 interface Console {

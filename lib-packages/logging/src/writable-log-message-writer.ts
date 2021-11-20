@@ -6,11 +6,11 @@ import { LogMessageWriter } from './message-writer';
 const asStringFormatter: LogDetailsFormatter = obj => String(obj);
 
 export interface WritableLogMessageWriterOptions {
-    readonly eol?: string;
-    readonly logErrors?: boolean | LogFilter;
-    readonly logDetails?: boolean | LogFilter;
-    readonly errorFormatter?: LogErrorFormatter;
-    readonly detailsFormatter?: LogDetailsFormatter;
+    readonly eol?: string | undefined;
+    readonly logErrors?: boolean | LogFilter | undefined;
+    readonly logDetails?: boolean | LogFilter | undefined;
+    readonly errorFormatter?: LogErrorFormatter | undefined;
+    readonly detailsFormatter?: LogDetailsFormatter | undefined;
 }
 
 interface Writable {

@@ -1,10 +1,10 @@
 import { TypedArray } from '../utils';
 
 interface ResizableTypedArrayOptions {
-    size?: number;
+    size?: number | undefined;
     capacity: number;
-    growFactor?: number;
-    shrinkFactor?: number;
+    growFactor?: number | undefined;
+    shrinkFactor?: number | undefined;
 }
 
 type TypedArrayConstructor<T extends TypedArray> = new (size: number) => T;

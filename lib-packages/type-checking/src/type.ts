@@ -20,8 +20,8 @@ type PartialTypeFromObjectDefinition<T extends AnyRecord> = {
 };
 
 interface PlainObjectOptions {
-    noExcessProperties?: boolean;
-    partial?: boolean;
+    noExcessProperties?: boolean | undefined;
+    partial?: boolean | undefined;
 }
 
 type StringTypeDefinition = typeof String | string | CheckableType<string>;

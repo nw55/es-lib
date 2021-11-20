@@ -5,8 +5,8 @@ import { LogLevel } from './log-level';
 import { LogMessageWriter } from './message-writer';
 
 export interface DefaultLogWriterOptions {
-    readonly filter?: LogFilter;
-    readonly format?: LogFormat;
+    readonly filter?: LogFilter | undefined;
+    readonly format?: LogFormat | undefined;
     readonly messageWriter: LogMessageWriter;
 }
 

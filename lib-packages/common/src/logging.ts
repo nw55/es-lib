@@ -1,7 +1,7 @@
 export interface LogDetails {
-    readonly code?: string;
-    readonly error?: Error;
-    readonly details?: unknown;
+    readonly code?: string | undefined;
+    readonly error?: Error | undefined;
+    readonly details?: unknown | undefined;
 }
 
 interface LoggerMethods {

@@ -20,9 +20,9 @@ type MainFunction = (args: string[]) => Awaitable<void>;
 type CleanupFunction = () => void;
 
 interface RunOptions {
-    main?: MainFunction;
-    cleanup?: CleanupFunction;
-    keepRunning?: boolean;
+    main?: MainFunction | undefined;
+    cleanup?: CleanupFunction | undefined;
+    keepRunning?: boolean | undefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

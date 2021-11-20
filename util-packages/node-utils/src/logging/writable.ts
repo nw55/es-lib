@@ -4,7 +4,7 @@ import { createWriteStream } from 'fs';
 
 export interface FileLogMessageWriterOptions extends WritableLogMessageWriterOptions {
     readonly file: string;
-    readonly append?: boolean;
+    readonly append?: boolean | undefined;
 }
 
 export async function openFileLogMessageWriter(options: FileLogMessageWriterOptions) {

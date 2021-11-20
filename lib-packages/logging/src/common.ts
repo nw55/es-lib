@@ -3,7 +3,7 @@ import { LogLevel } from './log-level';
 
 export interface LogMessage extends LogDetails {
     readonly level: LogLevel;
-    readonly source?: string;
+    readonly source?: string | undefined;
     readonly message: string;
 }
 
