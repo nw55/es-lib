@@ -1,5 +1,5 @@
 {
-    "extends": "@nw55/build-tools/tsconfig/lib/es2019.json",
+    "extends": "@nw55/build-tools/tsconfig/lib/es2020.json",
     "compilerOptions": {
         "outDir": "../lib"
     }
