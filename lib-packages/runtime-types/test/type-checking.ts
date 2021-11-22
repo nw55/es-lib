@@ -1,4 +1,7 @@
 import { requireType, testType, Type } from '@nw55/runtime-types';
+import { expectType } from './_utils';
+
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 
 describe('type-checking', () => {
     test('unchecked', () => {
@@ -6,6 +9,10 @@ describe('type-checking', () => {
         expect(testType(type, 1)).toBeTrue();
         expect(testType(type, '')).toBeTrue();
         expect(testType(type, {})).toBeTrue();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = unknown;
+        expectType<Actual, Actual, Expected>();
     });
 
     test('complex type', () => {
@@ -25,5 +32,9 @@ describe('type-checking', () => {
         expect(testType(type, failingValue)).toBeFalse();
         requireType(type, matchingValue);
         expect(() => requireType(type, failingValue)).toThrow();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = { a: string; b: number[]; };
+        expectType<Actual, Actual, Expected>();
     });
 });

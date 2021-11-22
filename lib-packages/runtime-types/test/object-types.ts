@@ -1,4 +1,7 @@
 import { testType, Type } from '@nw55/runtime-types';
+import { expectType } from './_utils';
+
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 
 describe('object-types', () => {
     test('plain object', () => {
@@ -9,6 +12,10 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string', b: 123 })).toBeTrue();
         expect(testType(type, {})).toBeFalse();
         expect(testType(type, { a: 123 })).toBeFalse();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = { a: string; };
+        expectType<Actual, Actual, Expected>();
     });
 
     test('plain object: non-objects', () => {
@@ -19,6 +26,10 @@ describe('object-types', () => {
         expect(testType(type, null)).toBeFalse();
         expect(testType(type, '')).toBeFalse();
         expect(testType(type, [])).toBeFalse();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = { a: string; };
+        expectType<Actual, Actual, Expected>();
     });
 
     test('plain object: partial', () => {
@@ -28,6 +39,10 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string' })).toBeTrue();
         expect(testType(type, {})).toBeTrue();
         expect(testType(type, { a: 123 })).toBeFalse();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = { a?: string; };
+        expectType<Actual, Actual, Expected>();
     });
 
     test('plain object: no excess properties', () => {
@@ -37,6 +52,10 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string' })).toBeTrue();
         expect(testType(type, {})).toBeFalse();
         expect(testType(type, { a: 'string', b: 'string' })).toBeFalse();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = { a: string; };
+        expectType<Actual, Actual, Expected>();
     });
 
     test('plain object with optional', () => {
@@ -51,6 +70,10 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string' })).toBeTrue();
         expect(testType(type, { b: 'string' })).toBeFalse();
         expect(testType(type, {})).toBeFalse();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = { a: string; b?: string; c?: string | undefined; };
+        expectType<Actual, Actual, Expected>();
     });
 
     test('record', () => {
@@ -60,6 +83,10 @@ describe('object-types', () => {
         expect(testType(type, {})).toBeTrue();
         expect(testType(type, { a: 1, b: 'string' })).toBeFalse();
         expect(testType(type, { a: 'string' })).toBeFalse();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = Record<string, number>;
+        expectType<Actual, Actual, Expected>();
     });
 
     test('record with union key', () => {
@@ -69,5 +96,9 @@ describe('object-types', () => {
         expect(testType(type, {})).toBeTrue();
         expect(testType(type, { a: 1, b: 'string' })).toBeFalse();
         expect(testType(type, { a: 'string' })).toBeFalse();
+
+        type Actual = Type.Of<typeof type>;
+        type Expected = Record<'a' | 'b', number>;
+        expectType<Actual, Actual, Expected>();
     });
 });

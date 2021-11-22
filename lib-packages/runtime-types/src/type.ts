@@ -13,11 +13,13 @@ import { UnknownType } from './types/unknown';
 
 const optionalSymbol = Symbol();
 
+type OptionalPropertyType<T> = readonly [typeof optionalSymbol, RuntimeType<T>];
+
 type PropertyTypeDefinition =
     | TypeDefinition
-    | readonly [typeof optionalSymbol, TypeDefinition];
+    | OptionalPropertyType<unknown>;
 
-function isOptionalPropertyType(type: PropertyTypeDefinition): type is readonly [typeof optionalSymbol, TypeDefinition] {
+function isOptionalPropertyType(type: PropertyTypeDefinition): type is OptionalPropertyType<unknown> {
     return isArray(type) && type[0] === optionalSymbol;
 }
 
@@ -30,8 +32,8 @@ export type TypeDefinition =
     | { readonly [key: string]: PropertyTypeDefinition; };
 
 type ObjectTypeFromDefinition<T extends Readonly<AnyRecord> | readonly unknown[]> =
-    & { -readonly [P in keyof T as typeof optionalSymbol extends keyof T[P] ? never : P]: TypeFromDefinition<T[P]>; }
-    & { -readonly [P in keyof T as typeof optionalSymbol extends keyof T[P] ? P : never]?: TypeFromDefinition<T[P]>; };
+    & { -readonly [P in keyof T as T[P] extends OptionalPropertyType<any> ? never : P]: TypeFromDefinition<T[P]>; }
+    & { -readonly [P in keyof T as T[P] extends OptionalPropertyType<any> ? P : never]?: T[P] extends OptionalPropertyType<infer U> ? U : never; };
 
 export type TypeFromDefinition<T> =
     T extends CheckableType<infer U> ? U :
@@ -41,7 +43,8 @@ export type TypeFromDefinition<T> =
     T extends typeof Number ? number :
     T extends typeof Boolean ? boolean :
     T extends typeof BigInt ? bigint :
-    T extends (Readonly<AnyRecord> | readonly unknown[]) ? ObjectTypeFromDefinition<T> :
+    T extends readonly unknown[] ? { -readonly [P in keyof T]: TypeFromDefinition<T[P]>; } :
+    T extends Readonly<AnyRecord> ? ObjectTypeFromDefinition<T> :
     never;
 
 type UnionTypeFromTupleDefinition<T extends unknown[]> = {
@@ -57,9 +60,9 @@ type PartialTypeFromObjectDefinition<T extends AnyRecord> = {
     [P in keyof T]?: TypeFromDefinition<T[P]>;
 };
 
-interface PlainObjectOptions {
+interface PlainObjectOptions<P extends boolean | undefined> {
     noExcessProperties?: boolean | undefined;
-    partial?: boolean | undefined;
+    partial?: P;
 }
 
 type StringTypeDefinition = typeof String | string | CheckableType<string> | RuntimeType<string>;
@@ -120,14 +123,18 @@ export namespace Type {
         return new ArrayType(fromDefinition(typeDefinition));
     }
 
-    export function object<T extends Record<string, TypeDefinition>>(options: PlainObjectOptions, typeDefinition: T): RuntimeType<PartialTypeFromObjectDefinition<T>> {
+    export function object<T extends Record<string, TypeDefinition>>(options: PlainObjectOptions<false | undefined>, typeDefinition: T): RuntimeType<ObjectTypeFromDefinition<T>>;
+    export function object<T extends Record<string, TypeDefinition>>(options: PlainObjectOptions<true>, typeDefinition: T): RuntimeType<PartialTypeFromObjectDefinition<T>>;
+    export function object<T extends Record<string, TypeDefinition>>(options: PlainObjectOptions<boolean | undefined>, typeDefinition: T) {
         return new ObjectType(getObjectPropertiesInfo(typeDefinition, options.partial ?? false), options.noExcessProperties ?? false);
     }
 
     export function partial<T extends Record<string, TypeDefinition>>(typeDefinition: T): RuntimeType<PartialTypeFromObjectDefinition<T>> {
-        return object({ partial: true }, typeDefinition);
+        return new ObjectType(getObjectPropertiesInfo(typeDefinition, true), false);
     }
 
+    export function optional<T extends TypeDefinition>(typeDefinition: T, allowUndefined?: false): OptionalPropertyType<TypeFromDefinition<T>>;
+    export function optional<T extends TypeDefinition>(typeDefinition: T, allowUndefined: true): OptionalPropertyType<TypeFromDefinition<T> | undefined>;
     export function optional<T extends TypeDefinition>(typeDefinition: T, allowUndefined = false) {
         return [
             optionalSymbol,
