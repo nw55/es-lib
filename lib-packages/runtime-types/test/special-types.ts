@@ -28,12 +28,4 @@ describe('special-types', () => {
         expect(testType(type, { a: 'string', b: 123, c: true })).toBeTrue();
         expect(testType(type, { a: 'string', c: true })).toBeFalse();
     });
-
-    test('optional', () => {
-        const type = Type.optional(String);
-        expect(testType(type, undefined)).toBeTrue();
-        expect(testType(type, 'string')).toBeTrue();
-        expect(testType(type, null)).toBeFalse();
-        expect(testType(type, 1)).toBeFalse();
-    });
 });

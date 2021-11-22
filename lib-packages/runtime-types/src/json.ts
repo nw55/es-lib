@@ -1,20 +1,26 @@
-import { CheckableType } from './common';
+import { CheckableType, RuntimeType } from './common';
 import { Type } from './type';
-
-type JsonValue = string | number | boolean | null | { [property: string]: JsonValue; } | JsonValue[];
+import { RecursiveType } from './types/recursive';
 
 export type JsonTypeDefinition =
-    CheckableType<JsonValue>
+    | CheckableType<JsonType.Value>
+    | RuntimeType<JsonType.Value>
     | string | number | boolean | null
     | typeof String | typeof Number | typeof Boolean
     | readonly JsonTypeDefinition[]
     | { readonly [key: string]: JsonTypeDefinition; };
 
 export namespace JsonType {
-    export const unchecked = Type.unchecked<JsonValue>();
+    // eslint-disable-next-line @typescript-eslint/ban-types, @typescript-eslint/array-type
+    export type Value = string | number | boolean | null | Object | Array;
+    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+    export type Object = { [property: string]: Value; };
+    export type Array = Value[];
 
-    const valueRef = Type.recursiveRef<JsonValue>();
-    export const value = valueRef.checkableType;
+    export const unchecked = Type.unchecked<Value>();
+
+    const valueRef = RecursiveType.create<Value>();
+    export const value = valueRef.type;
     export const array = Type.array(value);
     export const object = Type.record(value);
     valueRef.resolve(Type.union(String, Number, Boolean, Type.literalNull, array, object));

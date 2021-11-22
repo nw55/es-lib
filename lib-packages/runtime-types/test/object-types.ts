@@ -2,7 +2,7 @@ import { testType, Type } from '@nw55/runtime-types';
 
 describe('object-types', () => {
     test('plain object', () => {
-        const type = Type.plainObject({}, {
+        const type = Type.object({}, {
             a: String
         });
         expect(testType(type, { a: 'string' })).toBeTrue();
@@ -12,7 +12,7 @@ describe('object-types', () => {
     });
 
     test('plain object: non-objects', () => {
-        const type = Type.plainObject({}, {
+        const type = Type.object({}, {
             a: String
         });
         expect(testType(type, undefined)).toBeFalse();
@@ -22,7 +22,7 @@ describe('object-types', () => {
     });
 
     test('plain object: partial', () => {
-        const type = Type.plainObject({ partial: true }, {
+        const type = Type.object({ partial: true }, {
             a: String
         });
         expect(testType(type, { a: 'string' })).toBeTrue();
@@ -31,7 +31,7 @@ describe('object-types', () => {
     });
 
     test('plain object: no excess properties', () => {
-        const type = Type.plainObject({ noExcessProperties: true }, {
+        const type = Type.object({ noExcessProperties: true }, {
             a: String
         });
         expect(testType(type, { a: 'string' })).toBeTrue();
@@ -42,10 +42,12 @@ describe('object-types', () => {
     test('plain object with optional', () => {
         const type = Type.from({
             a: String,
-            b: Type.optional(String)
+            b: Type.optional(String),
+            c: Type.optional(String, true)
         });
-        expect(testType(type, { a: 'string', b: 'string' })).toBeTrue();
-        expect(testType(type, { a: 'string', b: undefined })).toBeTrue();
+        expect(testType(type, { a: 'string', b: 'string', c: 'string' })).toBeTrue();
+        expect(testType(type, { a: 'string', b: undefined })).toBeFalse();
+        expect(testType(type, { a: 'string', c: undefined })).toBeTrue();
         expect(testType(type, { a: 'string' })).toBeTrue();
         expect(testType(type, { b: 'string' })).toBeFalse();
         expect(testType(type, {})).toBeFalse();

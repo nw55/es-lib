@@ -13,6 +13,11 @@ export type Mutable<T> = {
     -readonly [P in keyof T]: T[P];
 };
 
+export type DeepMutable<T> =
+    T extends Function | null ? T : // eslint-disable-line @typescript-eslint/ban-types
+    T extends object ? { -readonly [P in keyof T]: DeepMutable<T[P]>; } : // eslint-disable-line @typescript-eslint/ban-types
+    T;
+
 export type DeepPartial<T> =
     T extends Function | null ? T : // eslint-disable-line @typescript-eslint/ban-types
     T extends object ? { [P in keyof T]?: DeepPartial<T[P]>; } : // eslint-disable-line @typescript-eslint/ban-types
@@ -47,6 +52,13 @@ export function getIterableFirstElement<T>(iterable: Iterable<T>): T | undefined
 
 export function isArray(value: unknown): value is readonly unknown[] {
     return Array.isArray(value);
+}
+
+export function isPlainObject(obj: unknown): obj is AnyRecord {
+    if (typeof obj !== 'object' || obj === null)
+        return false;
+    const prototype = Object.getPrototypeOf(obj) as unknown;
+    return prototype === null || prototype === Object.prototype;
 }
 
 // based on https://stackoverflow.com/a/7616484
