@@ -1,4 +1,4 @@
-import { testType, Type } from '@nw55/runtime-types';
+import { IntersectionType, testType, Type, UnionType } from '@nw55/runtime-types';
 import { expectType } from './_utils';
 
 describe('special-types', () => {
@@ -7,6 +7,7 @@ describe('special-types', () => {
         expect(testType(type, 'string')).toBeTrue();
         expect(testType(type, 123)).toBeTrue();
         expect(testType(type, true)).toBeFalse();
+        expect(type).toBeInstanceOf(UnionType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = string | number;
@@ -19,6 +20,7 @@ describe('special-types', () => {
         expect(testType(type, 123)).toBeTrue();
         expect(testType(type, true)).toBeTrue();
         expect(testType(type, [])).toBeFalse();
+        expect(type).toBeInstanceOf(UnionType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = string | number | boolean;
@@ -30,6 +32,7 @@ describe('special-types', () => {
         expect(testType(type, { a: 'string', b: 123 })).toBeTrue();
         expect(testType(type, { a: 'string' })).toBeFalse();
         expect(testType(type, { b: 123 })).toBeFalse();
+        expect(type).toBeInstanceOf(IntersectionType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a: string; } & { b: number; };
@@ -40,6 +43,7 @@ describe('special-types', () => {
         const type = Type.intersection({ a: String }, Type.intersection({ b: Number }, { c: Boolean }));
         expect(testType(type, { a: 'string', b: 123, c: true })).toBeTrue();
         expect(testType(type, { a: 'string', c: true })).toBeFalse();
+        expect(type).toBeInstanceOf(IntersectionType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a: string; } & { b: number; } & { c: boolean; };

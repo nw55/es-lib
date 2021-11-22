@@ -1,4 +1,4 @@
-import { requireType, testType, Type } from '@nw55/runtime-types';
+import { ObjectType, requireType, testType, Type } from '@nw55/runtime-types';
 import { expectType } from './_utils';
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
@@ -32,6 +32,7 @@ describe('type-checking', () => {
         expect(testType(type, failingValue)).toBeFalse();
         requireType(type, matchingValue);
         expect(() => requireType(type, failingValue)).toThrow();
+        expect(type).toBeInstanceOf(ObjectType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a: string; b: number[]; };

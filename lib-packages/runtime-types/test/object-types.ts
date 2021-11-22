@@ -1,4 +1,4 @@
-import { testType, Type } from '@nw55/runtime-types';
+import { ObjectType, RecordType, testType, Type } from '@nw55/runtime-types';
 import { expectType } from './_utils';
 
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
@@ -12,6 +12,7 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string', b: 123 })).toBeTrue();
         expect(testType(type, {})).toBeFalse();
         expect(testType(type, { a: 123 })).toBeFalse();
+        expect(type).toBeInstanceOf(ObjectType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a: string; };
@@ -26,6 +27,7 @@ describe('object-types', () => {
         expect(testType(type, null)).toBeFalse();
         expect(testType(type, '')).toBeFalse();
         expect(testType(type, [])).toBeFalse();
+        expect(type).toBeInstanceOf(ObjectType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a: string; };
@@ -39,6 +41,7 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string' })).toBeTrue();
         expect(testType(type, {})).toBeTrue();
         expect(testType(type, { a: 123 })).toBeFalse();
+        expect(type).toBeInstanceOf(ObjectType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a?: string; };
@@ -52,6 +55,7 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string' })).toBeTrue();
         expect(testType(type, {})).toBeFalse();
         expect(testType(type, { a: 'string', b: 'string' })).toBeFalse();
+        expect(type).toBeInstanceOf(ObjectType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a: string; };
@@ -70,6 +74,7 @@ describe('object-types', () => {
         expect(testType(type, { a: 'string' })).toBeTrue();
         expect(testType(type, { b: 'string' })).toBeFalse();
         expect(testType(type, {})).toBeFalse();
+        expect(type).toBeInstanceOf(ObjectType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = { a: string; b?: string; c?: string | undefined; };
@@ -83,6 +88,7 @@ describe('object-types', () => {
         expect(testType(type, {})).toBeTrue();
         expect(testType(type, { a: 1, b: 'string' })).toBeFalse();
         expect(testType(type, { a: 'string' })).toBeFalse();
+        expect(type).toBeInstanceOf(RecordType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = Record<string, number>;
@@ -96,6 +102,7 @@ describe('object-types', () => {
         expect(testType(type, {})).toBeTrue();
         expect(testType(type, { a: 1, b: 'string' })).toBeFalse();
         expect(testType(type, { a: 'string' })).toBeFalse();
+        expect(type).toBeInstanceOf(RecordType);
 
         type Actual = Type.Of<typeof type>;
         type Expected = Record<'a' | 'b', number>;

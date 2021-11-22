@@ -1,15 +1,6 @@
 import { AnyRecord, ArgumentError, isArray } from '@nw55/common';
 import { CheckableType, RuntimeType } from './common';
-import { ArrayType } from './types/array';
-import { IntersectionType } from './types/intersection';
-import { LiteralType } from './types/literal';
-import { ObjectPropertyType, ObjectType } from './types/object';
-import { RecordType } from './types/record';
-import { RecursiveType } from './types/recursive';
-import { TupleType } from './types/tuple';
-import { TypeofType } from './types/typeof';
-import { UnionType } from './types/union';
-import { UnknownType } from './types/unknown';
+import { ArrayType, IntersectionType, LiteralType, ObjectPropertyType, ObjectType, RecordType, RecursiveType, TupleType, TypeofType, UnionType, UnknownType } from './types';
 
 const optionalSymbol = Symbol();
 
