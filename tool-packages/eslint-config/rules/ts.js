@@ -187,7 +187,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-extra-non-null-assertion': style,
     '@typescript-eslint/no-extraneous-class': mistake,
-    '@typescript-eslint/no-implicit-any-catch': improvement,
+    '@typescript-eslint/no-implicit-any-catch': 'off',
     '@typescript-eslint/no-inferrable-types': style,
     '@typescript-eslint/no-invalid-void-type': [improvement, {
         allowAsThisParameter: true
