@@ -7,7 +7,7 @@ export async function tryReadTextFile(file: string) {
     try {
         return await fs.readFile(file, 'utf8');
     }
-    catch (e: unknown) {
+    catch (e) {
         if (isNodeError(e, 'ENOENT'))
             return null;
         // eslint-disable-next-line @typescript-eslint/no-throw-literal -- rethrow
