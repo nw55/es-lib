@@ -1,0 +1,33 @@
+{
+  "name": "@nw55/web",
+  "description": "nw55 web library",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nw55/es-lib.git",
+    "directory": "lib-packages/web"
+  },
+  "author": "Niklas Werner (nw55) <nw55@outlook.com>",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "/dist",
+    "/lib",
+    "/src"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.js",
+    "module": "lib/index.js",
+    "types": "lib/index.d.ts"
+  },
+  "dependencies": {
+    "@nw55/common": "~0.2.2",
+    "@nw55/runtime-types": "~0.1.1"
+  },
+  "devDependencies": {
+    "@nw55/build-tools": "~0.2.4",
+    "typescript": "~4.5.5"
+  }
+}

@@ -1106,12 +1106,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/runtime-types@workspace:lib-packages/runtime-types, @nw55/runtime-types@~0.1.0":
+"@nw55/runtime-types@workspace:lib-packages/runtime-types, @nw55/runtime-types@~0.1.0, @nw55/runtime-types@~0.1.1":
   version: 0.0.0-use.local
   resolution: "@nw55/runtime-types@workspace:lib-packages/runtime-types"
   dependencies:
     "@nw55/build-tools": ~0.2.4
     "@nw55/common": ~0.2.2
+    typescript: ~4.5.5
+  languageName: unknown
+  linkType: soft
+
+"@nw55/web@workspace:lib-packages/web":
+  version: 0.0.0-use.local
+  resolution: "@nw55/web@workspace:lib-packages/web"
+  dependencies:
+    "@nw55/build-tools": ~0.2.4
+    "@nw55/common": ~0.2.2
+    "@nw55/runtime-types": ~0.1.1
     typescript: ~4.5.5
   languageName: unknown
   linkType: soft

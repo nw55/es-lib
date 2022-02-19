@@ -10,6 +10,9 @@
             "path": "lib-packages/runtime-types/src"
         },
         {
+            "path": "lib-packages/web/src"
+        },
+        {
             "path": "util-packages/node-utils/src"
         },
         {
