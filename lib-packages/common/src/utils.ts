@@ -50,6 +50,18 @@ export function getIterableFirstElement<T>(iterable: Iterable<T>): T | undefined
     return undefined;
 }
 
+export function notNull<T>(value: T | null): value is T {
+    return value !== null;
+}
+
+export function notUndefined<T>(value: T | undefined): value is T {
+    return value !== undefined;
+}
+
+export function notNullable<T>(value: T | null | undefined): value is T {
+    return value !== null || value !== undefined;
+}
+
 export function isArray(value: unknown): value is readonly unknown[] {
     return Array.isArray(value);
 }
