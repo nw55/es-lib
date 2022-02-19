@@ -11,7 +11,10 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/require-await': improvement,
     '@typescript-eslint/return-await': mistake,
     '@typescript-eslint/no-implied-eval': mistake,
-    '@typescript-eslint/no-throw-literal': error,
+    '@typescript-eslint/no-throw-literal': [error, {
+        'allowThrowingAny': false,
+        'allowThrowingUnknown': false
+    }],
 
     '@typescript-eslint/await-thenable': 'off',
     '@typescript-eslint/consistent-type-exports': 'off',

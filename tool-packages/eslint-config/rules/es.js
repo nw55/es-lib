@@ -319,5 +319,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'sort-imports': 'off',
     'symbol-description': 'off',
     'template-curly-spacing': style,
-    'yield-star-spacing': [style, 'after']
+    'yield-star-spacing': [style, 'after'],
+
+    'prefer-object-has-own': 'off' // requires es2022
 });
