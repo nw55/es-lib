@@ -10,7 +10,7 @@ export class RecursiveType<T> extends RuntimeType<T> {
         };
     }
 
-    private _resolvedType: CheckableType<T> | null = null;
+    private _resolvedType: RuntimeType<T> | null = null;
 
     get type(): RuntimeType<T> {
         if (this._resolvedType === null)

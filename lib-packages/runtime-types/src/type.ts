@@ -136,7 +136,7 @@ export namespace Type {
     export function record<T extends TypeDefinition>(typeDefinition: T): RuntimeType<Record<string, TypeFromDefinition<T>>>;
     export function record<K extends StringTypeDefinition, V extends TypeDefinition>(keyTypeDefinition: K, valueTypeDefinition: V): RuntimeType<Record<TypeFromDefinition<K>, TypeFromDefinition<V>>>;
     export function record(typeDefinition1: TypeDefinition, typeDefinition2?: TypeDefinition) {
-        const keyType = typeDefinition2 === undefined ? uncheckedType : fromDefinition(typeDefinition1);
+        const keyType = typeDefinition2 === undefined ? unknown : fromDefinition(typeDefinition1);
         const valueType = fromDefinition(typeDefinition2 === undefined ? typeDefinition1 : typeDefinition2);
         return new RecordType(keyType, valueType);
     }
