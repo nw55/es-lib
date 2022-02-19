@@ -5,11 +5,8 @@
 
 module.exports = {
     extends: './app/es',
-    parserOptions: {
-        ecmaVersion: 2019
-    },
     env: {
         node: true,
-        es2017: true
+        es2020: true
     }
 };

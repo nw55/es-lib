@@ -10,6 +10,7 @@ export async function tryReadTextFile(file: string) {
     catch (e: unknown) {
         if (isNodeError(e, 'ENOENT'))
             return null;
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal -- rethrow
         throw e;
     }
 }

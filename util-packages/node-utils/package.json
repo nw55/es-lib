@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@nw55/build-tools": "~0.2.4",
-    "@types/node": "^16.11.9",
-    "typescript": "~4.4.4"
+    "@types/node": "^16.11.25",
+    "typescript": "~4.5.5"
   }
 }
