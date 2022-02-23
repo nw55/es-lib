@@ -108,7 +108,12 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     }],
     '@typescript-eslint/ban-ts-comment': mistake,
     '@typescript-eslint/ban-tslint-comment': mistake,
-    '@typescript-eslint/ban-types': mistake,
+    '@typescript-eslint/ban-types': [mistake, {
+        types: {
+            '{}': false
+        },
+        extendDefaults: true
+    }],
     '@typescript-eslint/class-literal-property-style': 'off',
     '@typescript-eslint/consistent-indexed-object-style': 'off',
     '@typescript-eslint/consistent-type-assertions': [mistake, {

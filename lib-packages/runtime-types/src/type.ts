@@ -93,6 +93,8 @@ export namespace Type {
             throw new ArgumentError();
         if (typeDefinition instanceof RuntimeType)
             return typeDefinition;
+        if (CheckableType.test(typeDefinition))
+            return new UnknownType(typeDefinition);
         if (isArray(typeDefinition))
             return new TupleType(typeDefinition.map(fromDefinition));
         return new ObjectType(getObjectPropertiesInfo(typeDefinition, false), false);

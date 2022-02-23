@@ -1,4 +1,3 @@
-export * from './common';
-export * from './parameters';
-export * from './rest-api';
-export * from './results';
+export * from './api-definition';
+export * from './endpoints';
+export * from './result';
