@@ -1,0 +1,46 @@
+{
+  "name": "@nw55/express-utils",
+  "description": "nw55 utility library for express",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nw55/es-lib.git",
+    "directory": "util-packages/express-utils"
+  },
+  "author": "Niklas Werner (nw55) <nw55@outlook.com>",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "/dist",
+    "/lib",
+    "/src"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.js",
+    "module": "lib/index.js",
+    "types": "lib/index.d.ts"
+  },
+  "dependencies": {
+    "@nw55/common": "~0.2.2",
+    "@nw55/logging": "~0.1.2",
+    "@nw55/runtime-types": "~0.1.0",
+    "@nw55/web": "~0.1.0"
+  },
+  "devDependencies": {
+    "@nw55/build-tools": "~0.2.4",
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.11.25",
+    "typescript": "~4.5.5"
+  },
+  "peerDependencies": {
+    "@types/express": "^4.17.13",
+    "express": "^4.17.3"
+  },
+  "peerDependenciesMeta": {
+    "@types/express": {
+      "optional": true
+    }
+  }
+}
