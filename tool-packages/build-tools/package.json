@@ -17,6 +17,9 @@
     "tsconfig",
     "cli.js"
   ],
+  "scripts": {
+    "tsconfig-dependency-graph": "node dev-scripts/tsconfig-dependency-graph.mjs"
+  },
   "bin": {
     "nw55-build": "./cli.js"
   },

@@ -1,13 +1,17 @@
 'use strict';
 
-const path = require('path');
-const fs = require('fs').promises;
-const stripJsonComments = require('strip-json-comments');
+import { resolve, relative, parse, dirname } from 'path';
+import fs from 'fs/promises';
+import stripJsonComments from 'strip-json-comments';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 async function* iterateFilesRecursive(dir) {
     const entries = await fs.readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
-        const file = path.resolve(dir, entry.name);
+        const file = resolve(dir, entry.name);
         if (entry.isDirectory())
             yield* iterateFilesRecursive(file);
         else
@@ -16,8 +20,8 @@ async function* iterateFilesRecursive(dir) {
 }
 
 async function processFile(baseDir, file, nodes, edges) {
-    const name = path.relative(baseDir, file);
-    const pathInfo = path.parse(file);
+    const name = relative(baseDir, file);
+    const pathInfo = parse(file);
     if (pathInfo.ext !== '.json')
         return;
 
@@ -26,14 +30,14 @@ async function processFile(baseDir, file, nodes, edges) {
     nodes.push(name);
 
     if (fileContent.extends) {
-        const extendsName = path.relative(baseDir, path.resolve(pathInfo.dir, fileContent.extends));
+        const extendsName = relative(baseDir, resolve(pathInfo.dir, fileContent.extends));
         edges.push([extendsName, name]);
     }
 }
 
 async function main() {
-    const tsconfigDir = path.resolve(__dirname, '../tsconfig');
-    const outputFile = path.resolve(tsconfigDir, 'dependencies.gv');
+    const tsconfigDir = resolve(__dirname, '../tsconfig');
+    const outputFile = resolve(tsconfigDir, 'dependencies.gv');
 
     const nodes = [];
     const edges = [];
