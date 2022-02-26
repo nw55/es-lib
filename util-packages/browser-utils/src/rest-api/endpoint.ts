@@ -1,21 +1,10 @@
 import { ArgumentError } from '@nw55/common';
 import { Log } from '@nw55/logging';
 import { requireType, RuntimeType } from '@nw55/runtime-types';
-import { ApiResultHandler, EndpointDefinition, HttpError, QueryParameterFormat, QueryParameters, RestMethod, RouteInfo, RouteParameterFormat, RoutePath } from '@nw55/web';
+import { ApiResultHandler, EndpointDefinition, HttpError, QueryParameterFormat, RestMethod, RoutePathSegment } from '@nw55/web';
 import { ApiClientOptions } from './common';
 
 const logger = Log.createLogger('@nw55/browser-utils/rest-api/endpoint');
-
-type AnyEndpoint = EndpointDefinition<RouteInfo<RoutePath, Record<string, RouteParameterFormat<any>>>, QueryParameters, any, any>;
-
-type PathSegment = {
-    type: 'fixed';
-    value: string;
-} | {
-    type: 'param';
-    name: string;
-    format?: RouteParameterFormat<unknown> | undefined;
-};
 
 function validateBaseUrl(baseUrl: URL | string) {
     if (typeof baseUrl === 'string')
@@ -27,25 +16,18 @@ function validateBaseUrl(baseUrl: URL | string) {
     return baseUrl.href;
 }
 
-export class EndpointFetchHandler<E extends AnyEndpoint> {
+export class EndpointFetchHandler {
     private _method: RestMethod;
-    private _pathSegments: PathSegment[];
+    private _pathSegments: RoutePathSegment[];
     private _queryParameters: [string, QueryParameterFormat<unknown>][];
-    private _hasParameters: boolean;
     private _dataType: RuntimeType<unknown> | null;
     private _resultHandler: ApiResultHandler<unknown, unknown>;
     private _baseUrl: string;
 
-    constructor(endpointDefinition: E, options: ApiClientOptions) {
+    constructor(endpointDefinition: EndpointDefinition, options: ApiClientOptions) {
         this._method = endpointDefinition.method;
-        this._pathSegments = endpointDefinition.route.path.split('/').filter(segment => segment !== '').map(segment => {
-            if (!segment.startsWith(':'))
-                return { type: 'fixed', value: segment };
-            const name = segment.slice(1);
-            return { type: 'param', name, format: endpointDefinition.route.parameterFormats[name] };
-        });
+        this._pathSegments = endpointDefinition.route.pathSegments;
         this._queryParameters = Object.entries(endpointDefinition.queryParameters);
-        this._hasParameters = endpointDefinition.route.parameters.length > 0 || this._queryParameters.length > 0;
         this._dataType = endpointDefinition.dataType;
         this._resultHandler = endpointDefinition.resultHandler;
         this._baseUrl = validateBaseUrl(options.baseUrl);
@@ -54,9 +36,11 @@ export class EndpointFetchHandler<E extends AnyEndpoint> {
     entrypoint = (...args: unknown[]) => this._sendRequest(args);
 
     private async _sendRequest(args: unknown[]) {
+        const hasParameters = this._pathSegments.length > 0 || this._queryParameters.length;
+        const hasData = this._dataType !== null;
         let argIndex = 0;
-        const parameters = this._hasParameters ? args[argIndex++] as Record<string, unknown> : {};
-        const data = this._dataType !== null ? args[argIndex++] : undefined;
+        const parameters = hasParameters ? args[argIndex++] as Record<string, unknown> : {};
+        const data = hasData ? args[argIndex++] : undefined;
 
         const url = this._generateUrl(parameters);
 
@@ -90,7 +74,7 @@ export class EndpointFetchHandler<E extends AnyEndpoint> {
             const value = parameters[segment.name];
             if (value === undefined)
                 throw new ArgumentError(`Missing route parameter '${segment.name}'`);
-            const formatted = segment.format === undefined ? value : segment.format.format(value);
+            const formatted = segment.format === null ? value : segment.format.format(value);
             if (typeof formatted !== 'string')
                 throw new ArgumentError(`Invalid route parameter type for '${segment.name}'`);
             if (formatted === '')

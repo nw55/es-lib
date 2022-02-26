@@ -13,6 +13,9 @@
             "path": "lib-packages/web/src"
         },
         {
+            "path": "util-packages/browser-utils/src"
+        },
+        {
             "path": "util-packages/express-utils/src"
         },
         {

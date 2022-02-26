@@ -1,12 +1,10 @@
-import { Awaitable } from '@nw55/common';
+import { Awaitable, notNull } from '@nw55/common';
 import { Log } from '@nw55/logging';
 import { requireType, RuntimeType } from '@nw55/runtime-types';
-import { ApiResultHandler, EndpointDefinition, EndpointSignature, HttpError, QueryParameterFormat, QueryParameters, RestMethod, RouteInfo, RouteParameterFormat, RoutePath } from '@nw55/web';
+import { ApiResultHandler, EndpointDefinition, EndpointSignature, HttpError, PathRouteInfo, QueryParameterFormat, RestMethod, RouteParameterFormat } from '@nw55/web';
 import { Request, RequestHandler, Response, Router } from 'express';
 
 const logger = Log.createLogger('@nw55/express-utils/rest-api/endpoint');
-
-type AnyEndpoint = EndpointDefinition<RouteInfo<RoutePath, Record<string, RouteParameterFormat<any>>>, QueryParameters, any, any>;
 
 type AnyEndpointImplementation = (...args: unknown[]) => Awaitable<unknown>;
 
@@ -15,9 +13,10 @@ interface Result {
     data?: unknown | undefined;
 }
 
-export class EndpointRequestHandler<E extends AnyEndpoint> {
+export class EndpointRequestHandler<E extends EndpointDefinition> {
     private _method: RestMethod;
-    private _route: RouteInfo<RoutePath, Record<string, RouteParameterFormat<unknown> | undefined>>;
+    private _routePath: string;
+    private _routeParameters: (readonly [string, RouteParameterFormat<unknown> | null])[];
     private _queryParameters: [string, QueryParameterFormat<unknown>][];
     private _dataType: RuntimeType<unknown> | null;
     private _resultHandler: ApiResultHandler<unknown, unknown>;
@@ -25,7 +24,10 @@ export class EndpointRequestHandler<E extends AnyEndpoint> {
 
     constructor(endpointDefinition: E, implementation: EndpointSignature<E>) {
         this._method = endpointDefinition.method;
-        this._route = endpointDefinition.route;
+        this._routePath = endpointDefinition.route.path;
+        this._routeParameters = endpointDefinition.route.pathSegments.map(
+            segment => segment.type === 'parameter' ? [segment.name, segment.format] as const : null
+        ).filter(notNull);
         this._queryParameters = Object.entries(endpointDefinition.queryParameters);
         this._dataType = endpointDefinition.dataType;
         this._resultHandler = endpointDefinition.resultHandler;
@@ -33,7 +35,7 @@ export class EndpointRequestHandler<E extends AnyEndpoint> {
     }
 
     mountToRouter(router: Router) {
-        const path = this._route.path;
+        const path = this._routePath;
         const handler = this._requestHandlerEntrypoint;
 
         switch (this._method) {
@@ -113,20 +115,18 @@ export class EndpointRequestHandler<E extends AnyEndpoint> {
     }
 
     private _handleRouteParameters(req: Request) {
-        if (this._route.parameters.length === 0)
+        if (this._routeParameters.length === 0)
             return null;
 
         const result: Record<string, unknown> = {};
 
-        for (const name of (this._route.parameters as string[])) {
+        for (const [name, format] of this._routeParameters) {
             const value = req.params[name];
 
             if (typeof value !== 'string')
                 throw new Error('Invalid or missing route param');
 
-            const format = this._route.parameterFormats[name];
-
-            if (format !== undefined) {
+            if (format !== null) {
                 let parsed;
                 try {
                     parsed = format.parse(value);

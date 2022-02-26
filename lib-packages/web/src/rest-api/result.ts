@@ -11,10 +11,10 @@ type ClientResult<T> = {
 
 export interface ApiResultHandler<B, T> {
     readonly bodyType: RuntimeType<B>;
-    readonly handleResult: (result: T) => ServerResult<B>;
-    readonly handleError?: (error: Error) => ServerResult<B>;
-    readonly handleStatus?: (status: number) => ClientResult<T>;
-    readonly handleBody: (body: B) => T;
+    handleResult(result: T): ServerResult<B>;
+    handleError?(error: Error): ServerResult<B>;
+    handleStatus?(status: number): ClientResult<T>;
+    handleBody(body: B): T;
 }
 
 export const ignoreResult: ApiResultHandler<unknown, void> = {

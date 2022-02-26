@@ -1,6 +1,6 @@
 import { ArgumentError } from '@nw55/common';
 
-export type QueryParameters = Record<string, QueryParameterFormat<any>>;
+export type QueryParameters = Record<string, QueryParameterFormat<unknown>>;
 
 type QueryParamTypes<Params> = {
     [P in keyof Params]: Params[P] extends QueryParameterFormat<infer T> ? T : never;
@@ -15,8 +15,8 @@ type Simplify<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
 export type ResolveQueryParameterTypes<T extends QueryParameters> = Simplify<OptionalIfUndefined<QueryParamTypes<T>>>;
 
 export interface QueryParameterFormat<T> {
-    parse: (str: string | undefined) => T;
-    format: (value: T) => string | undefined;
+    parse(str: string | undefined): T;
+    format(value: T): string | undefined;
 }
 
 export interface QueryParameterFormatCreator<T> {
@@ -25,8 +25,8 @@ export interface QueryParameterFormatCreator<T> {
 }
 
 export interface QueryParameterFormatCreatorOptions<T> {
-    parse: (str: string) => T;
-    format: (value: T) => string;
+    parse(str: string): T;
+    format(value: T): string;
 }
 
 class QueryParameterFormatImpl<T> implements QueryParameterFormat<T | undefined> {
