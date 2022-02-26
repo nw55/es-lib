@@ -13,15 +13,16 @@ export interface EndpointDefinition<R extends RouteInfo<any, any>, Q extends Que
     resultHandler: ApiResultHandler<any, T>;
 }
 
-type EntpointParams<R, Q, D> = [
-    ...(keyof R extends never ? [] : [routeParameters: R]),
-    ...(keyof Q extends never ? [] : [parameters: Q]),
+type EntpointParams<P, D> = [
+    ...(keyof P extends never ? [] : [parameters: Simplify<P>]),
     ...([D] extends [never] ? [] : [data: D])
 ];
 
+type Simplify<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
+
 export type EndpointSignature<ED extends EndpointDefinition<any, any, any, any>> =
     ED extends EndpointDefinition<infer R, infer Q, infer D, infer T>
-    ? (...params: EntpointParams<ResolveRouteParameterTypes<R>, ResolveQueryParameterTypes<Q>, D>) => Awaitable<T>
+    ? (...params: EntpointParams<ResolveRouteParameterTypes<R> & ResolveQueryParameterTypes<Q>, D>) => Awaitable<T>
     : never;
 
 export function endpoint<R extends RouteInfo<any, any>, Q extends QueryParameters, D = never, T = never>(

@@ -1,15 +1,15 @@
-import { notNull, ArgumentError } from '@nw55/common';
+import { ArgumentError, notNull } from '@nw55/common';
 
 export type RoutePath = `/${string}`;
 
-type PathSegmentParam<T> = T extends `:${infer P}` ? [P] : [];
+type PathSegmentParam<T> = T extends `:${infer P}` ? P : never;
 
 export type ExtractRouteParameters<Path extends RoutePath> =
     Path extends `/${infer Segment}/${infer Rest}` ?
-    [...PathSegmentParam<Segment>, ...ExtractRouteParameters<`/${Rest}`>] :
+    PathSegmentParam<Segment> | ExtractRouteParameters<`/${Rest}`> :
     Path extends `/${infer Segment}` ?
     PathSegmentParam<Segment> :
-    [];
+    never;
 
 export interface RouteParameterFormat<T> {
     parse: (str: string) => T | undefined; // undefined -> not found
@@ -18,12 +18,12 @@ export interface RouteParameterFormat<T> {
 
 export interface RouteInfo<P extends RoutePath, F extends ParameterFormats<P>> {
     path: P;
-    parameters: ExtractRouteParameters<P>;
-    parameterFormats: F | {};
+    parameters: ExtractRouteParameters<P>[];
+    parameterFormats: F;
 }
 
 type ParameterFormats<P extends RoutePath> = {
-    [K in ExtractRouteParameters<P>[number]]?: RouteParameterFormat<any>;
+    [K in ExtractRouteParameters<P>]?: RouteParameterFormat<any>;
 };
 
 export function pathRoute<P extends RoutePath>(path: P): RouteInfo<P, {}>;
@@ -41,13 +41,15 @@ export function pathRoute<P extends RoutePath, F extends ParameterFormats<P>>(pa
 
     return {
         path,
-        parameters: parameters as ExtractRouteParameters<P>,
-        parameterFormats: parameterFormats ?? {}
+        parameters: parameters as ExtractRouteParameters<P>[],
+        parameterFormats: parameterFormats ?? {} as F // eslint-disable-line @typescript-eslint/consistent-type-assertions
     };
 }
 
 export type ResolveRouteParameterTypes<T extends RouteInfo<any, any>> =
     T extends RouteInfo<infer P, infer F>
-    ? { [K in ExtractRouteParameters<P>[number]]:
-        F[K] extends RouteParameterFormat<infer PF> ? PF : string; }
+    ? {
+        [K in ExtractRouteParameters<P>]:
+        F[K] extends RouteParameterFormat<infer PF> ? PF : string;
+    }
     : never;

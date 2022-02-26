@@ -20,14 +20,11 @@ export interface QueryParameterFormat<T> {
 }
 
 export interface QueryParameterFormatCreator<T> {
-    (required: 'required'): QueryParameterFormat<T>;
-    (optional: 'optional'): QueryParameterFormat<T | undefined>;
-    (optional: 'optional', defaultValue: T): QueryParameterFormat<T>;
+    (required: true): QueryParameterFormat<T>;
+    (required: false): QueryParameterFormat<T | undefined>;
 }
 
 export interface QueryParameterFormatCreatorOptions<T> {
-    validateDefaultValue?: (defaultValue: T) => boolean; // may throw specific error instead of returning false
-    isDefaultValue?: (defaultValue: T) => boolean; // not needed if default value can be compared with ===
     parse: (str: string) => T;
     format: (value: T) => string;
 }
@@ -35,23 +32,14 @@ export interface QueryParameterFormatCreatorOptions<T> {
 class QueryParameterFormatImpl<T> implements QueryParameterFormat<T | undefined> {
     constructor(
         private _options: QueryParameterFormatCreatorOptions<T>,
-        private _required: boolean,
-        private _defaultValue: T | undefined
+        private _required: boolean
     ) { }
-
-    private _isDefaultValue(value: T) {
-        if (this._defaultValue === undefined)
-            return false;
-        if (this._options.isDefaultValue === undefined)
-            return value === this._defaultValue;
-        return this._options.isDefaultValue(value);
-    }
 
     parse(str: string | undefined) {
         if (str === undefined) {
             if (this._required)
                 throw new ArgumentError('Missing required parameter value.');
-            return this._defaultValue;
+            return undefined;
         }
         return this._options.parse(str);
     }
@@ -62,18 +50,13 @@ class QueryParameterFormatImpl<T> implements QueryParameterFormat<T | undefined>
                 throw new ArgumentError('Missing required parameter value.');
             return undefined;
         }
-        if (this._isDefaultValue(value))
-            return undefined;
         return this._options.format(value);
     }
 }
 
 export function createQueryParameterFormatCreator<T>(options: QueryParameterFormatCreatorOptions<T>) {
-    return ((requiredOrOptional: 'required' | 'optional', defaultValue?: T): QueryParameterFormat<T | undefined> => {
-        if (defaultValue !== undefined && options.validateDefaultValue !== undefined && !options.validateDefaultValue(defaultValue))
-            throw new ArgumentError('Invalid default value');
-        return new QueryParameterFormatImpl(options, requiredOrOptional === 'required', defaultValue);
-    }) as QueryParameterFormatCreator<T>;
+    return ((required: boolean): QueryParameterFormat<T | undefined> =>
+        new QueryParameterFormatImpl(options, required)) as QueryParameterFormatCreator<T>;
 }
 
 export const stringQueryParameter = createQueryParameterFormatCreator<string>({
@@ -87,7 +70,6 @@ export const booleanQueryParameter = createQueryParameterFormatCreator<boolean>(
 });
 
 export const integerQueryParameter = createQueryParameterFormatCreator<number>({
-    validateDefaultValue: value => Number.isInteger(value),
     parse: str => {
         if (!/^-?\d+/.test(str))
             throw new ArgumentError('Invalid parameter format');
