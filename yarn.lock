@@ -1026,6 +1026,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nw55/browser-utils@workspace:util-packages/browser-utils":
+  version: 0.0.0-use.local
+  resolution: "@nw55/browser-utils@workspace:util-packages/browser-utils"
+  dependencies:
+    "@nw55/build-tools": ~0.2.4
+    "@nw55/common": ~0.2.2
+    "@nw55/logging": ~0.1.2
+    "@nw55/runtime-types": ~0.1.0
+    "@nw55/web": ~0.1.0
+    typescript: ~4.5.5
+  languageName: unknown
+  linkType: soft
+
 "@nw55/build-tools@workspace:tool-packages/build-tools, @nw55/build-tools@~0.2.4":
   version: 0.0.0-use.local
   resolution: "@nw55/build-tools@workspace:tool-packages/build-tools"
