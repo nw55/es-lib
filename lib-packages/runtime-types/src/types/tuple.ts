@@ -14,7 +14,7 @@ export class TupleType<T extends readonly any[]> extends RuntimeType<Mutable<T>>
         return this._elements;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         const result: Mutable<TypeCheckResult> = {
             success: true,
             errors: []

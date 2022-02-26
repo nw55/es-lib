@@ -1,5 +1,5 @@
 import { InvalidOperationError } from '@nw55/common';
-import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common';
+import { CheckableType, RuntimeType, TypeCheckOptions } from '../common';
 
 export class RecursiveType<T> extends RuntimeType<T> {
     static create<T>() {
@@ -24,7 +24,7 @@ export class RecursiveType<T> extends RuntimeType<T> {
         this._resolvedType = type;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions) {
         return this.type[CheckableType.check](value, options);
     }
 }

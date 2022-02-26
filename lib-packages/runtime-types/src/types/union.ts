@@ -21,7 +21,7 @@ export class UnionType<T extends readonly any[]> extends RuntimeType<TupleToUnio
         return this._types;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         const unionResult: TypeCheckResult = {
             success: false,
             errors: []

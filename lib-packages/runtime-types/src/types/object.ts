@@ -40,7 +40,7 @@ export class ObjectType<T extends readonly ObjectPropertyType[]> extends Runtime
         return this._allowedPropertyKeys !== null;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         const result: Mutable<TypeCheckResult> = {
             success: true,
             errors: []

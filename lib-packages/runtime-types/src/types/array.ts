@@ -14,7 +14,7 @@ export class ArrayType<T> extends RuntimeType<T[]> {
         return this._element;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         const result: Mutable<TypeCheckResult> = {
             success: true,
             errors: []

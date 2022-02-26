@@ -1,4 +1,4 @@
-import { CheckableType, RuntimeType, TypeCheckOptions } from '../common';
+import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common';
 
 export class UnknownType<T> extends RuntimeType<T> {
     private _checkableType: CheckableType<T>;
@@ -9,7 +9,7 @@ export class UnknownType<T> extends RuntimeType<T> {
         this._checkableType = checkableType;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions) {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         return this._checkableType[CheckableType.check](value, options);
     }
 }

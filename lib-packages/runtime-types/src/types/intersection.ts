@@ -26,7 +26,7 @@ export class IntersectionType<T extends readonly any[]> extends RuntimeType<Tupl
         return this._types;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         const intersectionResult: Mutable<TypeCheckResult> = {
             success: true,
             errors: []

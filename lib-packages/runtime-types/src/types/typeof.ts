@@ -24,7 +24,7 @@ export class TypeofType<T extends keyof TypeofMapping> extends RuntimeType<Typeo
         return this._type;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         const success = typeof value === this._type;
         return {
             success,

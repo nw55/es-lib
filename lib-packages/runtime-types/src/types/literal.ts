@@ -13,7 +13,7 @@ export class LiteralType<T> extends RuntimeType<T> {
         return this._value;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T> {
         const success = value === this._value;
         return {
             success,

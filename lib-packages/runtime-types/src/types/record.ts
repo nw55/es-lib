@@ -20,7 +20,7 @@ export class RecordType<K extends string, V> extends RuntimeType<Record<K, V>> {
         return this._valueType;
     }
 
-    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult {
+    [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<Record<K, V>> {
         const result: Mutable<TypeCheckResult> = {
             success: true,
             errors: []
