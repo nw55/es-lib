@@ -1,7 +1,7 @@
 import { Awaitable, notNull } from '@nw55/common';
 import { Log } from '@nw55/logging';
 import { requireType, RuntimeType } from '@nw55/runtime-types';
-import { ApiResultHandler, EndpointDefinition, EndpointSignature, HttpError, PathRouteInfo, QueryParameterFormat, RestMethod, RouteParameterFormat } from '@nw55/web';
+import { ApiResultHandler, EndpointDefinition, EndpointSignature, HttpError, QueryParameterFormat, RestMethod, RouteParameterFormat } from '@nw55/web';
 import { Request, RequestHandler, Response, Router } from 'express';
 
 const logger = Log.createLogger('@nw55/express-utils/rest-api/endpoint');
@@ -13,7 +13,7 @@ interface Result {
     data?: unknown | undefined;
 }
 
-export class EndpointRequestHandler<E extends EndpointDefinition> {
+export class EndpointRequestHandler<E extends EndpointDefinition = EndpointDefinition> {
     private _method: RestMethod;
     private _routePath: string;
     private _routeParameters: (readonly [string, RouteParameterFormat<unknown> | null])[];

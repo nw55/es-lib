@@ -37,7 +37,11 @@ type ParameterFormats<P extends RoutePath> = {
     [K in ExtractRouteParameters<P>]?: RouteParameterFormat<any>;
 };
 
-export type ResolvePathRouteType<P extends RoutePath, F extends ParameterFormats<P> = {}> = PathRouteInfo<{
+export type ResolvePathRoute<R extends RoutePath | PathRouteInfo> =
+    R extends PathRouteInfo<any> ? R :
+    R extends RoutePath ? ResolvePathRouteType<R, {}> : never;
+
+export type ResolvePathRouteType<P extends RoutePath, F extends ParameterFormats<P>> = PathRouteInfo<{
     [K in ExtractRouteParameters<P>]: F[K] extends RouteParameterFormat<infer PF> ? PF : string;
 }>;
 
