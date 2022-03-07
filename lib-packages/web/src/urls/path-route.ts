@@ -64,8 +64,9 @@ export function pathRoute(path: string, parameterFormats?: Record<string, RouteP
         const name = segment.slice(1);
         const format = parameterFormats?.[name] ?? null;
         return { type: 'parameter', name, format };
-    });;
+    });
 
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     return {
         path,
         pathSegments
@@ -83,6 +84,7 @@ export type ConcatPathRoutes<R1 extends PathRouteInfo, R2 extends PathRouteInfo>
 export function concatPathRoutes<R1 extends PathRouteInfo, R2 extends PathRouteInfo>(route1: R1, route2: R2): ConcatPathRoutes<R1, R2> {
     const path = route1.path + route2.path;
     const pathSegments = route1.pathSegments.concat(route2.pathSegments);
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     return {
         path,
         pathSegments

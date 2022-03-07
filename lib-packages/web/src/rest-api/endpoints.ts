@@ -1,6 +1,6 @@
 import { Awaitable } from '@nw55/common';
 import { RuntimeType } from '@nw55/runtime-types';
-import { pathRoute, PathRouteInfo, QueryParameters, ResolvePathRoute, ResolvePathRouteType, ResolveQueryParameterTypes, ResolveRouteParameterTypes, RoutePath } from '../urls';
+import { pathRoute, PathRouteInfo, QueryParameters, ResolvePathRoute, ResolveQueryParameterTypes, ResolveRouteParameterTypes, RoutePath } from '../urls';
 import { ApiResultHandler } from './result';
 
 export type RestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';

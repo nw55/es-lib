@@ -36,7 +36,7 @@ export class EndpointFetchHandler {
     entrypoint = (...args: unknown[]) => this._sendRequest(args);
 
     private async _sendRequest(args: unknown[]) {
-        const hasParameters = this._pathSegments.length > 0 || this._queryParameters.length;
+        const hasParameters = this._pathSegments.length > 0 || this._queryParameters.length > 0;
         const hasData = this._dataType !== null;
         let argIndex = 0;
         const parameters = hasParameters ? args[argIndex++] as Record<string, unknown> : {};
@@ -53,10 +53,12 @@ export class EndpointFetchHandler {
 
         const response = await fetch(url, {
             method: this._method,
+            /* eslint-disable @typescript-eslint/naming-convention */
             headers: {
                 'Accept': 'application/json',
                 ...(data !== undefined ? { 'Content-Type': 'application/json' } : undefined)
             },
+            /* eslint-enable @typescript-eslint/naming-convention */
             body: data !== undefined ? JSON.stringify(data) : null
         });
 
@@ -120,7 +122,7 @@ export class EndpointFetchHandler {
         if (response.body === null)
             throw new HttpError(0, 'Missing response body');
 
-        const body = await response.json();
+        const body: unknown = await response.json();
         requireType(this._resultHandler.bodyType, body);
         const result = this._resultHandler.handleBody(body);
 

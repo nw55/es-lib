@@ -1,4 +1,4 @@
-import { concatPathRoutes, ConcatPathRoutes, pathRoute, PathRouteInfo, ResolvePathRoute, ResolvePathRouteType, RoutePath } from '../urls';
+import { concatPathRoutes, ConcatPathRoutes, pathRoute, PathRouteInfo, ResolvePathRoute, RoutePath } from '../urls';
 import { EndpointDefinition, EndpointSignature } from './endpoints';
 
 export interface ApiDefinition {
@@ -17,8 +17,8 @@ export function isEndpointDefinition(definition: ApiDefinition | EndpointDefinit
     return typeof definition.method === 'string';
 }
 
-type EndpointWithRoute<R1 extends PathRouteInfo, T extends EndpointDefinition> =
-    T extends EndpointDefinition<infer R2, infer Q, infer D, infer T>
+type EndpointWithRoute<R1 extends PathRouteInfo, E extends EndpointDefinition> =
+    E extends EndpointDefinition<infer R2, infer Q, infer D, infer T>
     ? EndpointDefinition<ConcatPathRoutes<R1, R2>, Q, D, T>
     : never;
 
@@ -41,9 +41,9 @@ function definitionWithRoute(
 ): EndpointDefinition | ApiDefinition {
     if (isEndpointDefinition(definition))
         return endpointWithRoute(routeOrPath, definition);
-    return Object.fromEntries(Object.entries(definition).map(([key, entryDefinition]) => [key,
-        definitionWithRoute(routeOrPath, entryDefinition)
-    ]));
+    return Object.fromEntries(Object.entries(definition).map(
+        ([key, entryDefinition]) => [key, definitionWithRoute(routeOrPath, entryDefinition)]
+    ));
 }
 
 export function withRoute<
