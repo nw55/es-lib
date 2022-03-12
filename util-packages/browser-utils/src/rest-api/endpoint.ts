@@ -53,12 +53,10 @@ export class EndpointFetchHandler {
 
         const response = await fetch(url, {
             method: this._method,
-            /* eslint-disable @typescript-eslint/naming-convention */
             headers: {
                 'Accept': 'application/json',
                 ...(data !== undefined ? { 'Content-Type': 'application/json' } : undefined)
             },
-            /* eslint-enable @typescript-eslint/naming-convention */
             body: data !== undefined ? JSON.stringify(data) : null
         });
 

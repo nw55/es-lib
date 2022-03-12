@@ -54,6 +54,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'semi': 'off',
     'space-before-function-paren': 'off',
     'space-infix-ops': 'off',
+    'space-before-blocks': 'off',
 
     // eslint overrides
     '@typescript-eslint/brace-style': [style, 'stroustrup', {
@@ -101,6 +102,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
         named: 'never'
     }],
     '@typescript-eslint/space-infix-ops': style,
+    '@typescript-eslint/space-before-blocks': style,
 
     '@typescript-eslint/adjacent-overload-signatures': mistake,
     '@typescript-eslint/array-type': [style, {
@@ -184,6 +186,13 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
         {
             selector: 'typeLike',
             format: ['PascalCase']
+        },
+        {
+            selector: [
+                'objectLiteralProperty',
+                'objectLiteralMethod'
+            ],
+            format: null
         }
     ],
     '@typescript-eslint/no-confusing-non-null-assertion': style,
@@ -203,10 +212,12 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-non-null-asserted-nullish-coalescing': error,
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-parameter-properties': 'off',
+    '@typescript-eslint/no-redundant-type-constituents': 'off',
     '@typescript-eslint/no-require-imports': improvement,
     '@typescript-eslint/no-this-alias': mistake,
     '@typescript-eslint/no-type-alias': 'off',
     '@typescript-eslint/no-unnecessary-type-constraint': improvement,
+    '@typescript-eslint/no-useless-empty-export': improvement,
     '@typescript-eslint/no-var-requires': mistake,
     '@typescript-eslint/prefer-as-const': improvement,
     '@typescript-eslint/prefer-enum-initializers': 'off',
