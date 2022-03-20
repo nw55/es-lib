@@ -1,21 +1,10 @@
-const emptyIteratorResult: IteratorResult<any> = {
-    done: true,
-    value: undefined
-};
-Object.freeze(emptyIteratorResult);
-
-const emptyIterableIterator: IterableIterator<any> = {
-    next() { return emptyIteratorResult; },
-    [Symbol.iterator]() { return this; }
-};
-Object.freeze(emptyIterableIterator);
+const emptySet = new Set<any>();
 
 interface MultiMapOptions {
     readonly maxEmptySets: number;
 }
 
 export class MultiMap<K, V> {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     static add<K, V>(map: Map<K, Set<V>>, key: K, value: V) {
         const inner = map.get(key);
         if (inner === undefined) {
@@ -32,10 +21,10 @@ export class MultiMap<K, V> {
     private _size = 0;
 
     private _emptySets = 0;
-    private _mapEmptySets: number;
+    private _maxEmptySets: number;
 
     constructor(items?: Iterable<readonly [K, V]>, options?: MultiMapOptions) {
-        this._mapEmptySets = options?.maxEmptySets ?? 8;
+        this._maxEmptySets = options?.maxEmptySets ?? 8;
 
         if (items) {
             for (const [key, value] of items)
@@ -61,10 +50,10 @@ export class MultiMap<K, V> {
         return inner.has(value);
     }
 
-    get(key: K): Iterable<V> {
+    get(key: K): ReadonlySet<V> {
         const inner = this._map.get(key);
         if (inner === undefined)
-            return emptyIterableIterator;
+            return emptySet;
         return inner;
     }
 
@@ -91,7 +80,7 @@ export class MultiMap<K, V> {
         const inner = this._map.get(key);
         if (inner !== undefined && inner.size > 0) {
             this._size -= inner.size;
-            if (this._emptySets < this._mapEmptySets) {
+            if (this._emptySets < this._maxEmptySets) {
                 inner.clear();
                 this._emptySets++;
             }
@@ -111,7 +100,7 @@ export class MultiMap<K, V> {
         if (success) {
             this._size--;
             if (inner.size === 0) {
-                if (this._emptySets < this._mapEmptySets)
+                if (this._emptySets < this._maxEmptySets)
                     this._emptySets++;
                 else
                     this._map.delete(key);
@@ -137,9 +126,9 @@ export class MultiMap<K, V> {
         }
     }
 
-    *groupedEntries(): IterableIterator<[K, IterableIterator<V>]> {
+    *groupedEntries(): IterableIterator<[K, ReadonlySet<V>]> {
         for (const [key, values] of this._map)
-            yield [key, values.values()];
+            yield [key, values];
     }
 
     keys(): IterableIterator<K> {
