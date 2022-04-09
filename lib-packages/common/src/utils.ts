@@ -13,6 +13,10 @@ export type Mutable<T> = {
     -readonly [P in keyof T]: T[P];
 };
 
+export type PartialWithUndefined<T> = {
+    [P in keyof T]?: T[P] | undefined;
+};
+
 export type DeepMutable<T> =
     T extends Function | null ? T : // eslint-disable-line @typescript-eslint/ban-types
     T extends object ? { -readonly [P in keyof T]: DeepMutable<T[P]>; } : // eslint-disable-line @typescript-eslint/ban-types
@@ -30,6 +34,11 @@ export type DeepReadonly<T> =
     T extends Set<infer U> ? ReadonlySet<DeepReadonly<U>> :
     T extends object ? { readonly [P in keyof T]: DeepReadonly<T[P]> } : // eslint-disable-line @typescript-eslint/ban-types
     T;
+
+// https://stackoverflow.com/a/50375286
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+
+export type SimplifyObjectType<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
 
 export type AnyRecord = Record<PropertyKey, unknown>;
 

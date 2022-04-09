@@ -1,3 +1,4 @@
+import { SimplifyObjectType } from '@nw55/common';
 import { concatPathRoutes, ConcatPathRoutes, pathRoute, PathRouteInfo, ResolvePathRoute, RoutePath } from '../urls';
 import { EndpointDefinition, EndpointSignature } from './endpoints';
 
@@ -5,9 +6,7 @@ export interface ApiDefinition {
     [key: string]: ApiDefinition | EndpointDefinition;
 }
 
-type Simplify<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
-
-export type ApiInterface<T extends ApiDefinition> = Simplify<{
+export type ApiInterface<T extends ApiDefinition> = SimplifyObjectType<{
     [P in keyof T]:
     T[P] extends EndpointDefinition<any, any, any, any> ? EndpointSignature<T[P]> :
     T[P] extends ApiDefinition ? ApiInterface<T[P]> : never;

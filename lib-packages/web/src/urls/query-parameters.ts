@@ -1,4 +1,4 @@
-import { ArgumentError } from '@nw55/common';
+import { ArgumentError, SimplifyObjectType } from '@nw55/common';
 
 export type QueryParameters = Record<string, QueryParameterFormat<unknown>>;
 
@@ -10,9 +10,7 @@ type OptionalIfUndefined<T> =
     { [P in keyof T as undefined extends T[P] ? P : never]?: T[P]; }
     & { [P in keyof T as undefined extends T[P] ? never : P]: T[P]; };
 
-type Simplify<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
-
-export type ResolveQueryParameterTypes<T extends QueryParameters> = Simplify<OptionalIfUndefined<QueryParamTypes<T>>>;
+export type ResolveQueryParameterTypes<T extends QueryParameters> = SimplifyObjectType<OptionalIfUndefined<QueryParamTypes<T>>>;
 
 export interface QueryParameterFormat<T> {
     parse(str: string | undefined): T;

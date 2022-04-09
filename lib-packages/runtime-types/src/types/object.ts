@@ -1,4 +1,4 @@
-import { DeepReadonly, isPlainObject, Mutable } from '@nw55/common';
+import { DeepReadonly, isPlainObject, Mutable, UnionToIntersection } from '@nw55/common';
 import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common';
 
 export interface ObjectPropertyType<K extends string = string, T = unknown, O extends boolean = boolean> {
@@ -6,8 +6,6 @@ export interface ObjectPropertyType<K extends string = string, T = unknown, O ex
     type: RuntimeType<T>;
     optional: O;
 }
-
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 
 type Helper<T, O extends boolean> = T extends ObjectPropertyType<string, unknown, O> ? {
     [P in T['key']]: CheckableType.ExtractType<T['type']>;

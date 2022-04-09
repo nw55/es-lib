@@ -1,4 +1,4 @@
-import { AnyRecord, ArgumentError, isArray } from '@nw55/common';
+import { AnyRecord, ArgumentError, isArray, UnionToIntersection } from '@nw55/common';
 import { CheckableType, RuntimeType } from './common';
 import { ArrayType, IntersectionType, LiteralType, ObjectPropertyType, ObjectType, RecordType, RecursiveType, TupleType, TypeofType, UnionType, UnknownType } from './types';
 
@@ -41,9 +41,6 @@ export type TypeFromDefinition<T> =
 type UnionTypeFromTupleDefinition<T extends unknown[]> = {
     [P in keyof T]: TypeFromDefinition<T[P]>;
 }[Exclude<keyof T, keyof []>];
-
-// https://stackoverflow.com/a/50375286
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 
 type IntersectionTypeFromTupleDefinition<T extends unknown[]> = UnionToIntersection<UnionTypeFromTupleDefinition<T>>;
 

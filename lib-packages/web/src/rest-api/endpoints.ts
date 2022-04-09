@@ -1,4 +1,4 @@
-import { Awaitable } from '@nw55/common';
+import { Awaitable, SimplifyObjectType } from '@nw55/common';
 import { RuntimeType } from '@nw55/runtime-types';
 import { pathRoute, PathRouteInfo, QueryParameters, ResolvePathRoute, ResolveQueryParameterTypes, ResolveRouteParameterTypes, RoutePath } from '../urls';
 import { ApiResultHandler } from './result';
@@ -14,11 +14,9 @@ export interface EndpointDefinition<R extends PathRouteInfo = PathRouteInfo, Q e
 }
 
 type EntpointParams<P, D> = [
-    ...(keyof P extends never ? [] : [parameters: Simplify<P>]),
+    ...(keyof P extends never ? [] : [parameters: SimplifyObjectType<P>]),
     ...([D] extends [never] ? [] : [data: D])
 ];
-
-type Simplify<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
 
 export type EndpointSignature<ED extends EndpointDefinition<any, any, any, any>> =
     ED extends EndpointDefinition<infer R, infer Q, infer D, infer T>
