@@ -17,7 +17,7 @@ export class ResizableTypedArray<T extends TypedArray> {
     private _shrinkFactor: number;
 
     constructor(type: TypedArrayConstructor<T>, options: ResizableTypedArrayOptions);
-    constructor(type: TypedArrayConstructor<T>, capacity: number); // eslint-disable-line @typescript-eslint/unified-signatures
+    constructor(type: TypedArrayConstructor<T>, capacity: number);
     constructor(type: TypedArrayConstructor<T>, options: ResizableTypedArrayOptions | number) {
         this._type = type;
         if (typeof options === 'number')

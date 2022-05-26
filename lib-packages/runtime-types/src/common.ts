@@ -15,7 +15,7 @@ export interface TypeCheckResult<T = unknown> {
     readonly errors: TypeCheckError[];
 }
 
-export interface CheckableType<T = unknown> {
+export interface CheckableType<out T = unknown> {
     [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T>;
 }
 
@@ -29,7 +29,7 @@ export namespace CheckableType {
     }
 }
 
-export abstract class RuntimeType<T> implements CheckableType<T> {
+export abstract class RuntimeType<out T> implements CheckableType<T> {
     abstract [CheckableType.check](value: unknown, options: TypeCheckOptions): TypeCheckResult<T>;
 }
 

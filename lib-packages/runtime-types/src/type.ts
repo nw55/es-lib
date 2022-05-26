@@ -1,4 +1,4 @@
-import { AnyRecord, ArgumentError, isArray, UnionToIntersection } from '@nw55/common';
+import { AnyRecord, ArgumentError, isArray, SimplifyObjectType, UnionToIntersection } from '@nw55/common';
 import { CheckableType, RuntimeType } from './common';
 import { ArrayType, IntersectionType, LiteralType, ObjectPropertyType, ObjectType, RecordType, RecursiveType, TupleType, TypeofType, UnionType, UnknownType } from './types';
 
@@ -38,9 +38,9 @@ export type TypeFromDefinition<T> =
     T extends Readonly<AnyRecord> ? ObjectTypeFromDefinition<T> :
     never;
 
-type UnionTypeFromTupleDefinition<T extends unknown[]> = {
-    [P in keyof T]: TypeFromDefinition<T[P]>;
-}[Exclude<keyof T, keyof []>];
+type UnionTypeFromTupleDefinition<T extends unknown[]> = SimplifyObjectType<{
+    [P in Exclude<keyof T, keyof []>]: TypeFromDefinition<T[P]>;
+}>[Exclude<keyof T, keyof []>];
 
 type IntersectionTypeFromTupleDefinition<T extends unknown[]> = UnionToIntersection<UnionTypeFromTupleDefinition<T>>;
 
@@ -74,12 +74,14 @@ export namespace Type {
         });
     }
 
+    const stringType = new TypeofType('string');
+
     function fromDefinition(typeDefinition: TypeDefinition): RuntimeType<unknown> {
         const type = typeof typeDefinition;
         if (typeDefinition === null || typeDefinition === undefined || type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint')
             return new LiteralType(typeDefinition);
         if (typeDefinition === String)
-            return new TypeofType('string');
+            return stringType;
         if (typeDefinition === Number)
             return new TypeofType('number');
         if (typeDefinition === Boolean)
@@ -97,8 +99,8 @@ export namespace Type {
         return new ObjectType(getObjectPropertiesInfo(typeDefinition, false), false);
     }
 
-    export function from<T extends TypeDefinition>(typeDefinition: T): RuntimeType<TypeFromDefinition<T>> {
-        return fromDefinition(typeDefinition);
+    export function from<T extends TypeDefinition>(typeDefinition: T) {
+        return fromDefinition(typeDefinition) as RuntimeType<TypeFromDefinition<T>>;
     }
 
     export function union<T extends TypeDefinition[]>(...typeDefinitions: T): RuntimeType<UnionTypeFromTupleDefinition<T>> {
@@ -135,19 +137,19 @@ export namespace Type {
     export function record<T extends TypeDefinition>(typeDefinition: T): RuntimeType<Record<string, TypeFromDefinition<T>>>;
     export function record<K extends StringTypeDefinition, V extends TypeDefinition>(keyTypeDefinition: K, valueTypeDefinition: V): RuntimeType<Record<TypeFromDefinition<K>, TypeFromDefinition<V>>>;
     export function record(typeDefinition1: TypeDefinition, typeDefinition2?: TypeDefinition) {
-        const keyType = typeDefinition2 === undefined ? unknown : fromDefinition(typeDefinition1);
+        const keyType = typeDefinition2 === undefined ? stringType : fromDefinition(typeDefinition1) as RuntimeType<string>;
         const valueType = fromDefinition(typeDefinition2 === undefined ? typeDefinition1 : typeDefinition2);
         return new RecordType(keyType, valueType);
     }
 
-    const uncheckedType: CheckableType = {
+    const uncheckedType: CheckableType<unknown> = {
         [CheckableType.check]() {
             return { success: true, errors: [] };
         }
     };
 
     export function unchecked<T>() {
-        return new UnknownType<T>(uncheckedType);
+        return new UnknownType(uncheckedType as CheckableType<T>);
     }
 
     export const unknown = unchecked<unknown>();

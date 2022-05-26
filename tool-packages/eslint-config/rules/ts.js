@@ -196,6 +196,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
         }
     ],
     '@typescript-eslint/no-confusing-non-null-assertion': style,
+    '@typescript-eslint/no-duplicate-enum-values': mistake,
     '@typescript-eslint/no-dynamic-delete': mistake,
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
@@ -211,7 +212,6 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-non-null-asserted-optional-chain': error,
     '@typescript-eslint/no-non-null-asserted-nullish-coalescing': error,
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-parameter-properties': 'off',
     '@typescript-eslint/no-redundant-type-constituents': 'off',
     '@typescript-eslint/no-require-imports': improvement,
     '@typescript-eslint/no-this-alias': mistake,
@@ -219,6 +219,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     '@typescript-eslint/no-unnecessary-type-constraint': improvement,
     '@typescript-eslint/no-useless-empty-export': improvement,
     '@typescript-eslint/no-var-requires': mistake,
+    '@typescript-eslint/parameter-properties': 'off',
     '@typescript-eslint/prefer-as-const': improvement,
     '@typescript-eslint/prefer-enum-initializers': 'off',
     '@typescript-eslint/prefer-for-of': improvement,
@@ -234,7 +235,9 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     }],
     '@typescript-eslint/type-annotation-spacing': style,
     '@typescript-eslint/typedef': 'off',
-    '@typescript-eslint/unified-signatures': improvement,
+    '@typescript-eslint/unified-signatures': [improvement, {
+        ignoreDifferentlyNamedParameters: true
+    }],
 
     // eslint overrides requiring type information
     '@typescript-eslint/dot-notation': 'off',

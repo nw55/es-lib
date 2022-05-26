@@ -12,6 +12,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-constant-condition': [mistake, {
         checkLoops: false
     }],
+    'no-constant-binary-expression': mistake,
     'no-control-regex': 'off',
     'no-debugger': debug,
     'no-dupe-args': error,
