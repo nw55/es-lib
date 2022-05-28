@@ -1,0 +1,31 @@
+digraph "loglevels" {
+  rankdir = "BT";
+  "crititcal" [
+    color = "red",
+  ];
+  "error" [
+    color = "red",
+  ];
+  "warn" [
+    color = "red",
+  ];
+  "debugWarn" [
+    color = "red",
+  ];
+  "error" -> "crititcal";
+  "warn" -> "error" [
+    color = "blue",
+  ];
+  "alert" -> "error";
+  "notice" -> "alert";
+  "notice" -> "warn" [
+    color = "blue",
+  ];
+  "info" -> "notice";
+  "verbose" -> "info";
+  "debugWarn" -> "warn";
+  "debugAlert" -> "debugWarn";
+  "debug" -> "verbose";
+  "debug" -> "debugAlert";
+  "trace" -> "debug";
+}

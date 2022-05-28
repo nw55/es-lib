@@ -1,81 +1,140 @@
-import { ArgumentError, LogLevelKeys } from '@nw55/common';
-import { LogMessage } from './common';
-import { LogLevel } from './log-level';
+import { isArray, LogLevel, LogSource } from '@nw55/common';
+import { LogEntry } from './common';
+import { getAllIncludedLogLevels, isLogLevelIncluded } from './log-level-metadata';
 
 export interface LogFilter {
-    shouldLog: (level: LogLevel, source?: string) => boolean;
+    shouldLog(level: LogLevel, source: LogSource): boolean;
 
-    shouldLogMessage: (message: LogMessage) => boolean;
+    shouldLogEntry(entry: LogEntry): boolean;
 }
 
-type LogFilterFunction = (level: LogLevel, source?: string) => boolean;
+type LogFilterFunction = LogFilter['shouldLog'];
 
-const logNothingFilter: LogFilter = {
+const nothingLogFilter: LogFilter = {
     shouldLog: () => false,
-    shouldLogMessage: () => false
+    shouldLogEntry: () => false
 };
 
-export function defaultLogFilter(filter: LogFilterFunction | LogFilter | boolean): LogFilter {
-    if (filter === true)
-        return LogLevel.All;
-    if (filter === false)
-        return logNothingFilter;
-    if (typeof filter !== 'function')
-        return filter;
-    return {
-        shouldLog: filter,
-        shouldLogMessage: message => filter(message.level, message.source)
-    };
+const everythingLogFilter: LogFilter = {
+    shouldLog: () => true,
+    shouldLogEntry: () => true
+};
+
+export type LogFilterResolvable = LogFilter | LogFilterFunction | LogLevel[] | LogLevel | boolean;
+
+export function createLogFilter(filter: LogFilterResolvable): LogFilter {
+    if (typeof filter === 'boolean')
+        return filter ? everythingLogFilter : nothingLogFilter;
+
+    if (typeof filter === 'function') {
+        return {
+            shouldLog: filter,
+            shouldLogEntry: entry => filter(entry.level, entry.source)
+        };
+    }
+
+    if (typeof filter === 'string') {
+        return {
+            shouldLog: level => isLogLevelIncluded(filter, level),
+            shouldLogEntry: entry => isLogLevelIncluded(filter, entry.level)
+        };
+    }
+
+    if (isArray(filter)) {
+        const levels = getAllIncludedLogLevels(...filter);
+        return {
+            shouldLog: level => levels.has(level),
+            shouldLogEntry: entry => levels.has(entry.level)
+        };
+    }
+
+    return filter;
 }
 
-interface LogFilterMap {
-    [sourcePrefix: string]: LogLevel | LogLevelKeys;
+interface TreeNode {
+    children?: Map<string, TreeNode>;
+    filter?: LogFilter;
 }
 
 export class SourcePrefixLogFilter implements LogFilter {
-    private _defaultLevelValue: number;
-    private _separator: string;
-    private _prefixMap = new Map<string, number>();
-    private _minLevelValue: number;
+    static fromStringMap(defaultFilter: LogFilterResolvable, map: Record<string, LogFilterResolvable>, separator = '/') {
+        const filters: [string[], LogFilter][] = [];
+        for (const [prefix, filter] of Object.entries(map)) {
+            const segments = prefix.split(separator);
+            filters.push([segments, createLogFilter(filter)]);
+        }
+        return new SourcePrefixLogFilter(createLogFilter(defaultFilter), filters);
+    }
 
-    constructor(defaultLevel: LogLevel | LogLevelKeys, map: LogFilterMap, separator = '/') {
-        if (separator === '')
-            throw new ArgumentError();
+    private _defaultFilter: LogFilter;
+    private _nodes = new Map<string, TreeNode>();
+    private _arrayCache = new WeakMap<readonly string[], LogFilter>();
 
-        this._defaultLevelValue = LogLevel.get(defaultLevel).value;
-        this._separator = separator;
+    constructor(defaultFilter: LogFilter | boolean, filters: readonly [string | readonly string[], LogFilter][]) {
+        this._defaultFilter = createLogFilter(defaultFilter);
 
-        this._minLevelValue = this._defaultLevelValue;
-        for (const [prefix, levelOrLevelKey] of Object.entries(map)) {
-            const levelValue = LogLevel.get(levelOrLevelKey).value;
-            this._minLevelValue = Math.min(this._minLevelValue, levelValue);
-            this._prefixMap.set(prefix, levelValue);
+        for (const [prefix, filter] of filters) {
+            if (isArray(prefix))
+                this._addToTree(prefix, filter);
+            else
+                this._addToTree([prefix], filter);
         }
     }
 
-    shouldLog(level: LogLevel, source?: string) {
-        if (level.value < this._minLevelValue)
-            return false;
-        if (source !== undefined) {
-            let prefix = source;
-            while (true) {
-                const prefixLevelValue = this._prefixMap.get(prefix);
-                if (prefixLevelValue !== undefined) {
-                    if (prefix !== source)
-                        this._prefixMap.set(source, prefixLevelValue);
-                    return level.value >= prefixLevelValue;
-                }
-                const lastSeparatorIndex = prefix.lastIndexOf(this._separator);
-                if (lastSeparatorIndex < 0)
-                    break;
-                prefix = prefix.slice(0, lastSeparatorIndex);
-            }
-            this._prefixMap.set(source, this._defaultLevelValue);
-        }
-        return level.value >= this._defaultLevelValue;
+    private _addToTree(source: readonly string[], filter: LogFilter) {
+        const node = this._getCreateNode(this._nodes, source, 0);
+        node.filter = filter;
     }
 
-    shouldLogMessage(message: LogMessage) {
-        return this.shouldLog(message.level, message.source);
+    private _getCreateNode(nodes: Map<string, TreeNode>, source: readonly string[], index: number): TreeNode {
+        const level = source[index];
+        let node = nodes.get(level);
+        if (node === undefined) {
+            node = {};
+            nodes.set(level, node);
+        }
+        if (index >= source.length - 1)
+            return node;
+        if (node.children === undefined)
+            node.children = new Map();
+        return this._getCreateNode(node.children, source, index + 1);
+    }
+
+    private _getFilter(source: LogSource): LogFilter {
+        if (source === null)
+            return this._defaultFilter;
+
+        if (!isArray(source)) {
+            const node = this._nodes.get(source);
+            return node?.filter ?? this._defaultFilter;
+        }
+
+        const cachedFilter = this._arrayCache.get(source);
+        if (cachedFilter !== undefined)
+            return cachedFilter;
+
+        let lastFilter = this._defaultFilter;
+        let currentNodes = this._nodes;
+        for (const level of source) {
+            const node = currentNodes.get(level);
+            if (node === undefined)
+                break;
+            if (node.filter !== undefined)
+                lastFilter = node.filter;
+            if (node.children === undefined)
+                break;
+            currentNodes = node.children;
+        }
+
+        this._arrayCache.set(source, lastFilter);
+        return lastFilter;
+    }
+
+    shouldLog(level: LogLevel, source: LogSource) {
+        return this._getFilter(source).shouldLog(level, source);
+    }
+
+    shouldLogEntry(entry: LogEntry) {
+        return this._getFilter(entry.source).shouldLogEntry(entry);
     }
 }

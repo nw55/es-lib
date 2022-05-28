@@ -1,13 +1,16 @@
-import { logFormat, LogLevel } from '@nw55/logging';
+import { logFormat } from '@nw55/logging';
 
 describe('format', () => {
     test('logFormat', () => {
-        const format = logFormat`${'level'} [${'source'}] ${logFormat.message}`;
+        const format = logFormat`${'level'} [${'source'}] ${logFormat.text}`;
         const text = format({
-            level: LogLevel.Warning,
-            source: '@nw55/logging/format',
-            message: 'Test Message'
+            level: 'warn',
+            source: ['@nw55', 'logging', 'format'],
+            timestamp: new Date('2022-05-28T12:50:00+02:00'),
+            message: {
+                text: 'Test Text'
+            }
         });
-        expect(text).toBe('warn [@nw55/logging/format] Test Message');
+        expect(text).toBe('warn [@nw55/logging/format] Test Text');
     });
 });

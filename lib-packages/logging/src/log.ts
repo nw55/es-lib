@@ -1,64 +1,86 @@
 import { LoggingProvider } from '@nw55/common';
 import { CombinedLogWriter } from './combined-log-writer';
 import { LogWriter } from './common';
-import { LogLevel } from './log-level';
 import { Logger } from './logger';
 
-export namespace Log {
-    let globalLogWriter: LogWriter | null = null;
+let globalLogWriter: LogWriter | null = null;
 
-    export const proxyGlobalLogWriter: LogWriter = {
-        shouldLog(level, source) {
-            return LoggingProvider.getGlobalLoggingProvider().shouldLog(level, source);
-        },
-        log(message) {
-            LoggingProvider.getGlobalLoggingProvider().log(message.level, message.source, message.message, message);
-        }
-    };
-
-    export const global = new Logger(proxyGlobalLogWriter);
-
-    export const loggingProvider: LoggingProvider = {
-        shouldLog(level, source) {
-            return globalLogWriter?.shouldLog(LogLevel.get(level), source) ?? false;
-        },
-        log(level, source, message, options) {
-            globalLogWriter?.log({
-                level: LogLevel.get(level),
-                source,
-                message,
-                ...options
-            });
-        }
-    };
-
-    function register() {
-        LoggingProvider.setGlobalLoggingProvider(loggingProvider);
+const loggingProvider: LoggingProvider = {
+    shouldLog(level, source) {
+        if (globalLogWriter === null)
+            return false;
+        return globalLogWriter.shouldLog(level, source);
+    },
+    log(level, source, message) {
+        if (globalLogWriter === null)
+            return;
+        globalLogWriter.log({
+            level,
+            source,
+            timestamp: new Date(),
+            message
+        });
     }
+};
 
-    export function getGlobalLogWriter() {
+const proxyGlobalLogWriter: LogWriter = {
+    shouldLog(level, source) {
+        const globalLoggingProvider = LoggingProvider.getGlobalLoggingProvider();
+        if (globalLoggingProvider === loggingProvider) {
+            if (globalLogWriter === null)
+                return false;
+            return globalLogWriter.shouldLog(level, source);
+        }
+        return globalLoggingProvider.shouldLog(level, source);
+    },
+    log(entry) {
+        const globalLoggingProvider = LoggingProvider.getGlobalLoggingProvider();
+        if (globalLoggingProvider === loggingProvider) {
+            if (globalLogWriter === null)
+                return;
+            globalLogWriter.log(entry);
+        }
+        globalLoggingProvider.log(entry.level, entry.source, entry.message);
+    }
+};
+
+function registerGlobalLogging() {
+    LoggingProvider.setGlobalLoggingProvider(loggingProvider);
+}
+
+function registerGlobalLoggingIfNeeded(force: boolean) {
+    if (force || !LoggingProvider.hasGlobalLoggingProvider())
+        registerGlobalLogging();
+}
+
+export class GlobalLogger extends Logger {
+    get globalLogWriter() {
         return globalLogWriter;
     }
 
-    export function setGlobalLogWriter(logWriter: LogWriter | null) {
-        register();
+    register() {
+        registerGlobalLogging();
+    }
+
+    setGlobalLogWriter(logWriter: LogWriter | null, forceRegister = false) {
+        registerGlobalLoggingIfNeeded(forceRegister);
         globalLogWriter = logWriter;
     }
 
-    export function addGlobalLogWriter(writer: LogWriter) {
-        register();
+    addGlobalLogWriter(writer: LogWriter, forceRegister = false) {
+        registerGlobalLoggingIfNeeded(forceRegister);
         globalLogWriter = CombinedLogWriter.addLogWriter(globalLogWriter, writer);
     }
 
-    export function removeGlobalLogWriter(writer: LogWriter) {
-        register();
+    removeGlobalLogWriter(writer: LogWriter, forceRegister = false) {
+        registerGlobalLoggingIfNeeded(forceRegister);
         globalLogWriter = CombinedLogWriter.removeLogWriter(globalLogWriter, writer);
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    export function createLogger(source: string | Function) {
-        if (typeof source === 'function')
-            source = source.name;
+    createLogger(...source: string[]) {
         return new Logger(proxyGlobalLogWriter, source);
     }
 }
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const Log = new GlobalLogger(proxyGlobalLogWriter, null);

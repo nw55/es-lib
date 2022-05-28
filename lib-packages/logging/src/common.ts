@@ -1,14 +1,14 @@
-import { LogDetails } from '@nw55/common';
-import { LogLevel } from './log-level';
+import { LogLevel, LogMessage, LogSource } from '@nw55/common';
 
-export interface LogMessage extends LogDetails {
+export interface LogEntry {
     readonly level: LogLevel;
-    readonly source?: string | undefined;
-    readonly message: string;
+    readonly source: LogSource;
+    readonly timestamp: Date;
+    readonly message: LogMessage;
 }
 
 export interface LogWriter {
-    shouldLog: (level: LogLevel, source?: string) => boolean;
+    shouldLog(level: LogLevel, source: LogSource): boolean;
 
-    log: (message: LogMessage) => void;
+    log(entry: LogEntry): void;
 }

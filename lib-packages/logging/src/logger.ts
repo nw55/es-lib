@@ -1,81 +1,30 @@
-import { AnyRecord, FatalError, LoggerStackTraceError, Mutable } from '@nw55/common';
-import { LogMessage, LogWriter } from './common';
-import { LogLevel } from './log-level';
+import { LoggerStackTraceError, LogLevel, LogMessage, LogMessageData, LogSource } from '@nw55/common';
+import { LogWriter } from './common';
 
-type InforParams =
-    | [message: string, details?: AnyRecord]
-    | [message: string, code?: string, details?: AnyRecord];
+type LogMethodParams =
+    | [data: LogMessageData]
+    | [text: string, data?: LogMessageData];
 
-function infoParamsToLogMessage(level: LogLevel, source: string | undefined, params: InforParams): LogMessage {
-    const message = params[0];
-    let code;
-    let details;
-
-    if (typeof params[1] === 'string') {
-        code = params[1];
-        details = params[2];
+function paramsToMessage(params: LogMethodParams, error?: Error): LogMessage {
+    let text;
+    let data;
+    if (typeof params[0] === 'string') {
+        text = params[0];
+        data = params[1];
     }
     else {
-        details = params[1];
+        data = params[0];
     }
-
-    return { level, source, message, code, details };
+    return { text, data, error };
 }
 
-type ErrorParams =
-    | [message: string, details?: AnyRecord]
-    | [message: string, code?: string, details?: AnyRecord]
-    | [error: Error, details?: AnyRecord]
-    | [error: Error, code?: string, details?: AnyRecord]
-    | [message: string, error: Error, details?: AnyRecord]
-    | [message: string, error: Error, code?: string, details?: AnyRecord];
+type LogLevelMethods = Record<LogLevel, (...params: LogMethodParams) => void>;
 
-function errorParamsToLogMessage(level: LogLevel, source: string | undefined, params: ErrorParams): Mutable<LogMessage> {
-    let message;
-    let error;
-    let code;
-    let details;
-
-    if (params[0] instanceof Error) {
-        message = params[0].toString();
-        error = params[0];
-        if (typeof params[1] === 'string') {
-            code = params[1];
-            details = params[2];
-        }
-        else {
-            details = params[1];
-        }
-    }
-    else {
-        message = params[0];
-        if (typeof params[1] === 'string') {
-            code = params[1];
-            details = params[2];
-        }
-        else if (params[1] instanceof Error) {
-            error = params[1];
-            if (typeof params[2] === 'string') {
-                code = params[2];
-                details = params[3];
-            }
-            else {
-                details = params[2];
-            }
-        }
-        else {
-            details = params[1];
-        }
-    }
-
-    return { level, source, message, error, code, details };
-}
-
-export class Logger {
+export class Logger implements LogLevelMethods {
     private _logWriter: LogWriter | null;
-    private _source: string | undefined;
+    private _source: LogSource;
 
-    constructor(logWriter: LogWriter | null, source?: string) {
+    constructor(logWriter: LogWriter | null, source: LogSource) {
         this._logWriter = logWriter;
         this._source = source;
     }
@@ -90,81 +39,93 @@ export class Logger {
     get source() {
         return this._source;
     }
-    set source(v: string | undefined) {
+    set source(v: LogSource) {
         this._source = v;
     }
 
     shouldLog(level: LogLevel) {
-        return this._logWriter?.shouldLog(level, this._source) ?? false;
+        if (this._logWriter === null)
+            return false;
+        return this._logWriter.shouldLog(level, this._source);
     }
 
-    private _log(message: LogMessage) {
-        this._logWriter?.log(message);
+    log(level: LogLevel, message: LogMessage) {
+        if (this._logWriter === null)
+            return;
+        this._logWriter.log({
+            level,
+            source: this._source,
+            timestamp: new Date(),
+            message
+        });
     }
 
-    trace(...params: InforParams) {
-        if (this.shouldLog(LogLevel.Trace)) {
-            const message = infoParamsToLogMessage(LogLevel.Trace, this._source, params);
-            this._log(message);
-        }
+    logError(level: LogLevel, error: unknown, text?: string) {
+        let errorObject;
+        if (error === undefined || error === null)
+            errorObject = new LoggerStackTraceError(text);
+        else if (error instanceof Error)
+            errorObject = error;
+        else
+            errorObject = new Error((text === undefined ? '' : text + ': ') + String(error));
+        this.log(level, {
+            text: text ?? (errorObject.message === '' ? undefined : errorObject.message),
+            error: errorObject
+        });
     }
 
-    debug(...params: InforParams) {
-        if (this.shouldLog(LogLevel.Debug)) {
-            const message = infoParamsToLogMessage(LogLevel.Debug, this._source, params);
-            this._log(message);
-        }
+    trace(...params: LogMethodParams) {
+        if (this.shouldLog('trace'))
+            this.log('trace', paramsToMessage(params));
     }
 
-    verbose(...params: InforParams) {
-        if (this.shouldLog(LogLevel.Verbose)) {
-            const message = infoParamsToLogMessage(LogLevel.Verbose, this._source, params);
-            this._log(message);
-        }
+    debug(...params: LogMethodParams) {
+        if (this.shouldLog('debug'))
+            this.log('debug', paramsToMessage(params));
     }
 
-    info(...params: InforParams) {
-        if (this.shouldLog(LogLevel.Information)) {
-            const message = infoParamsToLogMessage(LogLevel.Information, this._source, params);
-            this._log(message);
-        }
+    verbose(...params: LogMethodParams) {
+        if (this.shouldLog('verbose'))
+            this.log('verbose', paramsToMessage(params));
     }
 
-    notice(...params: InforParams) {
-        if (this.shouldLog(LogLevel.Notice)) {
-            const message = infoParamsToLogMessage(LogLevel.Notice, this._source, params);
-            this._log(message);
-        }
+    info(...params: LogMethodParams) {
+        if (this.shouldLog('info'))
+            this.log('info', paramsToMessage(params));
     }
 
-    warn(...params: ErrorParams) {
-        if (this.shouldLog(LogLevel.Warning)) {
-            const message = errorParamsToLogMessage(LogLevel.Warning, this._source, params);
-            this._log(message);
-        }
+    debugAlert(...params: LogMethodParams) {
+        if (this.shouldLog('debugAlert'))
+            this.log('debugAlert', paramsToMessage(params));
     }
 
-    error(...params: ErrorParams) {
-        if (this.shouldLog(LogLevel.Error)) {
-            const message = errorParamsToLogMessage(LogLevel.Error, this._source, params);
-            this._log(message);
-        }
+    notice(...params: LogMethodParams) {
+        if (this.shouldLog('notice'))
+            this.log('notice', paramsToMessage(params));
     }
 
-    critical(...params: ErrorParams) {
-        if (this.shouldLog(LogLevel.Critical)) {
-            const message = errorParamsToLogMessage(LogLevel.Critical, this._source, params);
-            message.error ??= new LoggerStackTraceError(message.message);
-            this._log(message);
-        }
+    alert(...params: LogMethodParams) {
+        if (this.shouldLog('alert'))
+            this.log('alert', paramsToMessage(params));
     }
 
-    fatal(...params: ErrorParams): never {
-        const message = errorParamsToLogMessage(LogLevel.Fatal, this._source, params);
-        if (this.shouldLog(LogLevel.Fatal)) {
-            message.error ??= new LoggerStackTraceError(message.message);
-            this._log(message);
-        }
-        throw new FatalError(message.message);
+    debugWarn(...params: LogMethodParams) {
+        if (this.shouldLog('debugWarn'))
+            this.log('debugWarn', paramsToMessage(params, new LoggerStackTraceError()));
+    }
+
+    warn(...params: LogMethodParams) {
+        if (this.shouldLog('warn'))
+            this.log('warn', paramsToMessage(params, new LoggerStackTraceError()));
+    }
+
+    error(...params: LogMethodParams) {
+        if (this.shouldLog('error'))
+            this.log('error', paramsToMessage(params, new LoggerStackTraceError()));
+    }
+
+    critical(...params: LogMethodParams) {
+        if (this.shouldLog('critical'))
+            this.log('critical', paramsToMessage(params, new LoggerStackTraceError()));
     }
 }

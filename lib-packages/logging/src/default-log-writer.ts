@@ -1,34 +1,34 @@
-import { LogMessage, LogWriter } from './common';
-import { LogFilter } from './filter';
+import { LogLevel, LogSource } from '@nw55/common';
+import { LogEntry, LogWriter } from './common';
+import { createLogFilter, LogFilter } from './filter';
 import { LogFormat, logFormat } from './format';
-import { LogLevel } from './log-level';
-import { LogMessageWriter } from './message-writer';
+import { LogTextWriter } from './log-text-writer';
 
 export interface DefaultLogWriterOptions {
     readonly filter?: LogFilter | undefined;
     readonly format?: LogFormat | undefined;
-    readonly messageWriter: LogMessageWriter;
+    readonly textWriter: LogTextWriter;
 }
 
 export class DefaultLogWriter implements LogWriter {
     private _filter: LogFilter;
     private _format: LogFormat;
-    private _messageWriter: LogMessageWriter;
+    private _textWriter: LogTextWriter;
 
     constructor(options: DefaultLogWriterOptions) {
-        this._filter = options.filter ?? LogLevel.Information;
-        this._format = options.format ?? logFormat.message;
-        this._messageWriter = options.messageWriter;
+        this._filter = options.filter ?? createLogFilter('info');
+        this._format = options.format ?? logFormat.text;
+        this._textWriter = options.textWriter;
     }
 
-    shouldLog(level: LogLevel, source?: string) {
+    shouldLog(level: LogLevel, source: LogSource) {
         return this._filter.shouldLog(level, source);
     }
 
-    log(message: LogMessage) {
-        if (this._filter.shouldLogMessage(message)) {
-            const text = this._format(message);
-            this._messageWriter.writeMessage(text, message);
+    log(entry: LogEntry) {
+        if (this._filter.shouldLogEntry(entry)) {
+            const text = this._format(entry);
+            this._textWriter.writeEntry(text, entry);
         }
     }
 }

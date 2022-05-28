@@ -1,35 +1,32 @@
-export interface LogDetails {
+import { PartialReadonlyJsonValue } from './text/json';
+
+export type LogLevel =
+    'trace' | 'debug' | 'debugAlert' | 'debugWarn' |
+    'verbose' | 'info' | 'notice' | 'alert' |
+    'warn' | 'error' | 'critical';
+export type LogSource = string | readonly string[] | null;
+export type LogMessageData = Record<string, PartialReadonlyJsonValue>;
+
+export interface LogMessage {
+    readonly scope?: string | undefined;
+    readonly id?: string | undefined;
+    readonly text?: string | undefined;
     readonly code?: string | undefined;
     readonly error?: Error | undefined;
-    readonly details?: unknown | undefined;
-}
-
-interface LoggerMethods {
-    trace(message: string, options?: LogDetails): void;
-    debug(message: string, options?: LogDetails): void;
-    verbose(message: string, options?: LogDetails): void;
-    info(message: string, options?: LogDetails): void;
-    notice(message: string, options?: LogDetails): void;
-    warn(message: string, options?: LogDetails): void;
-    error(message: string, options?: LogDetails): void;
-    critical(message: string, options?: LogDetails): void;
-    fatal(message: string, options?: LogDetails): void;
-}
-
-export type LogLevelKeys = 'all' | keyof LoggerMethods;
-
-export interface LogLevelInfo<TKey extends LogLevelKeys = LogLevelKeys> {
-    readonly key: TKey;
-}
-
-export interface Logger extends LoggerMethods {
-    shouldLog(level: LogLevelInfo | LogLevelKeys): boolean;
+    readonly data?: LogMessageData | undefined;
+    readonly [key: symbol]: unknown;
 }
 
 export interface LoggingProvider {
-    shouldLog(level: LogLevelInfo | LogLevelKeys, source?: string): boolean;
+    shouldLog(level: LogLevel, source: LogSource): boolean;
 
-    log(level: LogLevelInfo | LogLevelKeys, source: string | undefined, message: string, options?: LogDetails): void;
+    log(level: LogLevel, source: LogSource, message: LogMessage): void;
+}
+
+export interface SimpleLogger {
+    shouldLog(level: LogLevel): boolean;
+
+    log(level: LogLevel, message: LogMessage): void;
 }
 
 export namespace LoggingProvider {
@@ -40,6 +37,10 @@ export namespace LoggingProvider {
 
     let globalLoggingProvider = noopLoggingProvider;
 
+    export function hasGlobalLoggingProvider() {
+        return globalLoggingProvider !== noopLoggingProvider;
+    }
+
     export function getGlobalLoggingProvider() {
         return globalLoggingProvider;
     }
@@ -48,49 +49,25 @@ export namespace LoggingProvider {
         globalLoggingProvider = loggingProvider ?? noopLoggingProvider;
     }
 
-    class DefaultLogger implements Logger {
-        private _source: string | undefined;
+    export class SimpleLoggerImpl implements SimpleLogger {
+        private _source: LogSource;
 
-        constructor(source: string | undefined) {
+        constructor(source: LogSource) {
             this._source = source;
         }
 
-        shouldLog(level: LogLevelInfo | LogLevelKeys) {
-            return globalLoggingProvider.shouldLog(level, this._source);
+        shouldLog(level: LogLevel) {
+            return getGlobalLoggingProvider().shouldLog(level, this._source);
         }
 
-        trace(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('trace', this._source, message, options);
-        }
-        debug(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('debug', this._source, message, options);
-        }
-        verbose(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('verbose', this._source, message, options);
-        }
-        info(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('info', this._source, message, options);
-        }
-        notice(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('notice', this._source, message, options);
-        }
-        warn(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('warn', this._source, message, options);
-        }
-        error(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('error', this._source, message, options);
-        }
-        critical(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('critical', this._source, message, options);
-        }
-        fatal(message: string, options?: LogDetails) {
-            globalLoggingProvider.log('fatal', this._source, message, options);
+        log(level: LogLevel, message: LogMessage) {
+            getGlobalLoggingProvider().log(level, this._source, message);
         }
     }
 
-    export const globalLogger: Logger = new DefaultLogger(undefined);
+    export const globalLogger: SimpleLogger = new SimpleLoggerImpl(null);
 
-    export function getLogger(source?: string): Logger {
-        return source === undefined ? globalLogger : new DefaultLogger(source);
+    export function getLogger(source: LogSource): SimpleLogger {
+        return source === null ? globalLogger : new SimpleLoggerImpl(source);
     }
 }

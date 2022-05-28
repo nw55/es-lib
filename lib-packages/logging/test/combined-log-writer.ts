@@ -1,24 +1,25 @@
-import { LogLevelKeys } from '@nw55/common';
-import { CombinedLogWriter, LogLevel, LogMessage, LogWriter } from '@nw55/logging';
+import { LogLevel, LogSource } from '@nw55/common';
+import { CombinedLogWriter, LogEntry, LogWriter } from '@nw55/logging';
 
 class TestLogWriter implements LogWriter {
     didLog = false;
 
-    constructor(private _id: string, private _shouldLog: boolean) {
-    }
+    constructor(private _id: string, private _shouldLog: boolean) { }
 
-    shouldLog(level: LogLevel<LogLevelKeys>, source?: string) {
+    shouldLog(level: LogLevel, source: LogSource) {
         return this._shouldLog;
     }
 
-    log(message: LogMessage) {
+    log(entry: LogEntry) {
         this.didLog = true;
     }
 }
 
-const testLogMessage: LogMessage = {
-    level: LogLevel.Information,
-    message: ''
+const testLogEntry: LogEntry = {
+    level: 'info',
+    source: null,
+    timestamp: new Date('2022-05-28T12:50:00+02:00'),
+    message: {}
 };
 
 describe('combined-log-writer', () => {
@@ -28,16 +29,12 @@ describe('combined-log-writer', () => {
         const writer3 = new TestLogWriter('3', false);
 
         const combined1 = new CombinedLogWriter([writer1, writer2]);
-        expect(combined1.shouldLog(LogLevel.Information)).toBeTrue();// shouldLog() should return true
-        combined1.log(testLogMessage);
+        expect(combined1.shouldLog('info', null)).toBeTrue(); // shouldLog() should return true
+        combined1.log(testLogEntry);
         expect(writer1.didLog).toBeTrue(); // should call log()
-        expect(writer2.didLog).toBeFalse(); // should not call log()
 
         const combined2 = new CombinedLogWriter([writer2, writer3]);
-        expect(combined2.shouldLog(LogLevel.Information)).toBeFalse();
-        combined2.log(testLogMessage);
-        expect(writer2.didLog).toBeFalse(); // should not call log()
-        expect(writer3.didLog).toBeFalse(); // should not call log()
+        expect(combined2.shouldLog('info', null)).toBeFalse();
     });
 
     test('flattening of nested combined log writers', () => {

@@ -1,5 +1,5 @@
-import { LogMessage, LogWriter } from './common';
-import { LogLevel } from './log-level';
+import { LogLevel, LogSource } from '@nw55/common';
+import { LogEntry, LogWriter } from './common';
 
 export class CombinedLogWriter implements LogWriter {
     static addLogWriter(logWriter: LogWriter | null, add: LogWriter) {
@@ -61,7 +61,7 @@ export class CombinedLogWriter implements LogWriter {
         return this._writers;
     }
 
-    shouldLog(level: LogLevel, source?: string) {
+    shouldLog(level: LogLevel, source: LogSource) {
         for (const writer of this._writers) {
             if (writer.shouldLog(level, source))
                 return true;
@@ -69,10 +69,8 @@ export class CombinedLogWriter implements LogWriter {
         return false;
     }
 
-    log(message: LogMessage) {
-        for (const writer of this._writers) {
-            if (writer.shouldLog(message.level, message.source))
-                writer.log(message);
-        }
+    log(entry: LogEntry) {
+        for (const writer of this._writers)
+            writer.log(entry);
     }
 }

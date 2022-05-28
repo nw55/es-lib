@@ -21,7 +21,7 @@ export namespace json {
         return JSON.parse(str);
     }
 
-    export function encode(value: ReadonlyJsonValue, space?: number): string {
+    export function encode(value: PartialReadonlyJsonValue, space?: number): string {
         return JSON.stringify(value, null, space);
     }
 }

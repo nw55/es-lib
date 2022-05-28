@@ -19,6 +19,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-const-assign': 'off',
     'no-new-symbol': 'off',
     'no-this-before-super': 'off',
+    'consistent-return': 'off',
 
     // overridden eslint rules
     'brace-style': 'off',

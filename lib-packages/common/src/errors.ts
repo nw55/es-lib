@@ -27,8 +27,3 @@ export class LoggerStackTraceError extends Error {
     declare readonly name = 'LoggerStackTraceError';
 }
 Object.defineProperty(LoggerStackTraceError.prototype, 'name', { value: 'LoggerStackTraceError' });
-
-export class FatalError extends Error {
-    declare readonly name = 'FatalError';
-}
-Object.defineProperty(FatalError.prototype, 'name', { value: 'FatalError' });
