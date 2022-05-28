@@ -64,7 +64,7 @@ function useDefaultColorStyler(baseWriter: LogTextWriter, colorStyler?: DefaultC
 export const defaultConsoleLogFormat = logFormat`${'datetime'} ${logFormat.level('symbol')} [${logFormat.fixedWidth('source', 16)}] ${'text'}${logFormat.codeFormat(' [%]')}`;
 
 export interface ConsoleLogWriterOptions extends ConsoleLogTextWriterOptions {
-    readonly filter?: LogFilter | undefined;
+    readonly filter?: LogFilterResolvable | undefined;
     readonly format?: LogFormat | undefined;
     readonly colorStyler?: DefaultColorStyler | undefined;
 }
@@ -82,6 +82,6 @@ export function createConsoleLogWriter(options: ConsoleLogWriterOptions) {
     });
 }
 
-export function useDefaultConsoleLogging(filter?: LogFilter) {
+export function useDefaultConsoleLogging(filter?: LogFilterResolvable) {
     Log.addGlobalLogWriter(createConsoleLogWriter({ filter }));
 }

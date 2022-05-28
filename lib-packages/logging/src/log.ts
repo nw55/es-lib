@@ -39,6 +39,7 @@ const proxyGlobalLogWriter: LogWriter = {
             if (globalLogWriter === null)
                 return;
             globalLogWriter.log(entry);
+            return;
         }
         globalLoggingProvider.log(entry.level, entry.source, entry.message);
     }

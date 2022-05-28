@@ -1,4 +1,4 @@
-import { ArgumentError, isArray, json } from '@nw55/common';
+import { ArgumentError, isArray } from '@nw55/common';
 import { LogEntry } from './common';
 import { logLevelMetadata } from './log-level-metadata';
 
@@ -138,7 +138,7 @@ export namespace logFormat {
         }
     }
 
-    export const dataString: LogFormat = entry => entry.message.data === undefined ? '{}' : json.encode(entry.message.data);
+    export const dataString: LogFormat = entry => entry.message.data === undefined ? '{}' : JSON.stringify(entry.message.data);
 
     export const text: LogFormat = entry => entry.message.text ?? '';
 
@@ -146,7 +146,7 @@ export namespace logFormat {
         return () => value;
     }
 
-    export function fixedWidth(innerFormat: LogFormatPlaceholder, width: number, align: 'left' | 'right' = 'left', padding = ' '): LogFormat {
+    export function fixedWidth(innerFormat: LogFormatPlaceholder, width: number, align: 'left' | 'right' = 'left', cutoff: 'left' | 'right' = 'right', padding = ' '): LogFormat {
         if (width <= 0)
             throw new ArgumentError();
         const innerFormatResolved = placeholderLogFormat(innerFormat);
@@ -154,8 +154,11 @@ export namespace logFormat {
             const inner = innerFormatResolved(entry);
             if (inner.length === width)
                 return inner;
-            if (inner.length < width)
-                return inner.slice(0, width);
+            if (inner.length > width) {
+                if (cutoff === 'right')
+                    return inner.slice(0, width);
+                return inner.slice(inner.length - width);
+            }
             if (align === 'left')
                 return inner.padEnd(width, padding);
             return inner.padStart(width, padding);

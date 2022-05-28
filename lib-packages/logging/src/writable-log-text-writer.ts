@@ -1,4 +1,4 @@
-import { json, LogMessageData } from '@nw55/common';
+import { LogMessageData } from '@nw55/common';
 import { LogEntry } from './common';
 import { createLogFilter, LogFilter, LogFilterResolvable } from './filter';
 import { LogTextWriter } from './log-text-writer';
@@ -9,7 +9,7 @@ export type LogDataFormatter = (data: LogMessageData, entry: LogEntry) => string
 
 const errorStringFormatter: LogErrorFormatter = error => String(error);
 
-const dataJsonFormatter: LogDataFormatter = data => json.encode(data);
+const dataJsonFormatter: LogDataFormatter = data => JSON.stringify(data);
 
 export interface WritableLogMessageWriterOptions {
     readonly eol?: string | undefined;

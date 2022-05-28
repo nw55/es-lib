@@ -1,11 +1,9 @@
-import { PartialReadonlyJsonValue } from './text/json';
-
 export type LogLevel =
     'trace' | 'debug' | 'debugAlert' | 'debugWarn' |
     'verbose' | 'info' | 'notice' | 'alert' |
     'warn' | 'error' | 'critical';
 export type LogSource = string | readonly string[] | null;
-export type LogMessageData = Record<string, PartialReadonlyJsonValue>;
+export type LogMessageData = Record<string, unknown>; // should be JSON-serializable
 
 export interface LogMessage {
     readonly scope?: string | undefined;
