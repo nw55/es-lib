@@ -1,11 +1,11 @@
 import { LogLevel, LogSource } from '@nw55/common';
 import { LogEntry, LogWriter } from './common';
-import { createLogFilter, LogFilter } from './filter';
+import { createLogFilter, LogFilter, LogFilterResolvable } from './filter';
 import { LogFormat, logFormat } from './format';
 import { LogTextWriter } from './log-text-writer';
 
 export interface DefaultLogWriterOptions {
-    readonly filter?: LogFilter | undefined;
+    readonly filter?: LogFilterResolvable | undefined;
     readonly format?: LogFormat | undefined;
     readonly textWriter: LogTextWriter;
 }
@@ -16,7 +16,7 @@ export class DefaultLogWriter implements LogWriter {
     private _textWriter: LogTextWriter;
 
     constructor(options: DefaultLogWriterOptions) {
-        this._filter = options.filter ?? createLogFilter('info');
+        this._filter = createLogFilter(options.filter ?? true);
         this._format = options.format ?? logFormat.text;
         this._textWriter = options.textWriter;
     }

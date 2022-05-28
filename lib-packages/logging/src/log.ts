@@ -1,4 +1,4 @@
-import { LoggingProvider } from '@nw55/common';
+import { isArray, LoggingProvider } from '@nw55/common';
 import { CombinedLogWriter } from './combined-log-writer';
 import { LogWriter } from './common';
 import { Logger } from './logger';
@@ -77,8 +77,11 @@ export class GlobalLogger extends Logger {
         globalLogWriter = CombinedLogWriter.removeLogWriter(globalLogWriter, writer);
     }
 
-    createLogger(...source: string[]) {
-        return new Logger(proxyGlobalLogWriter, source);
+    createLogger(source: string, separator?: string): Logger;
+    createLogger(source: string[]): Logger;
+    createLogger(source: string | string[], separator = '/') {
+        const resolvedSource = isArray(source) ? source : source.split(separator);
+        return new Logger(proxyGlobalLogWriter, resolvedSource);
     }
 }
 

@@ -61,15 +61,22 @@ export class Logger implements LogLevelMethods {
     }
 
     logError(level: LogLevel, error: unknown, text?: string) {
+        let combinedText;
         let errorObject;
-        if (error === undefined || error === null)
+        if (error === undefined || error === null) {
+            combinedText = text;
             errorObject = new LoggerStackTraceError(text);
-        else if (error instanceof Error)
+        }
+        else if (error instanceof Error) {
+            combinedText = (text === undefined ? '' : text + ': ') + error.message;
             errorObject = error;
-        else
-            errorObject = new Error((text === undefined ? '' : text + ': ') + String(error));
+        }
+        else {
+            combinedText = (text === undefined ? '' : text + ': ') + String(error);
+            errorObject = new Error(combinedText);
+        }
         this.log(level, {
-            text: text ?? (errorObject.message === '' ? undefined : errorObject.message),
+            text: combinedText,
             error: errorObject
         });
     }

@@ -188,7 +188,7 @@ export class EndpointRequestHandler<E extends EndpointDefinition = EndpointDefin
         }
 
         if (this._resultHandler.handleError === undefined) {
-            logger.warn(`Unexepected error: ${error.message}`, error);
+            logger.logError('warn', error, `Unexepected error`);
             return { status: 500 };
         }
 

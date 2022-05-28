@@ -1,48 +1,84 @@
-import { ConsoleLogMessageWriter, DefaultLogWriter, Log, LogFilter, logFormat, LogFormat, LogMessageWriter, TransformedLogMessageWriter } from '@nw55/logging';
+import { createLogFilter, DefaultLogWriter, Log, LogEntry, LogFilter, LogFilterResolvable, logFormat, LogFormat, logLevelMetadata, LogTextWriter, TransformedLogTextWriter } from '@nw55/logging';
+
+export interface ConsoleLogTextWriterOptions {
+    readonly logErrors?: LogFilterResolvable | undefined;
+    readonly logData?: LogFilterResolvable | undefined;
+}
+
+export class ConsoleLogTextWriter implements LogTextWriter {
+    private _logErrors: LogFilter;
+    private _logData: LogFilter;
+
+    constructor(options: ConsoleLogTextWriterOptions) {
+        this._logErrors = createLogFilter(options.logErrors ?? true);
+        this._logData = createLogFilter(options.logData ?? false);
+    }
+
+    writeEntry(text: string, entry: LogEntry) {
+        const writeFn = logLevelMetadata[entry.level].isError ? 'error' : 'log';
+
+        const shouldLogError = entry.message.error !== undefined && this._logErrors.shouldLogEntry(entry);
+        const shouldLogData = entry.message.data !== undefined && this._logData.shouldLogEntry(entry);
+
+        /* eslint-disable no-console */
+        if (shouldLogError) {
+            if (shouldLogData)
+                console[writeFn](text, entry.message.error, entry.message.data);
+            else
+                console[writeFn](text, entry.message.error);
+        }
+        else if (shouldLogData) {
+            console[writeFn](text, entry.message.data);
+        }
+        else {
+            console[writeFn](text);
+        }
+        /* eslint-enable no-console */
+    }
+}
 
 type ColorStyler<K extends string> = {
     [P in K]: ColorStyler<K> & ((text: string) => string);
 };
 
-type DefaultColorStyler = ColorStyler<'gray' | 'cyanBright' | 'whiteBright' | 'greenBright' | 'yellowBright' | 'redBright' | 'red' | 'bgWhiteBright'>;
+type DefaultColorStyler = ColorStyler<'black' | 'gray' | 'cyanBright' | 'whiteBright' | 'greenBright' | 'green' | 'yellowBright' | 'redBright' | 'red' | 'bgWhiteBright'>;
 
-function useColorStyler(baseWriter: LogMessageWriter, colorStyler?: DefaultColorStyler) {
+function useDefaultColorStyler(baseWriter: LogTextWriter, colorStyler?: DefaultColorStyler) {
     if (colorStyler === undefined)
         return baseWriter;
 
-    return TransformedLogMessageWriter.byLevel(baseWriter, {
-        all: text => colorStyler.gray(text),
-        debug: text => colorStyler.whiteBright(text),
+    return TransformedLogTextWriter.byLevel(baseWriter, {
+        trace: text => colorStyler.gray(text),
+        verbose: text => colorStyler.whiteBright(text),
         info: text => colorStyler.cyanBright(text),
         notice: text => colorStyler.greenBright(text),
+        alert: text => colorStyler.bgWhiteBright.green(text),
+        debugAlert: text => colorStyler.bgWhiteBright.black(text),
+        debugWarn: text => colorStyler.yellowBright(text),
         warn: text => colorStyler.yellowBright(text),
         error: text => colorStyler.redBright(text),
         critical: text => colorStyler.bgWhiteBright.red(text)
     });
 }
 
-export const defaultConsoleLogFormat = logFormat`${'datetime'} ${'level'} [${'source'}]${logFormat.codeFormat(' %')}: ${'message'}`;
+export const defaultConsoleLogFormat = logFormat`${'datetime'} ${logFormat.level('symbol')} [${logFormat.fixedWidth('source', 16)}] ${'text'}${logFormat.codeFormat(' [%]')}`;
 
-export interface ConsoleLogWriterOptions {
+export interface ConsoleLogWriterOptions extends ConsoleLogTextWriterOptions {
     readonly filter?: LogFilter | undefined;
     readonly format?: LogFormat | undefined;
-    readonly logErrors?: boolean | LogFilter | undefined;
-    readonly logDetails?: boolean | LogFilter | undefined;
     readonly colorStyler?: DefaultColorStyler | undefined;
 }
 
 export function createConsoleLogWriter(options: ConsoleLogWriterOptions) {
-    const messageWriter = new ConsoleLogMessageWriter({
-        writer: console.log.bind(console), // eslint-disable-line no-console
-        errorWriter: console.error.bind(console), // eslint-disable-line no-console
-        logDetails: options.logDetails,
-        logErrors: options.logErrors
+    const textWriter = new ConsoleLogTextWriter({
+        logErrors: options.logErrors,
+        logData: options.logData
     });
 
     return new DefaultLogWriter({
         filter: options.filter,
         format: options.format ?? defaultConsoleLogFormat,
-        messageWriter: useColorStyler(messageWriter, options.colorStyler)
+        textWriter: useDefaultColorStyler(textWriter, options.colorStyler)
     });
 }
 

@@ -1,18 +1,10 @@
 import { Awaitable } from '@nw55/common';
-import { Log, LogLevel } from '@nw55/logging';
+import { Log } from '@nw55/logging';
 
 const logger = Log.createLogger('@nw55/node-utils/program');
 
 function fail(message: string, reason: unknown): never {
-    try {
-        if (reason instanceof Error)
-            logger.fatal(`${message}.`, reason);
-        else
-            logger.fatal(`${message}: ${String(reason)}`, { reason });
-    }
-    catch {
-        // logger.fatal throws, but we want to use process.exit instead
-    }
+    logger.logError('critical', reason, message);
     process.exit(1);
 }
 
@@ -58,7 +50,7 @@ export async function runProgram(options: RunOptions): Promise<never> {
 
     const args = process.argv.slice(2);
 
-    if (logger.shouldLog(LogLevel.Trace))
+    if (logger.shouldLog('trace'))
         logger.trace(`${args.length} command line argument${args.length === 1 ? '' : 's'}`, { args });
 
     try {

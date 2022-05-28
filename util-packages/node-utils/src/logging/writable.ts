@@ -1,31 +1,31 @@
 import { PromiseSource } from '@nw55/common';
-import { LogMessageWriter, WritableLogMessageWriter, WritableLogMessageWriterOptions } from '@nw55/logging';
+import { logLevelMetadata, LogTextWriter, WritableLogMessageWriterOptions, WritableLogTextWriter } from '@nw55/logging';
 import { createWriteStream } from 'fs';
 
-export interface FileLogMessageWriterOptions extends WritableLogMessageWriterOptions {
+export interface FileLogTextWriterOptions extends WritableLogMessageWriterOptions {
     readonly file: string;
     readonly append?: boolean | undefined;
 }
 
-export async function openFileLogMessageWriter(options: FileLogMessageWriterOptions) {
+export async function openFileLogTextWriter(options: FileLogTextWriterOptions) {
     const append = options.append ?? true;
     const stream = createWriteStream(options.file, { flags: append ? 'a' : 'w' });
     const readyEvent = new PromiseSource();
     stream.once('ready', () => readyEvent.resolve());
     stream.once('error', e => readyEvent.reject(e));
     await readyEvent.promise;
-    return new WritableLogMessageWriter(stream, options);
+    return new WritableLogTextWriter(stream, options);
 }
 
-export function createStandardStreamsLogMessageWriter(options: WritableLogMessageWriterOptions): LogMessageWriter {
-    const outWriter = new WritableLogMessageWriter(process.stdout, options);
-    const errWriter = new WritableLogMessageWriter(process.stderr, options);
+export function createStandardStreamsLogTextWriter(options: WritableLogMessageWriterOptions): LogTextWriter {
+    const outWriter = new WritableLogTextWriter(process.stdout, options);
+    const errWriter = new WritableLogTextWriter(process.stderr, options);
     return {
-        writeMessage(text, messaeg) {
-            if (messaeg.level.isError)
-                errWriter.writeMessage(text, messaeg);
+        writeEntry: (text, entry) => {
+            if (logLevelMetadata[entry.level].isError)
+                errWriter.writeEntry(text, entry);
             else
-                outWriter.writeMessage(text, messaeg);
+                outWriter.writeEntry(text, entry);
         }
     };
 }
