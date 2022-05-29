@@ -7,7 +7,7 @@ let cleanupDone = false;
 export const cleanupOnExitHandlers = new Set<CleanupOnExitHandler>();
 
 export function handleExit() {
-    logger.notice('Exiting...');
+    logger.debugAlert('Exiting...');
     cleanupOnExit('exit');
 }
 
@@ -40,10 +40,4 @@ export function cleanupOnExit(reason: ExitReason) {
         }
     }
     logger.debug('Cleanup handlers completed.');
-}
-
-export function exitWithSignal(signal: string) {
-    logger.notice(`Received signal ${signal}, will exit.`);
-    cleanupOnExit('signal');
-    process.exit(0);
 }

@@ -1,77 +1,63 @@
-import { Awaitable, InvalidOperationError, PromiseSource } from '@nw55/common';
-import { setupExitHandlers } from './exit';
+import { ArgumentError, Awaitable, InvalidOperationError, PromiseSource } from '@nw55/common';
+import { setupExitHandlers, waitForSigint } from './exit';
 import { exitWithError, logger } from './_internal';
 
-type MainFunction = (args: string[]) => Awaitable<void>;
+type MainFunction = (args: string[], stopEvent: Promise<void>) => Awaitable<void>;
 
-let programRunning = false;
-let programStopEvent: PromiseSource | null = null;
-let programIntervalHandle: NodeJS.Timer | null = null;
+let stopEventSource: PromiseSource | null = null;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-function noop() { }
-
-async function runMainFunction(main?: MainFunction) {
+async function runMainFunction(main: MainFunction, stopEvent: Promise<void>) {
     const args = process.argv.slice(2);
 
     if (logger.shouldLog('trace'))
         logger.trace(`${args.length} command line argument${args.length === 1 ? '' : 's'}`, { args });
 
     try {
-        if (main !== undefined) {
-            logger.debug('Executing main function...');
-            await main(args);
-        }
-        else {
-            logger.debug('Program without main function.');
-        }
+        logger.debug('Executing main function...');
+        await main(args, stopEvent);
     }
     catch (e) {
         exitWithError('Unhandled error in main function', e);
     }
 }
 
-export async function runMain(main: MainFunction) {
-    setupExitHandlers();
+export interface ProgramOptions {
+    sigint?: 'exit' | 'stop' | 'ignore';
+}
 
-    const args = process.argv.slice(2);
+export async function startProgram(main: MainFunction): Promise<void>;
+export async function startProgram(options: ProgramOptions, main: MainFunction): Promise<void>;
+export async function startProgram(mainOrOptions: MainFunction | ProgramOptions, mainOrNothing?: MainFunction) {
+    if (stopEventSource !== null)
+        throw new InvalidOperationError('Program already running');
+    stopEventSource = new PromiseSource();
 
-    if (logger.shouldLog('trace'))
-        logger.trace(`${args.length} command line argument${args.length === 1 ? '' : 's'}`, { args });
+    const main = typeof mainOrOptions === 'function' ? mainOrOptions : mainOrNothing;
+    const options = typeof mainOrOptions !== 'function' ? mainOrOptions : {};
+    if (typeof main !== 'function')
+        throw new ArgumentError();
 
-    await runMainFunction(main);
+    const handleSigint = options.sigint ?? 'exit';
+
+    setupExitHandlers({
+        sigint: handleSigint === 'stop' ? 'event' : handleSigint
+    });
+
+    const stopEvents = [stopEventSource.promise];
+    if (handleSigint === 'stop')
+        stopEvents.push(waitForSigint());
+    const stopEvent = Promise.race(stopEvents);
+
+    await runMainFunction(main, stopEvent);
 
     logger.debug('Exiting after completion of main function...');
 
     process.exit(0);
 }
 
-export async function startProgram(main?: MainFunction): Promise<void> {
-    if (!programRunning)
-        throw new InvalidOperationError('Program already running');
-    programRunning = true;
-
-    setupExitHandlers();
-
-    const args = process.argv.slice(2);
-
-    if (logger.shouldLog('trace'))
-        logger.trace(`${args.length} command line argument${args.length === 1 ? '' : 's'}`, { args });
-
-    await runMainFunction(main);
-
-    logger.debug('Keeping program running after completion of main function...');
-    programIntervalHandle = setInterval(noop, 1e9); // prevent node from exiting
-    programStopEvent = new PromiseSource();
-    await programStopEvent.promise; // prevent this async function from returning
-
-    process.exit(0);
-}
-
 export function stopProgram() {
-    if (!programRunning)
+    if (stopEventSource === null)
         throw new InvalidOperationError('Program not running');
     logger.verbose('Stopping program...');
-    programStopEvent!.resolve();
-    clearInterval(programIntervalHandle!);
+    stopEventSource.resolve();
 }
