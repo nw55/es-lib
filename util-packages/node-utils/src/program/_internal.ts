@@ -8,7 +8,6 @@ export const cleanupOnExitHandlers = new Set<CleanupOnExitHandler>();
 
 export function handleExit() {
     logger.notice('Exiting...');
-
     cleanupOnExit('exit');
 }
 
@@ -31,7 +30,7 @@ export function cleanupOnExit(reason: ExitReason) {
         return;
     }
 
-    logger.verbose('Running cleanup handlers...');
+    logger.debug('Running cleanup handlers...');
     for (const handler of cleanupOnExitHandlers) {
         try {
             handler(reason);
@@ -40,7 +39,7 @@ export function cleanupOnExit(reason: ExitReason) {
             logger.logError('critical', e, 'Uncaught exception in cleanup handler.');
         }
     }
-    logger.verbose('Cleanup handlers completed.');
+    logger.debug('Cleanup handlers completed.');
 }
 
 export function exitWithSignal(signal: string) {

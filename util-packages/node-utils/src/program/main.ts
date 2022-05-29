@@ -19,7 +19,7 @@ async function runMainFunction(main?: MainFunction) {
 
     try {
         if (main !== undefined) {
-            logger.verbose('Executing main function...');
+            logger.debug('Executing main function...');
             await main(args);
         }
         else {
@@ -41,7 +41,7 @@ export async function runMain(main: MainFunction) {
 
     await runMainFunction(main);
 
-    logger.verbose('Exiting after completion of main function...');
+    logger.debug('Exiting after completion of main function...');
 
     process.exit(0);
 }
@@ -60,7 +60,7 @@ export async function startProgram(main?: MainFunction): Promise<void> {
 
     await runMainFunction(main);
 
-    logger.verbose('Keeping program running after completion of main function...');
+    logger.debug('Keeping program running after completion of main function...');
     programIntervalHandle = setInterval(noop, 1e9); // prevent node from exiting
     programStopEvent = new PromiseSource();
     await programStopEvent.promise; // prevent this async function from returning
