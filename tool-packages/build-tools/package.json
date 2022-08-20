@@ -24,6 +24,6 @@
     "nw55-build": "./cli.js"
   },
   "devDependencies": {
-    "strip-json-comments": "^4.0.0"
+    "strip-json-comments": "^5.0.0"
   }
 }
