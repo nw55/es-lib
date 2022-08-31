@@ -86,7 +86,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
     'no-extra-bind': mistake,
     'no-extra-label': improvement,
     'no-fallthrough': [mistake, {
-        commentPattern: 'fall(?:s? )?through'
+        commentPattern: 'fall(?:s? |-)?through'
     }],
     'no-floating-decimal': style,
     'no-global-assign': error,

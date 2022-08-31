@@ -118,6 +118,7 @@ module.exports = ({ app, lib }, { error, mistake, debug, improvement, style }) =
         extendDefaults: true
     }],
     '@typescript-eslint/class-literal-property-style': 'off',
+    '@typescript-eslint/consistent-generic-constructors': 'off',
     '@typescript-eslint/consistent-indexed-object-style': 'off',
     '@typescript-eslint/consistent-type-assertions': [mistake, {
         assertionStyle: 'as',
