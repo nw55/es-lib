@@ -25,7 +25,7 @@ export namespace CheckableType {
     export type ExtractType<T extends CheckableType<unknown>> = T extends CheckableType<infer U> ? U : never;
 
     export function test<T>(obj: T): obj is T & CheckableType<unknown> {
-        return check in obj;
+        return typeof obj === 'object' && obj !== null && check in obj;
     }
 }
 

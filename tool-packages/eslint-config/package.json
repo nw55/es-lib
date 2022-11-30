@@ -27,7 +27,7 @@
     "clean": "run generate-files clean"
   },
   "devDependencies": {
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^11.1.0"
   },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
