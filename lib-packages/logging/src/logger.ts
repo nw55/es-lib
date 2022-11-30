@@ -118,12 +118,12 @@ export class Logger implements LogLevelMethods {
 
     debugWarn(...params: LogMethodParams) {
         if (this.shouldLog('debugWarn'))
-            this.log('debugWarn', paramsToMessage(params, new LoggerStackTraceError()));
+            this.log('debugWarn', paramsToMessage(params));
     }
 
     warn(...params: LogMethodParams) {
         if (this.shouldLog('warn'))
-            this.log('warn', paramsToMessage(params, new LoggerStackTraceError()));
+            this.log('warn', paramsToMessage(params));
     }
 
     error(...params: LogMethodParams) {

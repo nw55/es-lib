@@ -1,4 +1,4 @@
-import { json, PartialJsonValue, ReadonlyJsonValue } from '@nw55/common';
+import { json, ReadonlyJsonValue } from '@nw55/common';
 import { CheckableType, requireType } from '@nw55/runtime-types';
 import { promises as fs } from 'fs';
 import { isNodeError } from '../common';
@@ -22,7 +22,7 @@ export async function tryReadJsonFile(file: string) {
     return json.decode(content);
 }
 
-export async function tryReadJsonFileChecked<T extends PartialJsonValue>(file: string, type: CheckableType<T>) {
+export async function tryReadJsonFileChecked<T>(file: string, type: CheckableType<T>) {
     const content = await tryReadTextFile(file);
     if (content === null)
         return null;

@@ -1,4 +1,4 @@
-import { ArgumentError, notNull } from '@nw55/common';
+import { ArgumentError, notNull, TwoWayMap } from '@nw55/common';
 
 export type RoutePath = `/${string}`;
 
@@ -89,4 +89,19 @@ export function concatPathRoutes<R1 extends PathRouteInfo, R2 extends PathRouteI
         path,
         pathSegments
     } as ConcatPathRoutes<R1, R2>;
+}
+
+export function createMappedRouteParameterFormat<T extends string>(mapping: Record<T, string>): RouteParameterFormat<T> {
+    const map = new TwoWayMap(Object.entries(mapping) as [T, string][]);
+    return {
+        parse(str) {
+            return map.getKey(str);
+        },
+        format(value) {
+            const mapped = map.getValue(value);
+            if (mapped === undefined)
+                throw new ArgumentError();
+            return mapped;
+        }
+    };
 }
