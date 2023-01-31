@@ -1,25 +1,32 @@
 import { isArray, LoggingProvider } from '@nw55/common';
 import { CombinedLogWriter } from './combined-log-writer';
-import { LogWriter } from './common';
+import { LogEntry, LogWriter } from './common';
+import { createLogFilter, LogFilter, LogFilterResolvable } from './filter';
 import { Logger } from './logger';
 
 let globalLogWriter: LogWriter | null = null;
+let globalLogFilter: LogFilter | null = null;
 
 const loggingProvider: LoggingProvider = {
     shouldLog(level, source) {
         if (globalLogWriter === null)
+            return false;
+        if (globalLogFilter !== null && !globalLogFilter.shouldLog(level, source))
             return false;
         return globalLogWriter.shouldLog(level, source);
     },
     log(level, source, message) {
         if (globalLogWriter === null)
             return;
-        globalLogWriter.log({
+        const entry: LogEntry = {
             level,
             source,
             timestamp: new Date(),
             message
-        });
+        };
+        if (globalLogFilter !== null && !globalLogFilter.shouldLogEntry(entry))
+            return;
+        globalLogWriter.log(entry);
     }
 };
 
@@ -76,6 +83,10 @@ export class GlobalLogger extends Logger {
     removeGlobalLogWriter(writer: LogWriter, forceRegister = false) {
         registerGlobalLoggingIfNeeded(forceRegister);
         globalLogWriter = CombinedLogWriter.removeLogWriter(globalLogWriter, writer);
+    }
+
+    setGlobalLogFilter(filter: LogFilterResolvable) {
+        globalLogFilter = createLogFilter(filter);
     }
 
     createLogger(source: string, separator?: string): Logger;

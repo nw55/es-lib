@@ -28,9 +28,9 @@ export const logLevelMetadata: Readonly<Record<LogLevel, LogLevelMetadata>> = Ob
     // notice before debugWarn
     'notice': createMetadata('notice', 'Notice', false, 'alert', 'warn'),
     'debugWarn': createMetadata('debugWarn', 'DebugWarning', true, 'warn'),
-    // warn before alter
+    // warn before alert
     'warn': createMetadata('warn', 'Warning', true, 'error'),
-    'alert': createMetadata('alert', 'Alter', false, 'error'),
+    'alert': createMetadata('alert', 'Alert', false, 'error'),
     'error': createMetadata('error', 'Error', true, 'critical'),
     'critical': createMetadata('critical', 'Critical', true)
 });
