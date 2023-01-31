@@ -44,9 +44,7 @@ type UnionTypeFromTupleDefinition<T extends unknown[]> = SimplifyObjectType<{
 
 type IntersectionTypeFromTupleDefinition<T extends unknown[]> = UnionToIntersection<UnionTypeFromTupleDefinition<T>>;
 
-type PartialTypeFromObjectDefinition<T extends AnyRecord> = {
-    [P in keyof T]?: TypeFromDefinition<T[P]>;
-};
+type PartialTypeFromObjectDefinition<T extends AnyRecord> = Partial<ObjectTypeFromDefinition<T>>
 
 interface PlainObjectOptions<P extends boolean | undefined> {
     noExcessProperties?: boolean | undefined;
@@ -115,13 +113,13 @@ export namespace Type {
         return new ArrayType(fromDefinition(typeDefinition));
     }
 
-    export function object<T extends Record<string, TypeDefinition>>(options: PlainObjectOptions<false | undefined>, typeDefinition: T): RuntimeType<ObjectTypeFromDefinition<T>>;
-    export function object<T extends Record<string, TypeDefinition>>(options: PlainObjectOptions<true>, typeDefinition: T): RuntimeType<PartialTypeFromObjectDefinition<T>>;
-    export function object<T extends Record<string, TypeDefinition>>(options: PlainObjectOptions<boolean | undefined>, typeDefinition: T) {
+    export function object<T extends Record<string, PropertyTypeDefinition>>(options: PlainObjectOptions<false | undefined>, typeDefinition: T): RuntimeType<ObjectTypeFromDefinition<T>>;
+    export function object<T extends Record<string, PropertyTypeDefinition>>(options: PlainObjectOptions<true>, typeDefinition: T): RuntimeType<PartialTypeFromObjectDefinition<T>>;
+    export function object<T extends Record<string, PropertyTypeDefinition>>(options: PlainObjectOptions<boolean | undefined>, typeDefinition: T) {
         return new ObjectType(getObjectPropertiesInfo(typeDefinition, options.partial ?? false), options.noExcessProperties ?? false);
     }
 
-    export function partial<T extends Record<string, TypeDefinition>>(typeDefinition: T): RuntimeType<PartialTypeFromObjectDefinition<T>> {
+    export function partial<T extends Record<string, PropertyTypeDefinition>>(typeDefinition: T): RuntimeType<PartialTypeFromObjectDefinition<T>> {
         return new ObjectType(getObjectPropertiesInfo(typeDefinition, true), false);
     }
 

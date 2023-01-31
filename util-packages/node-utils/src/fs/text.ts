@@ -1,4 +1,4 @@
-import { json, ReadonlyJsonValue } from '@nw55/common';
+import { json, PartialReadonlyJsonValue } from '@nw55/common';
 import { CheckableType, requireType } from '@nw55/runtime-types';
 import { promises as fs } from 'fs';
 import { isNodeError } from '../common';
@@ -35,7 +35,7 @@ export async function writeTextFile(file: string, content: string) {
     await fs.writeFile(file, content, 'utf8');
 }
 
-export async function writeJsonFile(file: string, data: ReadonlyJsonValue) {
+export async function writeJsonFile(file: string, data: PartialReadonlyJsonValue) {
     const content = json.encode(data, 2);
     await writeTextFile(file, content);
 }
