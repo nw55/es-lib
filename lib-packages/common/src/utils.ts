@@ -105,10 +105,14 @@ export function createRecord<K extends PropertyKey, T>(keys: readonly K[], mapTo
     return Object.fromEntries(keys.map(key => [key, mapToValues(key)])) as Record<K, T>;
 }
 
+export function mapRecord<K extends PropertyKey, T, U>(record: Record<K, T>, mapValue: (value: T, key: K) => U): Record<K, U>;
+export function mapRecord<K extends PropertyKey, T, U>(record: PartialWithUndefined<Record<K, T>>, mapValue: (value: T | undefined, key: K) => U): Record<K, U>;
 export function mapRecord<K extends PropertyKey, T, U>(record: Record<K, T>, mapValue: (value: T, key: K) => U) {
-    return Object.fromEntries(Object.entries<T>(record).map(([key, value]) => [key, mapValue(value, key as K)])) as Record<K, U>;
+    return Object.fromEntries(Object.entries<T>(record).map(([key, value]) => [key, mapValue(value, key as K)]));
 }
 
+export function filterRecord<K extends PropertyKey, T>(record: Record<K, T>, filterValue: (value: T, key: K) => boolean): Partial<Record<K, T>>;
+export function filterRecord<K extends PropertyKey, T>(record: PartialWithUndefined<Record<K, T>>, filterValue: (value: T | undefined, key: K) => boolean): PartialWithUndefined<Record<K, T>>;
 export function filterRecord<K extends PropertyKey, T>(record: Record<K, T>, filterValue: (value: T, key: K) => boolean) {
-    return Object.fromEntries(Object.entries<T>(record).filter(([key, value]) => filterValue(value, key as K))) as Record<K, T>;
+    return Object.fromEntries(Object.entries<T>(record).filter(([key, value]) => filterValue(value, key as K)));
 }
