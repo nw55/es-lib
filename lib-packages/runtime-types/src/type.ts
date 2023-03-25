@@ -44,7 +44,7 @@ type UnionTypeFromTupleDefinition<T extends unknown[]> = SimplifyObjectType<{
 
 type IntersectionTypeFromTupleDefinition<T extends unknown[]> = UnionToIntersection<UnionTypeFromTupleDefinition<T>>;
 
-type PartialTypeFromObjectDefinition<T extends AnyRecord> = Partial<ObjectTypeFromDefinition<T>>
+type PartialTypeFromObjectDefinition<T extends AnyRecord> = Partial<ObjectTypeFromDefinition<T>>;
 
 interface PlainObjectOptions<P extends boolean | undefined> {
     noExcessProperties?: boolean | undefined;
