@@ -1,5 +1,5 @@
 import { LoggerStackTraceError, LogLevel, LogMessage, LogMessageData, LogSource } from '@nw55/common';
-import { LogWriter } from './common';
+import { LogWriter } from './common.js';
 
 type LogMethodParams =
     | [data: LogMessageData]

@@ -1,4 +1,4 @@
-import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common';
+import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common.js';
 
 export class LiteralType<T> extends RuntimeType<T> {
     private _value: T;

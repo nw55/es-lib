@@ -1,6 +1,6 @@
-import { CheckableType, RuntimeType } from './common';
-import { Type } from './type';
-import { RecursiveType } from './types';
+import { CheckableType, RuntimeType } from './common.js';
+import { Type } from './type.js';
+import { RecursiveType } from './types.js';
 
 export type JsonTypeDefinition =
     | CheckableType<JsonType.Value>

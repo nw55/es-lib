@@ -1,5 +1,5 @@
 import { InvalidOperationError } from '@nw55/common';
-import { CheckableType, RuntimeType, TypeCheckOptions } from '../common';
+import { CheckableType, RuntimeType, TypeCheckOptions } from '../common.js';
 
 export class RecursiveType<T> extends RuntimeType<T> {
     static create<T>() {

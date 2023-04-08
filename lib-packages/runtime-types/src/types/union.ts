@@ -1,4 +1,4 @@
-import { CheckableType, RuntimeType, RuntimeTypes, TypeCheckOptions, TypeCheckResult } from '../common';
+import { CheckableType, RuntimeType, RuntimeTypes, TypeCheckOptions, TypeCheckResult } from '../common.js';
 
 type TupleToUnion<T extends readonly any[]> = T[number];
 

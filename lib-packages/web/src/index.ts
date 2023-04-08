@@ -1,4 +1,3 @@
-export * from './rest-api';
-export * from './urls';
-
-export * from './common';
+export * from './common.js';
+export * from './rest-api.js';
+export * from './urls.js';

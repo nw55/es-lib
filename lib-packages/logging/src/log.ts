@@ -1,8 +1,8 @@
 import { isArray, LoggingProvider } from '@nw55/common';
-import { CombinedLogWriter } from './combined-log-writer';
-import { LogEntry, LogWriter } from './common';
-import { createLogFilter, LogFilter, LogFilterResolvable } from './filter';
-import { Logger } from './logger';
+import { CombinedLogWriter } from './combined-log-writer.js';
+import { LogEntry, LogWriter } from './common.js';
+import { createLogFilter, LogFilter, LogFilterResolvable } from './filter.js';
+import { Logger } from './logger.js';
 
 let globalLogWriter: LogWriter | null = null;
 let globalLogFilter: LogFilter | null = null;

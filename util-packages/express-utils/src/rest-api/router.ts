@@ -1,7 +1,7 @@
 import { ArgumentError, Awaitable } from '@nw55/common';
 import { ApiDefinition, ApiInterface, isEndpointDefinition } from '@nw55/web';
 import express, { Router } from 'express';
-import { EndpointRequestHandler } from './endpoint';
+import { EndpointRequestHandler } from './endpoint.js';
 
 interface ApiImplementation {
     [key: string]: ApiImplementation | ((...args: unknown[]) => Awaitable<unknown>);

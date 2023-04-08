@@ -1,4 +1,4 @@
-import { CallbackIterable } from '../interfaces';
+import { CallbackIterable } from '../interfaces.js';
 
 export class FixedSizeQueue<T = unknown> implements CallbackIterable<T> {
     private _elements: T[];

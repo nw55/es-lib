@@ -1,6 +1,6 @@
 import { SimplifyObjectType } from '@nw55/common';
-import { concatPathRoutes, ConcatPathRoutes, pathRoute, PathRouteInfo, ResolvePathRoute, RoutePath } from '../urls';
-import { EndpointDefinition, EndpointSignature } from './endpoints';
+import { concatPathRoutes, ConcatPathRoutes, pathRoute, PathRouteInfo, ResolvePathRoute, RoutePath } from '../urls.js';
+import { EndpointDefinition, EndpointSignature } from './endpoints.js';
 
 export interface ApiDefinition {
     [key: string]: ApiDefinition | EndpointDefinition;

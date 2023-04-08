@@ -1,4 +1,4 @@
-import { ArgumentError } from '../errors';
+import { ArgumentError } from '../errors.js';
 
 const UTF16_LEAD_SURROGATE_IDENTIFIER = 0xD800; // high
 const UTF16_TRAIL_SURROGATE_IDENTIFIER = 0xDC00; // low

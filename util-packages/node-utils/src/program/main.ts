@@ -1,6 +1,6 @@
 import { ArgumentError, Awaitable, InvalidOperationError, PromiseSource } from '@nw55/common';
-import { setupExitHandlers, waitForSigint } from './exit';
-import { exitWithError, logger } from './_internal';
+import { setupExitHandlers, waitForSigint } from './exit.js';
+import { exitWithError, logger } from './_internal.js';
 
 type MainFunction = (args: string[], stopEvent: Promise<void>) => Awaitable<void>;
 

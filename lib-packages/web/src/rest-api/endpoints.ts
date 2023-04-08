@@ -1,7 +1,7 @@
 import { Awaitable, SimplifyObjectType } from '@nw55/common';
 import { RuntimeType } from '@nw55/runtime-types';
-import { pathRoute, PathRouteInfo, QueryParameters, ResolvePathRoute, ResolveQueryParameterTypes, ResolveRouteParameterTypes, RoutePath } from '../urls';
-import { ApiResultHandler } from './result';
+import { PathRouteInfo, QueryParameters, ResolvePathRoute, ResolveQueryParameterTypes, ResolveRouteParameterTypes, RoutePath, pathRoute } from '../urls.js';
+import { ApiResultHandler } from './result.js';
 
 export type RestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 

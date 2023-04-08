@@ -1,5 +1,5 @@
 import { DeepReadonly, isPlainObject, Mutable, UnionToIntersection } from '@nw55/common';
-import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common';
+import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common.js';
 
 export interface ObjectPropertyType<K extends string = string, T = unknown, O extends boolean = boolean> {
     key: K;

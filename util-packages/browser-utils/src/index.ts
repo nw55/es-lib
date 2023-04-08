@@ -1,3 +1,2 @@
-export * from './logging/console';
-
-export * from './rest-api';
+export * from './logging/console.js';
+export * from './rest-api.js';

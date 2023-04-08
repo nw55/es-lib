@@ -1,5 +1,5 @@
 import { Log } from '@nw55/logging';
-import { CleanupOnExitHandler, ExitReason } from './exit';
+import { CleanupOnExitHandler, ExitReason } from './exit.js';
 
 export const logger = Log.createLogger('@nw55/node-utils/program');
 

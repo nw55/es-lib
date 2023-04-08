@@ -17,7 +17,7 @@
     "build:libs:esm": "tsc -b",
     "build:other": "run run-all:other -t -m build",
     "build": "run build:other && run build:libs:esm",
-    "clean:libs": "yarn tsc -b --clean && rimraf '{lib,util}-packages/*/{lib}'",
+    "clean:libs": "yarn tsc -b --clean && rimraf '{lib,util}-packages/*/lib'",
     "clean:other": "run run-all:other -m clean",
     "clean": "run clean:libs && run clean:other",
     "prepublishOnly": "run clean && run build && run lint && run test",

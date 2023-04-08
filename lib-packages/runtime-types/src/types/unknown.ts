@@ -1,4 +1,4 @@
-import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common';
+import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common.js';
 
 export class UnknownType<T> extends RuntimeType<T> {
     private _checkableType: CheckableType<T>;

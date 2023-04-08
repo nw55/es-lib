@@ -1,4 +1,4 @@
-import { ConstructorLike } from '../utils';
+import { ConstructorLike } from '../utils.js';
 
 /* eslint-disable @typescript-eslint/ban-types -- object is allowed in this file */
 

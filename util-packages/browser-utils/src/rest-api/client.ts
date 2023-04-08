@@ -1,7 +1,7 @@
 import { Awaitable } from '@nw55/common';
 import { ApiDefinition, ApiInterface, isEndpointDefinition } from '@nw55/web';
-import { ApiClientOptions } from './common';
-import { EndpointFetchHandler } from './endpoint';
+import { ApiClientOptions } from './common.js';
+import { EndpointFetchHandler } from './endpoint.js';
 
 interface ApiImplementation {
     [key: string]: ApiImplementation | ((...args: unknown[]) => Awaitable<unknown>);

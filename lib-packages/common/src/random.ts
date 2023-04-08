@@ -1,5 +1,5 @@
-import { ArgumentError } from './errors';
-import { RandomNumberGenerator } from './interfaces';
+import { ArgumentError } from './errors.js';
+import { RandomNumberGenerator } from './interfaces.js';
 
 // +++
 // XorShiftPlus based on:

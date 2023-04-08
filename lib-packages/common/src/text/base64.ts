@@ -1,4 +1,4 @@
-import { ArgumentError } from '../errors';
+import { ArgumentError } from '../errors.js';
 
 const ALPHABET = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',

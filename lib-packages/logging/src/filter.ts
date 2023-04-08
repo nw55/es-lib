@@ -1,6 +1,6 @@
 import { isArray, LogLevel, LogSource } from '@nw55/common';
-import { LogEntry } from './common';
-import { getAllIncludedLogLevels, isLogLevelIncluded } from './log-level-metadata';
+import { LogEntry } from './common.js';
+import { getAllIncludedLogLevels, isLogLevelIncluded } from './log-level-metadata.js';
 
 export interface LogFilter {
     shouldLog(level: LogLevel, source: LogSource): boolean;

@@ -1,7 +1,7 @@
 import { json, PartialReadonlyJsonValue } from '@nw55/common';
 import { CheckableType, requireType } from '@nw55/runtime-types';
 import { promises as fs } from 'fs';
-import { isNodeError } from '../common';
+import { isNodeError } from '../common.js';
 
 export async function tryReadTextFile(file: string) {
     try {

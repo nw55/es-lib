@@ -1,5 +1,5 @@
 import { LogEntry } from './common';
-import { getInheritedLogLevelProperties, PartialLogLevelProperties } from './log-level-metadata';
+import { getInheritedLogLevelProperties, PartialLogLevelProperties } from './log-level-metadata.js';
 
 export interface LogTextWriter {
     writeEntry(text: string, entry: LogEntry): void;

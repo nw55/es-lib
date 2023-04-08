@@ -1,5 +1,5 @@
 import { PromiseSource } from '@nw55/common';
-import { cleanupOnExit, cleanupOnExitHandlers, exitWithError, handleExit, logger } from './_internal';
+import { cleanupOnExit, cleanupOnExitHandlers, exitWithError, handleExit, logger } from './_internal.js';
 
 export type ExitReason = 'signal' | 'error' | 'exit';
 export type CleanupOnExitHandler = (reason: ExitReason) => void;

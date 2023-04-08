@@ -1,6 +1,5 @@
-export * from './types';
-
-export * from './common';
-export * from './json';
-export * from './type';
-export * from './type-checking';
+export * from './common.js';
+export * from './json.js';
+export * from './type-checking.js';
+export * from './type.js';
+export * from './types.js';

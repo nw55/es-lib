@@ -1,9 +1,8 @@
-export * from './collections';
-export * from './text';
-
-export * from './errors';
-export * from './interfaces';
-export * from './logging';
-export * from './promise-source';
-export * from './random';
-export * from './utils';
+export * from './collections.js';
+export * from './errors.js';
+export * from './interfaces.js';
+export * from './logging.js';
+export * from './promise-source.js';
+export * from './random.js';
+export * from './text.js';
+export * from './utils.js';

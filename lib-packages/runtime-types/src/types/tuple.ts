@@ -1,5 +1,5 @@
 import { isArray, Mutable } from '@nw55/common';
-import { CheckableType, RuntimeType, RuntimeTypes, TypeCheckOptions, TypeCheckResult } from '../common';
+import { CheckableType, RuntimeType, RuntimeTypes, TypeCheckOptions, TypeCheckResult } from '../common.js';
 
 export class TupleType<T extends readonly any[]> extends RuntimeType<Mutable<T>> {
     private _elements: readonly RuntimeType<unknown>[];
