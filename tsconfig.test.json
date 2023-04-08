@@ -5,7 +5,8 @@
             "jest",
             "jest-extended"
         ],
-        "noEmit": true
+        "noEmit": true,
+        "moduleResolution": "node"
     },
     "include": [
         "*-packages/*/test/**/*.ts"
