@@ -1,14 +1,18 @@
 'use strict';
 
 module.exports = {
-    preset: 'ts-jest',
+    preset: 'ts-jest/presets/default-esm',
     setupFilesAfterEnv: ['jest-extended/all'],
     testMatch: ['**/*-packages/*/test/**/*.ts'],
     testPathIgnorePatterns: ['/_[^/]+\\.ts'],
     testEnvironment: 'node',
-    globals: {
-        'ts-jest': {
-            tsconfig: 'tsconfig.test.json'
-        }
+    transform: {
+        '^.+\\.tsx?$': [
+            'ts-jest',
+            {
+                useESM: true,
+                tsconfig: 'tsconfig.test.json'
+            }
+        ]
     }
 };

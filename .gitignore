@@ -5,7 +5,6 @@
 !.yarn/versions
 .pnp.*
 
-/lib-packages/*/dist/
 /lib-packages/*/lib/
-/util-packages/*/dist/
 /util-packages/*/lib/
+*.tsbuildinfo

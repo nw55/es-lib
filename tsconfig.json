@@ -1,29 +1,29 @@
 {
-    "references": [
-        {
-            "path": "lib-packages/common/src"
-        },
-        {
-            "path": "lib-packages/logging/src"
-        },
-        {
-            "path": "lib-packages/runtime-types/src"
-        },
-        {
-            "path": "lib-packages/web/src"
-        },
-        {
-            "path": "util-packages/browser-utils/src"
-        },
-        {
-            "path": "util-packages/express-utils/src"
-        },
-        {
-            "path": "util-packages/node-utils/src"
-        },
-        {
-            "path": "tsconfig.test.json"
-        }
-    ],
-    "files": []
+  "references": [
+    {
+      "path": "lib-packages/common"
+    },
+    {
+      "path": "lib-packages/logging"
+    },
+    {
+      "path": "lib-packages/runtime-types"
+    },
+    {
+      "path": "lib-packages/web"
+    },
+    {
+      "path": "util-packages/browser-utils"
+    },
+    {
+      "path": "util-packages/express-utils"
+    },
+    {
+      "path": "util-packages/node-utils"
+    },
+    {
+      "path": "tsconfig.test.json"
+    }
+  ],
+  "files": [ ]
 }

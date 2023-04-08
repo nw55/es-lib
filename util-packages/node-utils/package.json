@@ -9,7 +9,11 @@
   },
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",
-  "main": "src/index.ts",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
   "sideEffects": false,
   "files": [
     "/dist",
@@ -17,10 +21,7 @@
     "/src"
   ],
   "publishConfig": {
-    "access": "public",
-    "main": "dist/index.js",
-    "module": "lib/index.js",
-    "types": "lib/index.d.ts"
+    "access": "public"
   },
   "dependencies": {
     "@nw55/common": "~0.2.2",
@@ -29,7 +30,7 @@
   },
   "devDependencies": {
     "@nw55/build-tools": "~0.2.4",
-    "@types/node": "^16.18.20",
-    "typescript": "~5.0.2"
+    "@types/node": "^16.18.23",
+    "typescript": "~5.0.4"
   }
 }

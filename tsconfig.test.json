@@ -1,7 +1,6 @@
 {
     "extends": "@nw55/build-tools/tsconfig/lib/es2020.json",
     "compilerOptions": {
-        "module": "commonjs",
         "types": [
             "jest",
             "jest-extended"

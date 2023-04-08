@@ -14,7 +14,7 @@ module.exports = {
         extends: ['@nw55/eslint-config/lib/ts-typecheck'],
         parserOptions: {
             project: [
-                '*-packages/*/src/tsconfig.json',
+                '*-packages/*/tsconfig.json',
                 'tsconfig.test.json'
             ]
         }

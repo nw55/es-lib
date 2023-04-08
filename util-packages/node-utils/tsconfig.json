@@ -1,0 +1,19 @@
+{
+  "extends": "@nw55/build-tools/tsconfig/node-lib/14.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "include": [ "src" ],
+  "references": [
+    {
+      "path": "../../lib-packages/common"
+    },
+    {
+      "path": "../../lib-packages/logging"
+    },
+    {
+      "path": "../../lib-packages/runtime-types"
+    }
+  ]
+}

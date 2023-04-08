@@ -1,0 +1,22 @@
+{
+  "extends": "@nw55/build-tools/tsconfig/dom-lib/es2020.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "include": [ "src" ],
+  "references": [
+    {
+      "path": "../../lib-packages/common"
+    },
+    {
+      "path": "../../lib-packages/logging"
+    },
+    {
+      "path": "../../lib-packages/runtime-types"
+    },
+    {
+      "path": "../../lib-packages/web"
+    }
+  ]
+}

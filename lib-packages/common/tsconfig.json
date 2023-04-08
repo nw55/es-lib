@@ -1,6 +1,8 @@
 {
     "extends": "@nw55/build-tools/tsconfig/lib/es2020.json",
     "compilerOptions": {
-        "outDir": "../lib"
-    }
+        "rootDir": "src",
+        "outDir": "lib"
+    },
+    "include": [ "src" ]
 }
