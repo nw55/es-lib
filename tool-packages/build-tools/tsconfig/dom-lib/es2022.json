@@ -1,14 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "../lib.json",
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "node16",
-    "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
-    ]
-  }
+  "extends": [ "../dom/es2022", "../_base/lib" ],
+  "compilerOptions": { }
 }

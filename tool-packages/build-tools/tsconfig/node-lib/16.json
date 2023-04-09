@@ -1,12 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "../node-lib.json",
-  "compilerOptions": {
-    "target": "ES2021",
-    "module": "ES2020",
-    "moduleResolution": "node16",
-    "lib": [
-      "ES2021"
-    ]
-  }
+  "extends": [ "../node/16", "../_base/lib" ],
+  "compilerOptions": { }
 }
