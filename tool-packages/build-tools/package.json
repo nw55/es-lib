@@ -9,7 +9,6 @@
   },
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -19,7 +18,7 @@
     "cli.js"
   ],
   "scripts": {
-    "tsconfig-dependency-graph": "node dev-scripts/tsconfig-dependency-graph.js"
+    "tsconfig-dependency-graph": "node dev-scripts/tsconfig-dependency-graph.mjs"
   },
   "bin": {
     "nw55-build": "./cli.js"

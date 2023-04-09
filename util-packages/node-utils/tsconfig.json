@@ -1,5 +1,5 @@
 {
-  "extends": "@nw55/build-tools/tsconfig/node-lib/14.json",
+  "extends": [ "@nw55/build-tools/tsconfig/node-lib/16.json", "../../tsconfig.common.json" ],
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib"

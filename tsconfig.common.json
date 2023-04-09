@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "@nw55/common": [ "./lib-packages/common/*" ],
+            "@nw55/logging": [ "./lib-packages/logging/*" ],
+            "@nw55/runtime-types": [ "./lib-packages/runtime-types/*" ],
+            "@nw55/web": [ "./lib-packages/web/*" ],
+            "@nw55/browser-utils": [ "./util-packages/browser-utils/*" ],
+            "@nw55/express-utils": [ "./util-packages/express-utils/*" ],
+            "@nw55/node-utils": [ "./util-packages/node-utils/*" ]
+        }
+    }
+}

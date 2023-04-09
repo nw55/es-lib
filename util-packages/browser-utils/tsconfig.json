@@ -1,5 +1,5 @@
 {
-  "extends": "@nw55/build-tools/tsconfig/dom-lib/es2020.json",
+  "extends": [ "@nw55/build-tools/tsconfig/dom-lib/es2020.json", "../../tsconfig.common.json" ],
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib"
