@@ -24,7 +24,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@nw55/build-tools": "~0.2.4",
+    "@nw55/build-tools": "workspace:~",
     "typescript": "~5.0.4"
   }
 }

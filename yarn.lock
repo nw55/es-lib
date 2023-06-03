@@ -1244,7 +1244,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nw55/build-tools@workspace:tool-packages/build-tools, @nw55/build-tools@workspace:~, @nw55/build-tools@~0.2.4":
+"@nw55/build-tools@workspace:tool-packages/build-tools, @nw55/build-tools@workspace:~":
   version: 0.0.0-use.local
   resolution: "@nw55/build-tools@workspace:tool-packages/build-tools"
   dependencies:
@@ -1261,7 +1261,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nw55/common@workspace:lib-packages/common"
   dependencies:
-    "@nw55/build-tools": ~0.2.4
+    "@nw55/build-tools": "workspace:~"
     typescript: ~5.0.4
   languageName: unknown
   linkType: soft
