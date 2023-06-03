@@ -24,12 +24,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@nw55/common": "~0.2.2",
-    "@nw55/logging": "~0.1.2",
-    "@nw55/runtime-types": "~0.1.0"
+    "@nw55/common": "workspace:~",
+    "@nw55/logging": "workspace:~",
+    "@nw55/runtime-types": "workspace:~"
   },
   "devDependencies": {
-    "@nw55/build-tools": "~0.2.4",
+    "@nw55/build-tools": "workspace:~",
     "@types/node": "^16.18.23",
     "typescript": "~5.0.4"
   }

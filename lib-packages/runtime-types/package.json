@@ -24,10 +24,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@nw55/common": "~0.2.2"
+    "@nw55/common": "workspace:~"
   },
   "devDependencies": {
-    "@nw55/build-tools": "~0.2.4",
+    "@nw55/build-tools": "workspace:~",
     "typescript": "~5.0.4"
   }
 }
