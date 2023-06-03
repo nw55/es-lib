@@ -1,4 +1,4 @@
-import { LogLevel, MultiMap } from '@nw55/common';
+import { MultiMap, type LogLevel } from '@nw55/common';
 
 export interface LogLevelMetadata {
     readonly key: LogLevel;

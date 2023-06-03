@@ -1,8 +1,8 @@
-import { Awaitable, notNull } from '@nw55/common';
+import { notNull, type Awaitable } from '@nw55/common';
 import { Log } from '@nw55/logging';
-import { requireType, RuntimeType } from '@nw55/runtime-types';
-import { ApiResultHandler, EndpointDefinition, EndpointSignature, HttpError, QueryParameterFormat, RestMethod, RouteParameterFormat } from '@nw55/web';
-import { Request, RequestHandler, Response, Router } from 'express';
+import { RuntimeType, requireType } from '@nw55/runtime-types';
+import { HttpError, type ApiResultHandler, type EndpointDefinition, type EndpointSignature, type QueryParameterFormat, type RestMethod, type RouteParameterFormat } from '@nw55/web';
+import { Router, type Request, type RequestHandler, type Response } from 'express';
 
 const logger = Log.createLogger('@nw55/express-utils/rest-api/endpoint');
 

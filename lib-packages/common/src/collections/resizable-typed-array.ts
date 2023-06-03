@@ -1,4 +1,4 @@
-import { TypedArray } from '../utils.js';
+import type { TypedArray } from '../utils.js';
 
 interface ResizableTypedArrayOptions {
     size?: number | undefined;

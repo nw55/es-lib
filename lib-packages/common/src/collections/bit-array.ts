@@ -1,5 +1,5 @@
 import { ArgumentError } from '../errors.js';
-import { TypedArray } from '../utils.js';
+import type { TypedArray } from '../utils.js';
 
 export class BitArray {
     static nonemptyEntries(data: TypedArray, length = data.length) {

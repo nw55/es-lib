@@ -1,4 +1,4 @@
-import { Awaitable } from './utils.js';
+import type { Awaitable } from './utils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export class PromiseSource<T = void> {

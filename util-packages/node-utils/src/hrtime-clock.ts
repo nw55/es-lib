@@ -1,4 +1,4 @@
-import { Clock } from '@nw55/common';
+import type { Clock } from '@nw55/common';
 
 export const hrtimeClock: Clock = {
     now() {

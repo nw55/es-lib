@@ -1,4 +1,4 @@
-import { ArgumentError, Awaitable, InvalidOperationError, PromiseSource } from '@nw55/common';
+import { ArgumentError, type Awaitable, InvalidOperationError, PromiseSource } from '@nw55/common';
 import { setupExitHandlers, waitForSigint } from './exit.js';
 import { exitWithError, logger } from './_internal.js';
 

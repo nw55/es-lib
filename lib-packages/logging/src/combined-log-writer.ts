@@ -1,5 +1,5 @@
-import { LogLevel, LogSource } from '@nw55/common';
-import { LogEntry, LogWriter } from './common.js';
+import type { LogLevel, LogSource } from '@nw55/common';
+import type { LogEntry, LogWriter } from './common.js';
 
 export class CombinedLogWriter implements LogWriter {
     static addLogWriter(logWriter: LogWriter | null, add: LogWriter) {

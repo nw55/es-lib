@@ -1,4 +1,4 @@
-import { json, PartialReadonlyJsonValue } from '@nw55/common';
+import { json, type PartialReadonlyJsonValue } from '@nw55/common';
 import { CheckableType, requireType } from '@nw55/runtime-types';
 import { promises as fs } from 'fs';
 import { isNodeError } from '../common.js';

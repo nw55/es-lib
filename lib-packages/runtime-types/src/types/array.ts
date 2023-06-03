@@ -1,5 +1,5 @@
-import { isArray, Mutable } from '@nw55/common';
-import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common.js';
+import { isArray, type Mutable } from '@nw55/common';
+import { CheckableType, RuntimeType, type TypeCheckOptions, type TypeCheckResult } from '../common.js';
 
 export class ArrayType<T> extends RuntimeType<T[]> {
     private _element: RuntimeType<T>;

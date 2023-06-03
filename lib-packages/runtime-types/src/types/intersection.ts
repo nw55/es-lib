@@ -1,5 +1,5 @@
-import { Mutable } from '@nw55/common';
-import { CheckableType, RuntimeType, TypeCheckOptions, TypeCheckResult } from '../common.js';
+import type { Mutable } from '@nw55/common';
+import { CheckableType, RuntimeType, type TypeCheckOptions, type TypeCheckResult } from '../common.js';
 
 type RuntimeTypes<T extends readonly any[]> = {
     [P in keyof T]: RuntimeType<T[P]>;

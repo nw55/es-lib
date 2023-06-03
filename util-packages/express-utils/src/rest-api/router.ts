@@ -1,5 +1,5 @@
-import { ArgumentError, Awaitable } from '@nw55/common';
-import { ApiDefinition, ApiInterface, isEndpointDefinition } from '@nw55/web';
+import { ArgumentError, type Awaitable } from '@nw55/common';
+import { isEndpointDefinition, type ApiDefinition, type ApiInterface } from '@nw55/web';
 import express, { Router } from 'express';
 import { EndpointRequestHandler } from './endpoint.js';
 

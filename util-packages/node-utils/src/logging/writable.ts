@@ -1,5 +1,5 @@
 import { PromiseSource } from '@nw55/common';
-import { logLevelMetadata, LogTextWriter, WritableLogMessageWriterOptions, WritableLogTextWriter } from '@nw55/logging';
+import { WritableLogTextWriter, logLevelMetadata, type LogTextWriter, type WritableLogMessageWriterOptions } from '@nw55/logging';
 import { createWriteStream } from 'fs';
 
 export interface FileLogTextWriterOptions extends WritableLogMessageWriterOptions {

@@ -1,4 +1,4 @@
-import { RuntimeType, Type, TypeDefinition, TypeFromDefinition } from '@nw55/runtime-types';
+import { RuntimeType, Type, type TypeDefinition, type TypeFromDefinition } from '@nw55/runtime-types';
 
 interface ServerResult<T> {
     status?: number;

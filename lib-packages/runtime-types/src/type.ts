@@ -1,6 +1,6 @@
-import { AnyRecord, ArgumentError, isArray, SimplifyObjectType, UnionToIntersection } from '@nw55/common';
+import { ArgumentError, isArray, type AnyRecord, type SimplifyObjectType, type UnionToIntersection } from '@nw55/common';
 import { CheckableType, RuntimeType } from './common.js';
-import { ArrayType, IntersectionType, LiteralType, ObjectPropertyType, ObjectType, RecordType, RecursiveType, TupleType, TypeofType, UnionType, UnknownType } from './types.js';
+import { ArrayType, IntersectionType, LiteralType, ObjectType, RecordType, RecursiveType, TupleType, TypeofType, UnionType, UnknownType, type ObjectPropertyType } from './types.js';
 
 const optionalSymbol = Symbol();
 

@@ -1,4 +1,4 @@
-import { ArgumentError, SimplifyObjectType } from '@nw55/common';
+import { ArgumentError, type SimplifyObjectType } from '@nw55/common';
 
 export type QueryParameters = Record<string, QueryParameterFormat<unknown>>;
 

@@ -1,8 +1,8 @@
-import { LogLevel, LogSource } from '@nw55/common';
-import { LogEntry, LogWriter } from './common.js';
-import { createLogFilter, LogFilter, LogFilterResolvable } from './filter.js';
-import { LogFormat, logFormat } from './format.js';
-import { LogTextWriter } from './log-text-writer.js';
+import type { LogLevel, LogSource } from '@nw55/common';
+import type { LogEntry, LogWriter } from './common.js';
+import { createLogFilter, type LogFilter, type LogFilterResolvable } from './filter.js';
+import { logFormat, type LogFormat } from './format.js';
+import type { LogTextWriter } from './log-text-writer.js';
 
 export interface DefaultLogWriterOptions {
     readonly filter?: LogFilterResolvable | undefined;

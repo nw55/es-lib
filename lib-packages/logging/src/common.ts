@@ -1,4 +1,4 @@
-import { LogLevel, LogMessage, LogSource } from '@nw55/common';
+import type { LogLevel, LogMessage, LogSource } from '@nw55/common';
 
 export interface LogEntry {
     readonly level: LogLevel;

@@ -1,5 +1,5 @@
-import { LogLevel } from '@nw55/common';
-import { createLogFilter, DefaultLogWriter, Log, LogEntry, LogFilter, LogFilterResolvable, logFormat, LogFormat, LogTextWriter } from '@nw55/logging';
+import type { LogLevel } from '@nw55/common';
+import { DefaultLogWriter, Log, createLogFilter, logFormat, type LogEntry, type LogFilter, type LogFilterResolvable, type LogFormat, type LogTextWriter } from '@nw55/logging';
 
 const logFunctions: Record<LogLevel, 'debug' | 'info' | 'log' | 'warn' | 'error'> = {
     trace: 'debug',

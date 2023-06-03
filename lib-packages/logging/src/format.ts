@@ -1,5 +1,5 @@
 import { ArgumentError, isArray } from '@nw55/common';
-import { LogEntry } from './common.js';
+import type { LogEntry } from './common.js';
 import { logLevelMetadata } from './log-level-metadata.js';
 
 export type LogFormat = (entry: LogEntry) => string;

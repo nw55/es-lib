@@ -1,4 +1,4 @@
-import { CheckableType, TypeCheckError, TypeCheckResult } from './common.js';
+import { CheckableType, type TypeCheckError, type TypeCheckResult } from './common.js';
 
 const NESTED_MESSAGE_INDENT = '  ';
 

@@ -1,5 +1,5 @@
 {
-    "extends": "@nw55/build-tools/tsconfig/lib/es2020.json",
+    "extends": "@nw55/build-tools/tsconfig/node/16.json",
     "compilerOptions": {
         "types": [
             "jest",

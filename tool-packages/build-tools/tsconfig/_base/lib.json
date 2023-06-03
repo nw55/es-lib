@@ -5,6 +5,7 @@
         "declarationMap": true,
         "exactOptionalPropertyTypes": true,
         "isolatedModules": true,
+        "verbatimModuleSyntax": true,
         "composite": true
     }
 }

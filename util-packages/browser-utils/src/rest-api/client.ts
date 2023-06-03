@@ -1,6 +1,6 @@
-import { Awaitable } from '@nw55/common';
-import { ApiDefinition, ApiInterface, isEndpointDefinition } from '@nw55/web';
-import { ApiClientOptions } from './common.js';
+import type { Awaitable } from '@nw55/common';
+import { isEndpointDefinition, type ApiDefinition, type ApiInterface } from '@nw55/web';
+import type { ApiClientOptions } from './common.js';
 import { EndpointFetchHandler } from './endpoint.js';
 
 interface ApiImplementation {

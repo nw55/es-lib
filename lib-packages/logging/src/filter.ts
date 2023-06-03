@@ -1,5 +1,5 @@
-import { isArray, LogLevel, LogSource } from '@nw55/common';
-import { LogEntry } from './common.js';
+import { isArray, type LogLevel, type LogSource } from '@nw55/common';
+import type { LogEntry } from './common.js';
 import { getAllIncludedLogLevels, isLogLevelIncluded } from './log-level-metadata.js';
 
 export interface LogFilter {

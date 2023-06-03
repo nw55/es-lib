@@ -1,4 +1,4 @@
-import { createLogFilter, DefaultLogWriter, Log, LogEntry, LogFilter, LogFilterResolvable, logFormat, LogFormat, logLevelMetadata, LogTextWriter, TransformedLogTextWriter } from '@nw55/logging';
+import { DefaultLogWriter, Log, TransformedLogTextWriter, createLogFilter, logFormat, logLevelMetadata, type LogEntry, type LogFilter, type LogFilterResolvable, type LogFormat, type LogTextWriter } from '@nw55/logging';
 
 export interface ConsoleLogTextWriterOptions {
     readonly logErrors?: LogFilterResolvable | undefined;

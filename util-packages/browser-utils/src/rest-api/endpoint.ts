@@ -1,8 +1,8 @@
 import { ArgumentError } from '@nw55/common';
 import { Log } from '@nw55/logging';
-import { requireType, RuntimeType } from '@nw55/runtime-types';
-import { ApiResultHandler, EndpointDefinition, HttpError, QueryParameterFormat, RestMethod, RoutePathSegment } from '@nw55/web';
-import { ApiClientOptions } from './common.js';
+import { RuntimeType, requireType } from '@nw55/runtime-types';
+import { HttpError, type ApiResultHandler, type EndpointDefinition, type QueryParameterFormat, type RestMethod, type RoutePathSegment } from '@nw55/web';
+import type { ApiClientOptions } from './common.js';
 
 const logger = Log.createLogger('@nw55/browser-utils/rest-api/endpoint');
 

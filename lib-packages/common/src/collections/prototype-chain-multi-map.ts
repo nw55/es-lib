@@ -1,4 +1,4 @@
-import { ConstructorLike } from '../utils.js';
+import type { ConstructorLike } from '../utils.js';
 import { MultiMap } from './multi-map.js';
 
 /* eslint-disable @typescript-eslint/ban-types -- object is allowed in this file */

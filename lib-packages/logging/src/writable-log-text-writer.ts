@@ -1,7 +1,7 @@
-import { LogMessageData } from '@nw55/common';
-import { LogEntry } from './common.js';
-import { createLogFilter, LogFilter, LogFilterResolvable } from './filter.js';
-import { LogTextWriter } from './log-text-writer.js';
+import type { LogMessageData } from '@nw55/common';
+import type { LogEntry } from './common.js';
+import { createLogFilter, type LogFilter, type LogFilterResolvable } from './filter.js';
+import type { LogTextWriter } from './log-text-writer.js';
 
 export type LogErrorFormatter = (error: Error, entry: LogEntry) => string;
 
