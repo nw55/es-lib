@@ -14,6 +14,7 @@ function compareVersions(a, b) {
 export default async function main() {
     const cwd = ppath.cwd();
     const configuration = await Configuration.find(cwd, null);
+    // eslint-disable-next-line no-unused-vars
     const { project, workspace } = await Project.find(configuration, cwd);
 
     console.info(`                              latest       local `);
