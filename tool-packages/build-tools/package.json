@@ -9,6 +9,7 @@
   },
   "author": "Niklas Werner (nw55) <nw55@outlook.com>",
   "license": "MIT",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -18,12 +19,17 @@
     "cli.js"
   ],
   "scripts": {
-    "tsconfig-dependency-graph": "node dev-scripts/tsconfig-dependency-graph.mjs"
+    "tsconfig-dependency-graph": "node dev-scripts/tsconfig-dependency-graph.js"
   },
   "bin": {
     "nw55-build": "./cli.js"
   },
   "devDependencies": {
     "strip-json-comments": "^5.0.0"
+  },
+  "dependencies": {
+    "@yarnpkg/core": "^3.5.2",
+    "@yarnpkg/fslib": "^2.10.3",
+    "semver": "^7.5.1"
   }
 }

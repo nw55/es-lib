@@ -1,5 +1,3 @@
-'use strict';
-
 import fs from 'fs/promises';
 import { dirname, parse, relative, resolve } from 'path';
 import stripJsonComments from 'strip-json-comments';

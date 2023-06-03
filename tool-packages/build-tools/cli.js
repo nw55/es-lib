@@ -1,19 +1,15 @@
 #!/usr/bin/env node
 
-'use strict';
+async function main(scriptName, ...args) {
+    const validScripts = ['fix-dts-bundle', 'workspace-versions'];
 
-const path = require('path');
-
-function main(script, ...args) {
-    const validScripts = ['fix-dts-bundle'];
-
-    if (validScripts.includes(script)) {
+    if (validScripts.includes(scriptName)) {
         // eslint-disable-next-line global-require
-        const scriptMain = require(path.resolve(__dirname, 'scripts', script));
-        scriptMain(...args);
+        const script = await import('./scripts/' + scriptName + '.js');
+        script.default(...args);
     }
-    else if (script) {
-        console.error('Invalid script name: ' + script);
+    else if (scriptName) {
+        console.error('Invalid script name: ' + scriptName);
     }
     else {
         console.error('No script name specified.');

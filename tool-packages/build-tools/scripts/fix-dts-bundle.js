@@ -1,8 +1,6 @@
-'use strict';
+import fs from 'fs';
 
-const fs = require('fs');
-
-function main(prefix, inputFile, outputFile = inputFile) {
+export default function main(prefix, inputFile, outputFile = inputFile) {
     fs.readFile(inputFile, 'utf-8', (readErr, text) => {
         if (readErr)
             throw readErr;
@@ -51,5 +49,3 @@ function main(prefix, inputFile, outputFile = inputFile) {
         });
     });
 }
-
-module.exports = main;
